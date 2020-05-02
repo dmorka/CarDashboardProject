@@ -11,7 +11,7 @@
    <children>
       <ImageView fitHeight="198.0" fitWidth="299.0" layoutX="11.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@dashboard-icon.png" />
+            <Image url="@images/dashboard-icon.png" />
          </image>
       </ImageView>
       <Label layoutX="154.0" layoutY="14.0" text="CAR DASHBOARD - PROJECT">
