@@ -5,6 +5,7 @@ import java.io.Serializable;
 public class Dashboard implements Serializable {
 
     OnBoardComputer onBoardComputer;
+    Settings settings;
     short speed;
     boolean leftTurnSignal;
     boolean rightTurnSignal;
@@ -15,11 +16,31 @@ public class Dashboard implements Serializable {
     boolean rearFogLights;
     int counter;
     int dayCounter1;
-    int DayCounter2;
+    int dayCounter2;
     int revs;
     byte actualGear;
 
-    public Dashboard() {}
+    public Dashboard() {
+        this.onBoardComputer = new OnBoardComputer();
+        this.settings = new Settings();
+        this.speed = 0;
+        this.leftTurnSignal = false;
+        this.rightTurnSignal = false;
+        this.positionLights = false;
+        this.lowBeam = false;
+        this.trafficLights = false;
+        this.frontFogLights = false;
+        this.rearFogLights = false;
+        this.counter = 0;
+        this.dayCounter1 = 0;
+        this.dayCounter2 = 0;
+        this.revs = 0;
+        this.actualGear = 0;
+    }
+
+    public Settings getSettings() {
+        return settings;
+    }
 
     public short getSpeed() {
         return speed;
@@ -62,7 +83,7 @@ public class Dashboard implements Serializable {
     }
 
     public int getDayCounter2() {
-        return DayCounter2;
+        return dayCounter2;
     }
 
     public int getRevs() {
@@ -131,7 +152,7 @@ public class Dashboard implements Serializable {
     public void setDayCounter2(int dayCounter2) throws NegativeValueException {
         if(dayCounter2 < 0)
             throw new NegativeValueException("The day counter 2 can't be negative!");
-        DayCounter2 = dayCounter2;
+        this.dayCounter2 = dayCounter2;
     }
 
     public void setRevs(int revs) throws NegativeValueException {

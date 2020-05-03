@@ -4,16 +4,24 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import eu.hansolo.medusa.Gauge;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.CheckMenuItem;
+import javafx.scene.control.MenuItem;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.event.ActionEvent;
+import org.Logic.Dashboard;
 
 public class PrimaryController {
+    private Dashboard dashboard;
     public ImageView IVindicatorsTurnRight;
     public ImageView IVindicatorsTurnLeft;
     public ImageView IVparkingLights;
@@ -21,10 +29,15 @@ public class PrimaryController {
     public ImageView IVheadlightsHighBeam;
     public ImageView IVfogLightsBack;
     public ImageView IVfogLightsFront;
+    public Gauge speedGauge;
+    public Gauge revsGauge;
+    public BorderPane BPmain;
+    public MenuItem MIexit;
     private Map<String, ImageView> lightsImg;
 
     @FXML
-    public void initialize() {
+    private void initialize() {
+        this.dashboard = new Dashboard();
          lightsImg = new HashMap<>() {
             {
                 put("indicatorsTurnRight",IVindicatorsTurnRight);
@@ -39,17 +52,38 @@ public class PrimaryController {
     }
 
     @FXML
-    private void openAbout() throws IOException {
-        Parent root = new FXMLLoader(App.class.getResource("about.fxml")).load();
-        Scene scene = new Scene(root);
+    private void openNewWindow(ActionEvent actionEvent) throws IOException {
+        MenuItem menuItem = (MenuItem)actionEvent.getSource();
+        String filename, title;
+        switch (menuItem.getId()) {
+            case "MIabout":
+                    filename = "about.fxml";
+                    title = "About";
+                break;
+            case "MIsettings":
+                    filename = "settings.fxml";
+                    title = "Settings";
+                break;
+            default:
+                filename ="";
+                title ="";
+        }
+
+        FXMLLoader root = new FXMLLoader(App.class.getResource(filename));
+        Scene scene = new Scene(root.load());
+        if(filename.equals("settings.fxml")) {
+            SettingsController settingsController = root.getController();
+            settingsController.loadSettings(this.dashboard.getSettings(), this);
+        }
 
         Stage stage = new Stage();
-        stage.setTitle("About");
+        stage.setTitle(title);
         stage.setScene(scene);
         stage.show();
     }
 
-    public void lightSwitch(javafx.event.ActionEvent actionEvent) {
+    @FXML
+    private void lightSwitch(ActionEvent actionEvent) {
         CheckMenuItem source = (CheckMenuItem)actionEvent.getSource();
         String id = source.getId();
         Image newImg;
@@ -60,5 +94,17 @@ public class PrimaryController {
             newImg = new Image(getClass().getResourceAsStream("images/"+id+"Off.png"));
 
         lightsImg.get(id).setImage(newImg);
+    }
+
+    public void reload() {
+        speedGauge.setMaxValue(dashboard.getSettings().maxSpeed);
+        revsGauge.setMaxValue(dashboard.getSettings().maxRevs);
+        int color = dashboard.getSettings().dashboardLightIntesity;
+        BPmain.setStyle("-fx-background-color: rgb("+color+", "+color+", "+color+");");
+    }
+
+    @FXML
+    private void closeWindow(ActionEvent event) {
+        Platform.exit();
     }
 }

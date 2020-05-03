@@ -2,6 +2,7 @@ package org.Presentation;
 
 import java.io.IOException;
 import javafx.fxml.FXML;
+import org.Logic.Settings;
 
 public class SecondaryController {
 
