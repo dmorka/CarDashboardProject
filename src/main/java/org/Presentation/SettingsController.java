@@ -1,8 +1,6 @@
 package org.Presentation;
 
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.Slider;
@@ -15,7 +13,7 @@ import java.io.IOException;
 
 public class SettingsController {
     private Settings settings;
-    PrimaryController primaryController;
+    DashboardController dashboardController;
     public TextField TFmaxSpeed;
     public Slider SLdashboardLightIntensity;
     public ToggleSwitch TSautoLowBeam;
@@ -27,9 +25,9 @@ public class SettingsController {
     public Button saveButton;
 
 
-    public void loadSettings(Settings settings, PrimaryController primaryController) {
+    public void loadSettings(Settings settings, DashboardController dashboardController) {
         this.settings = settings;
-        this.primaryController = primaryController;
+        this.dashboardController = dashboardController;
         TFmaxSpeed.setText(Short.toString(this.settings.maxSpeed));
         SLdashboardLightIntensity.setValue(this.settings.dashboardLightIntesity);
         TSautoLowBeam.setSelected(this.settings.autoLowBeam);
@@ -62,7 +60,7 @@ public class SettingsController {
         settings.numberOfGears = (byte)(RDnumberOfGears5.isSelected() ? 5 : 6);
         settings.shuffleMode = TSshuffleMode.isSelected();
 
-        primaryController.reload();
+        dashboardController.reload();
         Stage stage = (Stage) saveButton.getScene().getWindow();
         stage.close();
     }

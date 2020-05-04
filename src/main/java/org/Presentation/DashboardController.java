@@ -9,18 +9,16 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.event.ActionEvent;
 import org.Logic.Dashboard;
 
-public class PrimaryController {
+public class DashboardController {
     private Dashboard dashboard;
     public ImageView IVindicatorsTurnRight;
     public ImageView IVindicatorsTurnLeft;
@@ -69,7 +67,7 @@ public class PrimaryController {
                 title ="";
         }
 
-        FXMLLoader root = new FXMLLoader(App.class.getResource(filename));
+        FXMLLoader root = new FXMLLoader(GUI.class.getResource(filename));
         Scene scene = new Scene(root.load());
         if(filename.equals("settings.fxml")) {
             SettingsController settingsController = root.getController();

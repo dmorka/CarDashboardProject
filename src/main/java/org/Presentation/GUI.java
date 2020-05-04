@@ -5,20 +5,19 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import org.Logic.Dashboard;
 
 import java.io.IOException;
 
 /**
- * JavaFX App
+ * JavaFX GUI
  */
-public class App extends Application {
+public class GUI extends Application {
 
     private static Scene scene;
 
     @Override
     public void start(Stage stage) throws IOException {
-        scene = new Scene(loadFXML("primary"));
+        scene = new Scene(loadFXML("dashboard"));
         stage.setScene(scene);
         stage.show();
     }
@@ -28,7 +27,7 @@ public class App extends Application {
     }
 
     private static Parent loadFXML(String fxml) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml + ".fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(GUI.class.getResource(fxml + ".fxml"));
         return fxmlLoader.load();
     }
 
