@@ -26,7 +26,7 @@ public class SpeedThread extends Thread {
         while(running) {
             startTime = System.nanoTime(); //Zapisujemy czas rozpoczęcia rysownia klatki
 
-            try { //Spróbuj wykonać poniższy kod
+           /* try { //Spróbuj wykonać poniższy kod
                 // by nikt inny nie mógł rysować oprócz nas na niej oraz rozpocznamy edycję pikseli na naszej powierzchni.
                 synchronized (surfaceHolder) { //Tylko jeden wątek może wykonać poniższy blok kodu jednocześnie.
                     this.gamePanel.update(); //Aktualizuje położenie postaci oraz przeszkód
@@ -41,7 +41,7 @@ public class SpeedThread extends Thread {
                         // do Canvas'u/powierzchni na której rysujemy naszą gre
                     } catch (Exception e) {e.printStackTrace(); }
                 }
-            }
+            }*/
 
             timeMillis = (System.nanoTime() - startTime)/1000000; //Obliczamy czas jaki zajeło rysowanie klatki
             //oraz konwertujemy czas z ns na ms
@@ -57,10 +57,10 @@ public class SpeedThread extends Thread {
             totalTime += System.nanoTime() - startTime; //dodajemy czas rysownia klatki do całkowitego czasu
             frameCount++; //zwiększamy numer klatki
             if(frameCount == MAX_FPS) {
-                averageFPS = 1000/((totalTime/frameCount)/1000000); //Obliczamy średnią liczbę klatek na sekunde
+                //averageFPS = 1000/((totalTime/frameCount)/1000000); //Obliczamy średnią liczbę klatek na sekunde
                 frameCount = 0;
                 totalTime = 0;
-                System.out.println(averageFPS);
+               // System.out.println(averageFPS);
             }
         }
     }

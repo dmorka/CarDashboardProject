@@ -1,5 +1,7 @@
 package org.Presentation;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.RadioButton;
@@ -14,7 +16,6 @@ import java.io.IOException;
 public class SettingsController {
     private Settings settings;
     DashboardController dashboardController;
-    public TextField TFmaxSpeed;
     public Slider SLdashboardLightIntensity;
     public ToggleSwitch TSautoLowBeam;
     public RadioButton RDengineTypePetrol;
@@ -23,12 +24,17 @@ public class SettingsController {
     public RadioButton RDnumberOfGears6;
     public ToggleSwitch TSshuffleMode;
     public Button saveButton;
+    @FXML
+    private TextFieldLimited TFLmaxSpeed;
 
+    public void initialize() {
+        TFLmaxSpeed.setMaxlength(3);
+    }
 
     public void loadSettings(Settings settings, DashboardController dashboardController) {
         this.settings = settings;
         this.dashboardController = dashboardController;
-        TFmaxSpeed.setText(Short.toString(this.settings.maxSpeed));
+        TFLmaxSpeed.setText(Short.toString(this.settings.maxSpeed));
         SLdashboardLightIntensity.setValue(this.settings.dashboardLightIntesity);
         TSautoLowBeam.setSelected(this.settings.autoLowBeam);
         if(this.settings.engineType == 'P') {
@@ -52,7 +58,7 @@ public class SettingsController {
 
     @FXML
     private void save() throws IOException {
-        settings.maxSpeed = Short.parseShort(TFmaxSpeed.getText());
+        settings.maxSpeed = Short.parseShort(TFLmaxSpeed.getText());
         settings.dashboardLightIntesity = (short)SLdashboardLightIntensity.getValue();
         settings.autoLowBeam = TSautoLowBeam.isSelected();
         settings.engineType = RDengineTypePetrol.isSelected() ? 'P' : 'D';
@@ -63,5 +69,17 @@ public class SettingsController {
         dashboardController.reloadAfterSettings();
         Stage stage = (Stage) saveButton.getScene().getWindow();
         stage.close();
+    }
+
+    public static void addTextLimiter(final TextField tf, final int maxLength) {
+        tf.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(final ObservableValue<? extends String> ov, final String oldValue, final String newValue) {
+                if (tf.getText().length() > maxLength) {
+                    String s = tf.getText().substring(0, maxLength);
+                    tf.setText(s);
+                }
+            }
+        });
     }
 }

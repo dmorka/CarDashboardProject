@@ -22,6 +22,7 @@ public class Dashboard implements Serializable {
     byte actualGear;
     ArrayList<Short> gears;
 
+
     public Dashboard() {
         this.onBoardComputer = new OnBoardComputer();
         this.settings = new Settings();
@@ -38,6 +39,7 @@ public class Dashboard implements Serializable {
         this.dayCounter2 = 0;
         this.revs = 0;
         this.actualGear = 0;
+        gears = new ArrayList<>();
         this.setGears();
     }
 

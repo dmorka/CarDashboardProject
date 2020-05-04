@@ -26,6 +26,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
+<?import javafx.scene.input.KeyCodeCombination?>
 <BorderPane fx:id="BPmain" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="388.0" prefWidth="760.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.Presentation.DashboardController">
     <top>
         <VBox prefHeight="69.0" prefWidth="600.0" BorderPane.alignment="CENTER">
@@ -68,7 +69,11 @@
                                 <Menu mnemonicParsing="false" text="Indicators">
                                     <items>
                                         <CheckMenuItem fx:id="indicatorsTurnLeft" mnemonicParsing="false" onAction="#lightSwitch" text="Turn left" />
-                                        <CheckMenuItem fx:id="indicatorsTurnRight" mnemonicParsing="false" onAction="#lightSwitch" text="Turn right" />
+                                        <CheckMenuItem fx:id="indicatorsTurnRight" mnemonicParsing="false" onAction="#lightSwitch" text="Turn right" >
+                                           <accelerator>
+                                              <KeyCodeCombination alt="UP" code="RIGHT" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                                           </accelerator>
+                                        </CheckMenuItem>
                                     </items>
                                 </Menu>
                             </items>
