@@ -60,7 +60,7 @@ public class SettingsController {
         settings.numberOfGears = (byte)(RDnumberOfGears5.isSelected() ? 5 : 6);
         settings.shuffleMode = TSshuffleMode.isSelected();
 
-        dashboardController.reload();
+        dashboardController.reloadAfterSettings();
         Stage stage = (Stage) saveButton.getScene().getWindow();
         stage.close();
     }

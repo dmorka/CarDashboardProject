@@ -1,6 +1,7 @@
 package org.Logic;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class Dashboard implements Serializable {
 
@@ -19,6 +20,7 @@ public class Dashboard implements Serializable {
     int dayCounter2;
     int revs;
     byte actualGear;
+    ArrayList<Short> gears;
 
     public Dashboard() {
         this.onBoardComputer = new OnBoardComputer();
@@ -36,6 +38,7 @@ public class Dashboard implements Serializable {
         this.dayCounter2 = 0;
         this.revs = 0;
         this.actualGear = 0;
+        this.setGears();
     }
 
     public Settings getSettings() {
@@ -165,7 +168,24 @@ public class Dashboard implements Serializable {
     public void setActualGear(byte actualGear) {
         this.actualGear = actualGear;
     }
-}
 
+    public void setGears(){
+        this.gears.clear();
+        this.gears.add((short)0);
+        this.gears.add((short) (this.settings.maxSpeed*0.1));
+        this.gears.add((short)(this.settings.maxSpeed*0.15));
+        this.gears.add((short)(this.settings.maxSpeed*0.31));
+        if (this.settings.numberOfGears == 5) {
+            this.gears.add((short)(this.settings.maxSpeed*0.5));
+            this.gears.add(this.settings.maxSpeed);
+        }
+        else {
+            this.gears.add((short)(this.settings.maxSpeed*0.4));
+            this.gears.add((short)(this.settings.maxSpeed*0.6));
+            this.gears.add(this.settings.maxSpeed);
+        }
+
+    }
+}
 
 
