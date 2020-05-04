@@ -94,11 +94,12 @@ public class DashboardController {
         lightsImg.get(id).setImage(newImg);
     }
 
-    public void reload() {
+    public void reloadAfterSettings() {
         speedGauge.setMaxValue(dashboard.getSettings().maxSpeed);
         revsGauge.setMaxValue(dashboard.getSettings().maxRevs);
         int color = dashboard.getSettings().dashboardLightIntesity;
         BPmain.setStyle("-fx-background-color: rgb("+color+", "+color+", "+color+");");
+        dashboard.setGears();
     }
 
     @FXML
