@@ -1,33 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import eu.hansolo.medusa.Gauge?>
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.CheckMenuItem?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Menu?>
-<?import javafx.scene.control.MenuBar?>
-<?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.Slider?>
-<?import javafx.scene.effect.Glow?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.paint.Color?>
-<?import javafx.scene.shape.Circle?>
-<?import javafx.scene.shape.Line?>
-<?import javafx.scene.shape.Polygon?>
-<?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
+<?import eu.hansolo.medusa.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.input.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
 
-<?import javafx.scene.input.KeyCodeCombination?>
-<BorderPane fx:id="BPmain" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="388.0" prefWidth="760.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.Presentation.DashboardController">
+<BorderPane fx:id="BPmain" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="388.0" prefWidth="760.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.Presentation.DashboardController">
     <top>
         <VBox prefHeight="69.0" prefWidth="600.0" BorderPane.alignment="CENTER">
             <children>
@@ -69,7 +54,7 @@
                                 <Menu mnemonicParsing="false" text="Indicators">
                                     <items>
                                         <CheckMenuItem fx:id="indicatorsTurnLeft" mnemonicParsing="false" onAction="#lightSwitch" text="Turn left" />
-                                        <CheckMenuItem fx:id="indicatorsTurnRight" mnemonicParsing="false" onAction="#lightSwitch" text="Turn right" >
+                                        <CheckMenuItem fx:id="indicatorsTurnRight" mnemonicParsing="false" onAction="#lightSwitch" text="Turn right">
                                            <accelerator>
                                               <KeyCodeCombination alt="UP" code="RIGHT" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                                            </accelerator>
@@ -161,13 +146,16 @@
                      <effect>
                         <Glow />
                      </effect></Text>
-                  <Slider value="72.0">
+                  <Slider focusTraversable="false" value="72.0">
                      <VBox.margin>
                         <Insets top="10.0" />
                      </VBox.margin>
                      <effect>
                         <Glow />
-                     </effect></Slider>
+                     </effect>
+                     <cursor>
+                        <Cursor fx:constant="DEFAULT" />
+                     </cursor></Slider>
                   <HBox prefHeight="48.0" prefWidth="221.0">
                      <children>
                         <AnchorPane layoutX="52.0" layoutY="10.0" prefHeight="200.0" prefWidth="200.0">
