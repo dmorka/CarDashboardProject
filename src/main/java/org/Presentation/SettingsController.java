@@ -24,12 +24,7 @@ public class SettingsController {
     public RadioButton RDnumberOfGears6;
     public ToggleSwitch TSshuffleMode;
     public Button saveButton;
-    @FXML
-    private TextFieldLimited TFLmaxSpeed;
-
-    public void initialize() {
-        TFLmaxSpeed.setMaxlength(3);
-    }
+    public TextFieldLimited TFLmaxSpeed;
 
     public void loadSettings(Settings settings, DashboardController dashboardController) {
         this.settings = settings;
@@ -57,7 +52,7 @@ public class SettingsController {
     }
 
     @FXML
-    private void save() throws IOException {
+    private void save() {
         settings.maxSpeed = Short.parseShort(TFLmaxSpeed.getText());
         settings.dashboardLightIntesity = (short)SLdashboardLightIntensity.getValue();
         settings.autoLowBeam = TSautoLowBeam.isSelected();

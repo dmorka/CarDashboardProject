@@ -12,7 +12,7 @@ public class Dashboard implements Serializable {
     boolean rightTurnSignal;
     boolean positionLights;
     boolean lowBeam;
-    boolean trafficLights;
+    boolean highBeam;
     boolean frontFogLights;
     boolean rearFogLights;
     int counter;
@@ -21,7 +21,8 @@ public class Dashboard implements Serializable {
     int revs;
     byte actualGear;
     ArrayList<Short> gears;
-
+    boolean KeyUp;
+    boolean KeyDown;
 
     public Dashboard() {
         this.onBoardComputer = new OnBoardComputer();
@@ -31,7 +32,7 @@ public class Dashboard implements Serializable {
         this.rightTurnSignal = false;
         this.positionLights = false;
         this.lowBeam = false;
-        this.trafficLights = false;
+        this.highBeam = false;
         this.frontFogLights = false;
         this.rearFogLights = false;
         this.counter = 0;
@@ -41,6 +42,22 @@ public class Dashboard implements Serializable {
         this.actualGear = 0;
         gears = new ArrayList<>();
         this.setGears();
+    }
+
+    public boolean isKeyUp() {
+        return KeyUp;
+    }
+
+    public void setKeyUp(boolean keyUp) {
+        KeyUp = keyUp;
+    }
+
+    public boolean isKeyDown() {
+        return KeyDown;
+    }
+
+    public void setKeyDown(boolean keyDown) {
+        KeyDown = keyDown;
     }
 
     public Settings getSettings() {
@@ -67,8 +84,8 @@ public class Dashboard implements Serializable {
         return lowBeam;
     }
 
-    public boolean isTrafficLights() {
-        return trafficLights;
+    public boolean isHighBeam() {
+        return highBeam;
     }
 
     public boolean isFrontFogLights() {
@@ -128,8 +145,8 @@ public class Dashboard implements Serializable {
         this.lowBeam = lowBeam;
     }
 
-    public void setTrafficLights(boolean trafficLights) {
-        this.trafficLights = trafficLights;
+    public void setHighBeam(boolean highBeam) {
+        this.highBeam = highBeam;
     }
 
     public void setFrontFogLights(boolean frontFogLights) {

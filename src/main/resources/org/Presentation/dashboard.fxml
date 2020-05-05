@@ -11,7 +11,6 @@
 <?import javafx.scene.effect.Glow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.input.KeyCodeCombination?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -27,7 +26,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane fx:id="BPmain" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="388.0" prefWidth="760.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.Presentation.DashboardController">
+<BorderPane fx:id="BPmain" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyPressed="#keyPressed" onKeyReleased="#keyReleased" prefHeight="388.0" prefWidth="760.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.Presentation.DashboardController">
     <top>
         <VBox prefHeight="69.0" prefWidth="600.0" BorderPane.alignment="CENTER">
             <children>
@@ -69,11 +68,7 @@
                                 <Menu mnemonicParsing="false" text="Indicators">
                                     <items>
                                         <CheckMenuItem fx:id="indicatorsTurnLeft" mnemonicParsing="false" onAction="#lightSwitch" text="Turn left" />
-                                        <CheckMenuItem fx:id="indicatorsTurnRight" mnemonicParsing="false" onAction="#lightSwitch" text="Turn right">
-                                           <accelerator>
-                                              <KeyCodeCombination alt="UP" code="RIGHT" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
-                                           </accelerator>
-                                        </CheckMenuItem>
+                                        <CheckMenuItem fx:id="indicatorsTurnRight" mnemonicParsing="false" onAction="#lightSwitch" text="Turn right" />
                                     </items>
                                 </Menu>
                             </items>
@@ -486,7 +481,7 @@
    <bottom>
       <HBox alignment="CENTER" prefHeight="47.0" prefWidth="760.0" BorderPane.alignment="CENTER">
          <children>
-            <ImageView fx:id="IVindicatorsTurnLeft" fitHeight="34.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="IVindicatorsTurnLeft" fitHeight="34.0" fitWidth="29.0" opacity="0.2" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@images/indicatorsTurnLeftOff.png" />
                </image>
@@ -497,7 +492,7 @@
                   <Glow level="0.45" />
                </effect>
             </ImageView>
-            <ImageView fx:id="IVparkingLights" fitHeight="33.0" fitWidth="62.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="IVparkingLights" fitHeight="33.0" fitWidth="62.0" opacity="0.2" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@images/parkingLightsOff.png" />
                </image>
@@ -508,7 +503,7 @@
                   <Glow level="0.45" />
                </effect>
             </ImageView>
-            <ImageView fx:id="IVheadlightsLowBeam" fitHeight="30.0" fitWidth="39.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="IVheadlightsLowBeam" fitHeight="30.0" fitWidth="39.0" opacity="0.2" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@images/headlightsLowBeamOff.png" />
                </image>
@@ -519,7 +514,7 @@
                   <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
                </HBox.margin>
             </ImageView>
-            <ImageView fx:id="IVheadlightsHighBeam" fitHeight="28.0" fitWidth="51.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="IVheadlightsHighBeam" fitHeight="28.0" fitWidth="51.0" opacity="0.2" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@images/headlightsHighBeamOff.png" />
                </image>
@@ -530,7 +525,7 @@
                   <Glow level="0.45" />
                </effect>
             </ImageView>
-            <ImageView fx:id="IVfogLightsBack" fitHeight="39.0" fitWidth="46.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="IVfogLightsBack" fitHeight="39.0" fitWidth="46.0" opacity="0.2" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@images/fogLightsBackOff.png" />
                </image>
@@ -541,7 +536,7 @@
                   <Glow level="0.45" />
                </effect>
             </ImageView>
-            <ImageView fx:id="IVfogLightsFront" fitHeight="34.0" fitWidth="46.0" layoutX="483.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="IVfogLightsFront" fitHeight="34.0" fitWidth="46.0" layoutX="483.0" layoutY="10.0" opacity="0.2" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@images/fogLightsFrontOff.png" />
                </image>
@@ -552,7 +547,7 @@
                   <Glow level="0.45" />
                </effect>
             </ImageView>
-            <ImageView fx:id="IVindicatorsTurnRight" fitHeight="44.0" fitWidth="32.0" layoutX="525.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="IVindicatorsTurnRight" fitHeight="44.0" fitWidth="32.0" layoutX="525.0" layoutY="10.0" opacity="0.2" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@images/indicatorsTurnRightOff.png" />
                </image>
