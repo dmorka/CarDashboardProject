@@ -66,6 +66,14 @@ public class SettingsController {
         stage.close();
     }
 
+    public void lockSettings(boolean lock) {
+        TFLmaxSpeed.setDisable(lock);
+        RDengineTypePetrol.setDisable(lock);
+        RDengineTypeDiesel.setDisable(lock);
+        RDnumberOfGears5.setDisable(lock);
+        RDnumberOfGears6.setDisable(lock);
+    }
+
     public static void addTextLimiter(final TextField tf, final int maxLength) {
         tf.textProperty().addListener(new ChangeListener<String>() {
             @Override

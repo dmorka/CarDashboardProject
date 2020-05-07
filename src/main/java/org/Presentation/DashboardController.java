@@ -1,10 +1,21 @@
 package org.Presentation;
 
+import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ResourceBundle;
+
 import eu.hansolo.medusa.Gauge;
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -12,18 +23,23 @@ import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.MenuItem;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.BorderPane;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.GridPane;
+import javafx.scene.media.AudioClip;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.shape.Circle;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.event.ActionEvent;
-import org.Logic.Dashboard;
-import org.Logic.FlashingSignalThread;
-import org.Logic.TurnSignalException;
+import javafx.util.Duration;
+import org.Logic.*;
 
-public class DashboardController {
-    private Dashboard dashboard;
+public class DashboardController extends UIController implements Initializable {
     private FlashingSignalThread flashingSignalThread;
+    private SpeedThread speedThread;
     public ImageView IVindicatorsTurnRight;
     public ImageView IVindicatorsTurnLeft;
     public ImageView IVparkingLights;
@@ -33,15 +49,45 @@ public class DashboardController {
     public ImageView IVfogLightsFront;
     public Gauge speedGauge;
     public Gauge revsGauge;
-    public BorderPane BPmain;
+    public GridPane GPmain;
     public MenuItem MIexit;
+    public MenuItem MIstartEngine;
+    public MenuItem MIstopEngine;
+    public MenuItem MIsettings;
     public CheckMenuItem indicatorsTurnLeft;
     public CheckMenuItem indicatorsTurnRight;
+    public Text TXTclock;
+    public Text TXTgear;
+    public Text TXTavgSpeed;
+    public Text TXTmaxSpeed;
+    public Text TXTavgFuelUsage;
+    public Text TXTmaxFuelUsage;
+    public Text TXTmainCounter;
+    public Text TXTdayCounter1;
+    public Text TXTdayCounter2;
+    public Text TXTjourneyDistance;
+    public Text TXTjourneyTime;
+    public MusicPlayer musicPlayer;
 
-    @FXML
-    private void initialize() {
-        this.dashboard = new Dashboard();
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        initClock();
+        reloadAfterSettings();
+        refresh();
+        this.musicPlayer = new MusicPlayer("C:\\Users\\Dawid\\Music\\music\\happy_adveture.mp3");
     }
+
+    public void testowa() {
+        System.out.println("Rozpoczyna granie!!!");
+        musicPlayer.playSong();
+        System.out.println("Po rozpoczeciu!!!");
+    }
+//    @FXML
+//    private void initialize() throws MalformedURLException {
+//        initClock();
+//        reloadAfterSettings();
+//        refresh();
+//    }
 
     @FXML
     private void openNewWindow(ActionEvent actionEvent) throws IOException {
@@ -65,6 +111,7 @@ public class DashboardController {
         Scene scene = new Scene(root.load());
         if(filename.equals("settings.fxml")) {
             SettingsController settingsController = root.getController();
+            settingsController.lockSettings(MIstartEngine.isDisable());
             settingsController.loadSettings(this.dashboard.getSettings(), this);
         }
 
@@ -99,11 +146,7 @@ public class DashboardController {
                 try{
                     dashboard.setLeftTurnSignal(enable);
                 } catch (TurnSignalException e) {
-                    openDialog(AlertType.ERROR,
-                            "Error Dialog",
-                            "Turn Signal Exception",
-                            "You cannot turn on both direction indicators at the same time!");
-
+                    openDialog(AlertType.ERROR, "Error Dialog", e.getClass().getSimpleName(), e.getMessage());
                     checkMenuItem.setSelected(false);
                     break;
                 }
@@ -114,10 +157,7 @@ public class DashboardController {
                 try{
                     dashboard.setRightTurnSignal(enable);
                 } catch (TurnSignalException e) {
-                    openDialog(AlertType.ERROR,
-                            "Error Dialog",
-                            "Turn Signal Exception",
-                            "You cannot turn on both direction indicators at the same time!");
+                    openDialog(AlertType.ERROR, "Error Dialog", e.getClass().getSimpleName(), e.getMessage());
                     checkMenuItem.setSelected(false);
                     break;
                 }
@@ -173,7 +213,7 @@ public class DashboardController {
         speedGauge.setMaxValue(dashboard.getSettings().maxSpeed);
         revsGauge.setMaxValue(dashboard.getSettings().maxRevs);
         int color = dashboard.getSettings().dashboardLightIntesity;
-        BPmain.setStyle("-fx-background-color: rgb("+color+", "+color+", "+color+");");
+        GPmain.setStyle("-fx-background-color: rgb("+color+", "+color+", "+color+");");
         dashboard.setGears();
     }
 
@@ -184,35 +224,39 @@ public class DashboardController {
 
     @FXML
     private void keyPressed(KeyEvent event) {
-        if (event.getCode() == KeyCode.UP) {
+        if (event.getCode() == KeyCode.UP && !dashboard.isKeyUp()) {
             dashboard.setKeyUp(true);
         } else if (event.getCode() == KeyCode.DOWN) {
             dashboard.setKeyDown(true);
         } else if ((event.getCode() == KeyCode.LEFT) && !this.dashboard.isLeftTurnSignal()) {
             try {
                 dashboard.setLeftTurnSignal(true);
+                indicatorsTurnLeft.setSelected(true);
                 indicatorSwitch(IVindicatorsTurnLeft,
                         new Image(getClass().getResourceAsStream("images/indicatorsTurnLeftOn.png")),
                         true);
             } catch (TurnSignalException e) {
-                openDialog(AlertType.ERROR,
-                        "Error Dialog",
-                        "Turn Signal Exception",
-                        "You cannot turn on both direction indicators at the same time!");
+                openDialog(AlertType.ERROR, "Error Dialog", e.getClass().getSimpleName(), e.getMessage());
             }
         } else if ((event.getCode() == KeyCode.RIGHT) && (!this.dashboard.isRightTurnSignal())) {
             try {
                 dashboard.setRightTurnSignal(true);
+                indicatorsTurnRight.setSelected(true);
                 indicatorSwitch(IVindicatorsTurnRight,
                         new Image(getClass().getResourceAsStream("images/indicatorsTurnRightOn.png")),
                         true);
             } catch (TurnSignalException e) {
-                openDialog(AlertType.ERROR,
-                        "Error Dialog",
-                        "Turn Signal Exception",
-                        "You cannot turn on both direction indicators at the same time!");
+                openDialog(AlertType.ERROR, "Error Dialog", e.getClass().getSimpleName(), e.getMessage());
+            }
+        } else if(event.getText().compareTo("0") >= 0 && 0 >= event.getText().compareTo("6") && MIstartEngine.isDisable()) {
+            try {
+                dashboard.setCurrentGear(Short.parseShort(event.getText()));
+            } catch (GearException e) {
+                openDialog(AlertType.ERROR, "Error dialog", e.getClass().getSimpleName(), e.getMessage());
             }
         }
+
+
     }
 
     @FXML
@@ -235,4 +279,75 @@ public class DashboardController {
                     false);
         }
     }
+
+    public void startStopEngine() {
+        if(!MIstartEngine.isDisable()) {
+            MIstopEngine.setDisable(false);
+            MIstartEngine.setDisable(true);
+            dashboard.getOnBoardComputer().startJourneyTime();
+            speedThread = new SpeedThread(this);
+            speedThread.setEngineRunning(true);
+            speedThread.start();
+        }
+        else {
+            MIstartEngine.setDisable(false);
+            MIstopEngine.setDisable(true);
+            speedThread.setEngineRunning(false);
+            try {
+                speedThread.join();
+                // Tworzymy wątek dla przypadku gdy zgasło auto podczas jazdy, by prędkość nadal spadała
+                // aż do zera lub ponownego właczenia silnika
+                speedThread = new SpeedThread(this);
+                speedThread.start();
+                //speedThread.join();
+
+            } catch (InterruptedException e) {
+                openDialog(AlertType.ERROR, "Error dialog", e.getClass().getSimpleName(), e.getMessage());
+            }
+        }
+    }
+
+    @FXML
+    public void removeFocus(){
+        GPmain.requestFocus();
+    }
+
+
+    public void refresh() {
+        speedGauge.setValue(dashboard.getSpeed());
+        revsGauge.setValue(dashboard.getRevs());
+        TXTgear.setText(String.valueOf(dashboard.getCurrentGear()));
+        TXTavgSpeed.setText(String.valueOf(dashboard.getOnBoardComputer().getAvgSpeed()));
+        TXTmaxSpeed.setText(String.valueOf(dashboard.getOnBoardComputer().getMaxSpeed()));
+        TXTavgFuelUsage.setText(String.valueOf(dashboard.getOnBoardComputer().getAvgCombustion()));
+        TXTmaxFuelUsage.setText(String.valueOf(dashboard.getOnBoardComputer().getMaxCombustion()));
+        TXTmainCounter.setText(String.valueOf(dashboard.getCounter()));
+        TXTdayCounter1.setText(String.valueOf(dashboard.getDayCounter1()));
+        TXTdayCounter2.setText(String.valueOf(dashboard.getDayCounter2()));
+        TXTjourneyDistance.setText(String.valueOf(dashboard.getOnBoardComputer().getJourneyDistance()));
+        TXTjourneyTime.setText(dashboard.getOnBoardComputer().getJourneyTime());
+    }
+
+    private void initClock() {
+        Timeline clock = new Timeline(new KeyFrame(Duration.ZERO, e -> {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+            TXTclock.setText(LocalDateTime.now().format(formatter));
+        }), new KeyFrame(Duration.seconds(1)));
+        clock.setCycleCount(Animation.INDEFINITE);
+        clock.play();
+    }
+
+    @FXML
+    private void resetDailyCounter(MouseEvent event) {
+        Circle circle = (Circle) event.getSource();
+        if(circle.getId().equals("CresetDailyCounter1")) {
+            dashboard.setDayCounter1(0.0f);
+            TXTdayCounter1.setText("0.0");
+        } else {
+            dashboard.setDayCounter2(0.0f);
+            TXTdayCounter2.setText("0.0");
+        }
+    }
+
+
 }

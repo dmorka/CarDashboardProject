@@ -1,14 +1,17 @@
 package org.Logic;
 
 import java.io.Serializable;
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class OnBoardComputer implements Serializable, Comparable<OnBoardComputer> {
     public float avgSpeed;
     public int maxSpeed;
-    public long journeyTime;
+    public LocalDateTime journeyTime = null;
     public float journeyDistance;
     public float avgCombustion;
+    public float maxCombustion;
 
     public float avgSpeed() {
         return 0;
@@ -28,6 +31,14 @@ public class OnBoardComputer implements Serializable, Comparable<OnBoardComputer
 
     public float avgCombustion() {
         return 0;
+    }
+
+    public float getMaxCombustion() {
+        return maxCombustion;
+    }
+
+    public void setMaxCombustion(float maxCombustion) {
+        this.maxCombustion = maxCombustion;
     }
 
     public float getAvgSpeed() {
@@ -53,7 +64,7 @@ public class OnBoardComputer implements Serializable, Comparable<OnBoardComputer
         }
         int journeyDistanceCmp = Float.compare(journeyDistance, o.journeyDistance);
         if(journeyDistanceCmp == 0) {
-            int journeyTimeCmp = Long.compare(journeyTime, o.journeyTime);
+            int journeyTimeCmp = journeyTime.compareTo(o.journeyTime);
             if(journeyTimeCmp == 0) {
                 int avgSpeedCmp = Float.compare(avgSpeed, o.avgSpeed);
 
@@ -85,16 +96,23 @@ public class OnBoardComputer implements Serializable, Comparable<OnBoardComputer
         this.maxSpeed = maxSpeed;
     }
 
-    public long getJourneyTime() {
-        return journeyTime;
+    public String getJourneyTime() {
+        if(journeyTime != null)
+        {
+            int min = (int)(Duration.between(journeyTime, LocalDateTime.now()).getSeconds() / 60);
+            int h = (int)(min / 60);
+            return h + "h " + min % 60 + " min";
+        }
+
+        return "0h 0min";
     }
 
-    public void setJourneyTime(long journeyTime) {
-        this.journeyTime = journeyTime;
+    public void startJourneyTime() {
+        this.journeyTime = LocalDateTime.now();
     }
 
     public float getJourneyDistance() {
-        return journeyDistance;
+        return Math.round(journeyDistance * 10.0) / 10.0f;
     }
 
     public void setJourneyDistance(float journeyDistance) {

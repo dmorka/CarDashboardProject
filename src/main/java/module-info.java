@@ -4,6 +4,7 @@ module org.cardashboardproject {
     requires java.desktop;
     requires eu.hansolo.medusa;
     requires org.controlsfx.controls;
+    requires javafx.media;
 
     opens org.Presentation to javafx.fxml;
     exports org.Presentation;

@@ -1,10 +1,11 @@
 package org.Logic;
 
 import java.io.Serializable;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class Dashboard implements Serializable {
-
     OnBoardComputer onBoardComputer;
     Settings settings;
     short speed;
@@ -15,14 +16,16 @@ public class Dashboard implements Serializable {
     boolean highBeam;
     boolean frontFogLights;
     boolean rearFogLights;
-    int counter;
-    int dayCounter1;
-    int dayCounter2;
-    int revs;
-    byte actualGear;
-    ArrayList<Short> gears;
     boolean KeyUp;
     boolean KeyDown;
+    float counter;
+    float dayCounter1;
+    float dayCounter2;
+    int revs;
+    short currentGear;
+    ArrayList<Short> gears;
+    DecimalFormat decimalFormat;
+
 
     public Dashboard() {
         this.onBoardComputer = new OnBoardComputer();
@@ -39,13 +42,31 @@ public class Dashboard implements Serializable {
         this.dayCounter1 = 0;
         this.dayCounter2 = 0;
         this.revs = 0;
-        this.actualGear = 0;
+        this.currentGear = 0;
         gears = new ArrayList<>();
         this.setGears();
+        this.decimalFormat  = new DecimalFormat("#.#");
+        this.decimalFormat.setRoundingMode(RoundingMode.HALF_UP);
     }
 
     public boolean isKeyUp() {
         return KeyUp;
+    }
+
+    public OnBoardComputer getOnBoardComputer() {
+        return onBoardComputer;
+    }
+
+    public void setCounter(float counter) {
+        this.counter = counter;
+    }
+
+    public void setDayCounter1(float dayCounter1) {
+        this.dayCounter1 = dayCounter1;
+    }
+
+    public void setDayCounter2(float dayCounter2) {
+        this.dayCounter2 = dayCounter2;
     }
 
     public void setKeyUp(boolean keyUp) {
@@ -96,24 +117,24 @@ public class Dashboard implements Serializable {
         return rearFogLights;
     }
 
-    public int getCounter() {
-        return counter;
+    public float getCounter() {
+        return Math.round(counter * 10.0) / 10.0f;
     }
 
-    public int getDayCounter1() {
-        return dayCounter1;
+    public float getDayCounter1() {
+        return Math.round(dayCounter1 * 10.0) / 10.0f;
     }
 
-    public int getDayCounter2() {
-        return dayCounter2;
+    public float getDayCounter2() {
+        return Math.round(dayCounter2 * 10.0) / 10.0f;
     }
 
     public int getRevs() {
         return revs;
     }
 
-    public byte getActualGear() {
-        return actualGear;
+    public short getCurrentGear() {
+        return currentGear;
     }
 
     public void setSpeed(short speed) throws NegativeValueException {
@@ -125,14 +146,14 @@ public class Dashboard implements Serializable {
 
     public void setLeftTurnSignal(boolean leftTurnSignal) throws TurnSignalException {
         if(isRightTurnSignal())
-            throw new TurnSignalException("The right turn signal is on, you can't turn on both at the same time!");
+            throw new TurnSignalException("The right turn signal is already on, you can't turn on both at the same time!");
 
         this.leftTurnSignal = leftTurnSignal;
     }
 
     public void setRightTurnSignal(boolean rightTurnSignal) throws TurnSignalException {
         if(isLeftTurnSignal())
-            throw new TurnSignalException("The left turn signal is on, you can't turn on both at the same time!");
+            throw new TurnSignalException("The left turn signal is already on, you can't turn on both at the same time!");
 
         this.rightTurnSignal = rightTurnSignal;
     }
@@ -184,8 +205,15 @@ public class Dashboard implements Serializable {
         this.revs = revs;
     }
 
-    public void setActualGear(byte actualGear) {
-        this.actualGear = actualGear;
+    public void setCurrentGear(short currentGear) throws GearException {
+        if(currentGear < gears.size()){
+            if(currentGear == 0)
+                this.currentGear = currentGear;
+            else if(speed >= (float)gears.get(currentGear-1)*(3f/5f))
+                this.currentGear = currentGear;
+            else
+                throw new GearException("You cannot change the gear to "+currentGear+" at this speed!");
+        }
     }
 
     public void setGears(){
@@ -196,14 +224,22 @@ public class Dashboard implements Serializable {
         this.gears.add((short)(this.settings.maxSpeed*0.31));
         if (this.settings.numberOfGears == 5) {
             this.gears.add((short)(this.settings.maxSpeed*0.5));
-            this.gears.add(this.settings.maxSpeed);
         }
         else {
             this.gears.add((short)(this.settings.maxSpeed*0.4));
             this.gears.add((short)(this.settings.maxSpeed*0.6));
-            this.gears.add(this.settings.maxSpeed);
         }
+        this.gears.add(this.settings.maxSpeed);
+    }
 
+    public short getCurrentGearMaxSpeed() {
+        return gears.get(currentGear);
+    }
+
+    public short getLowerGearMaxSpeed() {
+        if(currentGear != 0)
+            return gears.get(currentGear-1);
+        return 0;
     }
 }
 
