@@ -23,7 +23,9 @@ public class SpeedThread extends Thread {
         if(!engineRunning) {
             while(dashboard.speed > 0) {
                 dashboard.speed -= 1;
-                uiController.refresh();
+                synchronized (uiController) {
+                    uiController.refresh();
+                }
                 try {
                     Thread.sleep(100);
                 } catch (InterruptedException e) {
@@ -34,7 +36,7 @@ public class SpeedThread extends Thread {
         float distance = 0.0f;
         long startTime = System.currentTimeMillis();
         while(engineRunning) {
-            synchronized (dashboard) {
+            synchronized (uiController) {
                 if (dashboard.isKeyUp() && dashboard.speed < dashboard.getCurrentGearMaxSpeed()) {
                     dashboard.speed += 2;
                     if(dashboard.speed > onBoardComputer.getMaxSpeed())
@@ -59,9 +61,7 @@ public class SpeedThread extends Thread {
 
                 }
 
-                synchronized (uiController) {
-                    uiController.refresh();
-                }
+                uiController.refresh();
             }
             try {
                 Thread.sleep(100);

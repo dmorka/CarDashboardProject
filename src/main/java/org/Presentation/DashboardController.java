@@ -1,8 +1,6 @@
 package org.Presentation;
 
-import java.io.File;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -17,18 +15,15 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
+import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.CheckMenuItem;
-import javafx.scene.control.MenuItem;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
-import javafx.scene.media.AudioClip;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.Polygon;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.scene.image.Image;
@@ -40,6 +35,8 @@ import org.Logic.*;
 public class DashboardController extends UIController implements Initializable {
     private FlashingSignalThread flashingSignalThread;
     private SpeedThread speedThread;
+    private MusicPlayer musicPlayer;
+    private Timeline progressBar;
     public ImageView IVindicatorsTurnRight;
     public ImageView IVindicatorsTurnLeft;
     public ImageView IVparkingLights;
@@ -67,27 +64,94 @@ public class DashboardController extends UIController implements Initializable {
     public Text TXTdayCounter2;
     public Text TXTjourneyDistance;
     public Text TXTjourneyTime;
-    public MusicPlayer musicPlayer;
+    public Label LtitleMP;
+    public Label LartistMP;
+    public Slider SLvolume;
+    public Polygon PolyPlay;
+    public Rectangle RecPause1;
+    public Rectangle RecPause2;
+    public ProgressBar PBsongDuration;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        this.musicPlayer = new MusicPlayer();
         initClock();
         reloadAfterSettings();
         refresh();
-        this.musicPlayer = new MusicPlayer("C:\\Users\\Dawid\\Music\\music\\happy_adveture.mp3");
+        progressBar = null;
+        setTitleArtist();
     }
 
-    public void testowa() {
-        System.out.println("Rozpoczyna granie!!!");
-        musicPlayer.playSong();
-        System.out.println("Po rozpoczeciu!!!");
+    @FXML
+    private void playPauseMP() {
+        if(musicPlayer.isEmpty())
+            return;
+
+        if(PolyPlay.isVisible()) {
+            PolyPlay.setVisible(false);
+            RecPause1.setVisible(true);
+            RecPause2.setVisible(true);
+            musicPlayer.playSong();
+            progressBarMP(false, false);
+
+        } else {
+            PolyPlay.setVisible(true);
+            RecPause1.setVisible(false);
+            RecPause2.setVisible(false);
+            musicPlayer.pauseSong();
+            progressBarMP(false, true);
+        }
+        setTitleArtist();
     }
-//    @FXML
-//    private void initialize() throws MalformedURLException {
-//        initClock();
-//        reloadAfterSettings();
-//        refresh();
-//    }
+
+    @FXML
+    private void progressBarMP(boolean resetProgress, boolean pause) {
+        if(musicPlayer.isEmpty())
+            return;
+        if(resetProgress && progressBar!=null) {
+            progressBar.stop();
+            progressBar = null;
+            PBsongDuration.setProgress(0.0);
+        }
+        if(!pause) {
+            double progressValue = 1/musicPlayer.getTotalDuration().toSeconds();
+            if(progressBar == null && !Double.isNaN(progressValue)) {
+                progressBar = new Timeline(new KeyFrame(Duration.ZERO, e -> {
+                    PBsongDuration.setProgress(PBsongDuration.getProgress() + progressValue);
+                }), new KeyFrame(Duration.seconds(1)));
+                progressBar.setCycleCount((int) musicPlayer.getTotalDuration().toSeconds() + 1);
+            }
+            if(progressBar != null)
+                progressBar.play();
+        }
+        else if(progressBar != null)
+            progressBar.pause();
+    }
+
+    @FXML
+    private void nextSongMP() {
+        musicPlayer.nextSong();
+        progressBarMP(true, PolyPlay.isVisible());
+        setTitleArtist();
+    }
+
+    @FXML
+    public void previousSong() {
+        musicPlayer.previousSong();
+        progressBarMP(true, PolyPlay.isVisible());
+        setTitleArtist();
+    }
+
+    @FXML
+    private void changeVolumeMP() {
+        musicPlayer.changeVolume(SLvolume.getValue()/100);
+    }
+
+    @FXML
+    private void setTitleArtist() {
+        LtitleMP.setText(musicPlayer.getTitle());
+        LartistMP.setText(musicPlayer.getArtist());
+    }
 
     @FXML
     private void openNewWindow(ActionEvent actionEvent) throws IOException {
@@ -210,6 +274,18 @@ public class DashboardController extends UIController implements Initializable {
     }
 
     public void reloadAfterSettings() {
+        if(musicPlayer != null) {
+            musicPlayer.dispose();
+            if(progressBar != null)
+                progressBarMP(true, true);
+            musicPlayer.loadSongs(dashboard.getSettings().getPlaylistDirectoryPath());
+            if(dashboard.getSettings().isShuffleMode())
+                musicPlayer.shufflePlaylist();
+            setTitleArtist();
+            PolyPlay.setVisible(true);
+            RecPause1.setVisible(false);
+            RecPause2.setVisible(false);
+        }
         speedGauge.setMaxValue(dashboard.getSettings().maxSpeed);
         revsGauge.setMaxValue(dashboard.getSettings().maxRevs);
         int color = dashboard.getSettings().dashboardLightIntesity;
@@ -285,6 +361,7 @@ public class DashboardController extends UIController implements Initializable {
             MIstopEngine.setDisable(false);
             MIstartEngine.setDisable(true);
             dashboard.getOnBoardComputer().startJourneyTime();
+            dashboard.playStartEngineSound();
             speedThread = new SpeedThread(this);
             speedThread.setEngineRunning(true);
             speedThread.start();

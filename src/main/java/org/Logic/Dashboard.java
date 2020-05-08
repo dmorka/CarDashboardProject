@@ -1,7 +1,9 @@
 package org.Logic;
 
+import javafx.scene.media.AudioClip;
 import java.io.Serializable;
 import java.math.RoundingMode;
+import java.nio.file.Paths;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
@@ -240,6 +242,11 @@ public class Dashboard implements Serializable {
         if(currentGear != 0)
             return gears.get(currentGear-1);
         return 0;
+    }
+
+    public void playStartEngineSound() {
+        AudioClip audioClip = new AudioClip(Paths.get("src/main/resources/org/Presentation/sounds/engineStartSound.mp3").toUri().toString());
+        audioClip.play();
     }
 }
 

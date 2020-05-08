@@ -10,6 +10,7 @@ public class Settings implements Serializable {
     public char engineType;
     public byte numberOfGears;
     public boolean shuffleMode;
+    private String playlistDirectoryPath;
 
     public Settings() {
         maxSpeed = 220;
@@ -19,6 +20,15 @@ public class Settings implements Serializable {
         engineType = 'P';
         numberOfGears = 6;
         shuffleMode = false;
+        playlistDirectoryPath = System.getenv("USERPROFILE") + "\\Music";
+    }
+
+    public String getPlaylistDirectoryPath() {
+        return playlistDirectoryPath;
+    }
+
+    public void setPlaylistDirectoryPath(String playlistDirectoryPath) {
+        this.playlistDirectoryPath = playlistDirectoryPath;
     }
 
     public short getMaxSpeed() {

@@ -1,29 +1,32 @@
 package org.Presentation;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
+import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 import org.Logic.Settings;
 import org.controlsfx.control.ToggleSwitch;
+import java.io.File;
 
-import java.io.IOException;
 
 public class SettingsController {
     private Settings settings;
-    DashboardController dashboardController;
+    private DashboardController dashboardController;
     public Slider SLdashboardLightIntensity;
     public ToggleSwitch TSautoLowBeam;
+    public ToggleSwitch TSshuffleMode;
     public RadioButton RDengineTypePetrol;
     public RadioButton RDengineTypeDiesel;
     public RadioButton RDnumberOfGears5;
     public RadioButton RDnumberOfGears6;
-    public ToggleSwitch TSshuffleMode;
     public Button saveButton;
+    public Button BTNchoosePlaylistFolder;
+    public TextField TFplaylistFolderPath;
     public TextFieldLimited TFLmaxSpeed;
 
     public void loadSettings(Settings settings, DashboardController dashboardController) {
@@ -49,6 +52,7 @@ public class SettingsController {
             RDnumberOfGears6.setSelected(true);
         }
         TSshuffleMode.setSelected(this.settings.shuffleMode);
+        TFplaylistFolderPath.setText(this.settings.getPlaylistDirectoryPath());
     }
 
     @FXML
@@ -60,6 +64,7 @@ public class SettingsController {
         settings.maxRevs = (short) (RDengineTypePetrol.isSelected() ? 8000 : 6000);
         settings.numberOfGears = (byte)(RDnumberOfGears5.isSelected() ? 5 : 6);
         settings.shuffleMode = TSshuffleMode.isSelected();
+        settings.setPlaylistDirectoryPath(TFplaylistFolderPath.getText());
 
         dashboardController.reloadAfterSettings();
         Stage stage = (Stage) saveButton.getScene().getWindow();
@@ -74,15 +79,23 @@ public class SettingsController {
         RDnumberOfGears6.setDisable(lock);
     }
 
-    public static void addTextLimiter(final TextField tf, final int maxLength) {
-        tf.textProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(final ObservableValue<? extends String> ov, final String oldValue, final String newValue) {
-                if (tf.getText().length() > maxLength) {
-                    String s = tf.getText().substring(0, maxLength);
-                    tf.setText(s);
-                }
-            }
-        });
+//    public static void addTextLimiter(final TextField tf, final int maxLength) {
+//        tf.textProperty().addListener(new ChangeListener<String>() {
+//            @Override
+//            public void changed(final ObservableValue<? extends String> ov, final String oldValue, final String newValue) {
+//                if (tf.getText().length() > maxLength) {
+//                    String s = tf.getText().substring(0, maxLength);
+//                    tf.setText(s);
+//                }
+//            }
+//        });
+//    }
+
+    public void chooseDirectory(MouseEvent e) {
+        DirectoryChooser directoryChooser = new DirectoryChooser();
+        File selectedDirectory = directoryChooser.showDialog(((Node)e.getSource()).getScene().getWindow());
+        if(selectedDirectory != null)
+            TFplaylistFolderPath.setText(selectedDirectory.getAbsolutePath());
     }
+
 }
