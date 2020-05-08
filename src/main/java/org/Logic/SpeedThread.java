@@ -7,10 +7,12 @@ public class SpeedThread extends Thread {
     private boolean engineRunning;
     private final Dashboard dashboard;
     private OnBoardComputer onBoardComputer;
+    private int startAfter;
 
     //Konstruktor klasy
-    public SpeedThread(UIController uiController) {
+    public SpeedThread(UIController uiController, int startAfter) {
         this.uiController = uiController;
+        this.startAfter = startAfter;
         this.dashboard = uiController.getDashboard();
         this.onBoardComputer = this.dashboard.getOnBoardComputer();
     }
@@ -20,6 +22,11 @@ public class SpeedThread extends Thread {
     }
 
     public void run() {
+        try {
+            Thread.sleep(startAfter);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         if(!engineRunning) {
             while(dashboard.speed > 0) {
                 dashboard.speed -= 1;

@@ -1,9 +1,12 @@
 package org.Presentation;
 
+import java.io.File;
+import java.io.FilenameFilter;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
 import java.util.ResourceBundle;
 
 import eu.hansolo.medusa.Gauge;
@@ -32,7 +35,7 @@ import javafx.event.ActionEvent;
 import javafx.util.Duration;
 import org.Logic.*;
 
-public class DashboardController extends UIController implements Initializable {
+public class DashboardController extends UIController {
     private FlashingSignalThread flashingSignalThread;
     private SpeedThread speedThread;
     private MusicPlayer musicPlayer;
@@ -72,8 +75,13 @@ public class DashboardController extends UIController implements Initializable {
     public Rectangle RecPause2;
     public ProgressBar PBsongDuration;
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
+//    @Override
+//    public void initialize(URL location, ResourceBundle resources) {
+//
+//    }
+
+    @FXML
+    public void initialize() {
         this.musicPlayer = new MusicPlayer();
         initClock();
         reloadAfterSettings();
@@ -81,7 +89,6 @@ public class DashboardController extends UIController implements Initializable {
         progressBar = null;
         setTitleArtist();
     }
-
     @FXML
     private void playPauseMP() {
         if(musicPlayer.isEmpty())
@@ -358,15 +365,56 @@ public class DashboardController extends UIController implements Initializable {
         }
     }
 
+    private void switchAllLights(boolean state) {
+        String endWith = (state) ? "On.png" : "Off.png";
+        lightSwitch(IVindicatorsTurnRight, new Image(getClass().getResourceAsStream("images/indicatorsTurnRight" +endWith)), state);
+        lightSwitch(IVindicatorsTurnLeft, new Image(getClass().getResourceAsStream("images/indicatorsTurnLeft" +endWith)), state);
+        lightSwitch(IVparkingLights, new Image(getClass().getResourceAsStream("images/parkingLights" +endWith)), state);
+        lightSwitch(IVheadlightsLowBeam, new Image(getClass().getResourceAsStream("images/headlightsLowBeam" +endWith)), state);
+        lightSwitch(IVheadlightsHighBeam, new Image(getClass().getResourceAsStream("images/headlightsHighBeam" +endWith)), state);
+        lightSwitch(IVfogLightsBack, new Image(getClass().getResourceAsStream("images/fogLightsBack" +endWith)), state);
+        lightSwitch(IVfogLightsFront, new Image(getClass().getResourceAsStream("images/fogLightsFront" +endWith)), state);
+    }
+
+    private void animateEngineStart(boolean forward) {
+
+        final double revs = dashboard.getSettings().getMaxRevs() / ((forward) ? 100.0: -100.0);
+        final double speed = dashboard.getSettings().getMaxSpeed() / ((forward) ? 100.0: -100.0);
+        final double maxRevs = dashboard.getSettings().getMaxRevs();
+        final double maxSpeed = dashboard.getSettings().getMaxSpeed();
+        Timeline animEngineStartGrow = new Timeline(new KeyFrame(Duration.ZERO, e -> {
+            speedGauge.setValue(speedGauge.getValue() + speed);
+            revsGauge.setValue(revsGauge.getValue() + revs);
+        }), new KeyFrame(Duration.millis(8)));
+        animEngineStartGrow.setCycleCount(100);
+        animEngineStartGrow.setDelay(Duration.millis((forward) ? 500 : 200));
+        animEngineStartGrow.play();
+        animEngineStartGrow.setOnFinished(f ->{
+            if(forward)
+                animateEngineStart(false);
+        });
+        try {
+            Thread.sleep((forward) ? 500 : 200);
+
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        switchAllLights(forward);
+    }
+
     public void startStopEngine() {
         if(!MIstartEngine.isDisable()) {
             MIstopEngine.setDisable(false);
             MIstartEngine.setDisable(true);
             dashboard.getOnBoardComputer().startJourneyTime();
             dashboard.playStartEngineSound();
-            speedThread = new SpeedThread(this);
+            animateEngineStart(true);
+
+            speedThread = new SpeedThread(this, 1800);
             speedThread.setEngineRunning(true);
+            speedThread.setDaemon(true); //Wątek uruchamiamy w trybie Deamon by zakończył się razem z aplikacją i jej glownym wątkiem
             speedThread.start();
+
         }
         else {
             MIstartEngine.setDisable(false);
@@ -376,7 +424,8 @@ public class DashboardController extends UIController implements Initializable {
                 speedThread.join();
                 // Tworzymy wątek dla przypadku gdy zgasło auto podczas jazdy, by prędkość nadal spadała
                 // aż do zera lub ponownego właczenia silnika
-                speedThread = new SpeedThread(this);
+                speedThread = new SpeedThread(this,0);
+                speedThread.setDaemon(true);
                 speedThread.start();
                 //speedThread.join();
 
@@ -428,5 +477,12 @@ public class DashboardController extends UIController implements Initializable {
         }
     }
 
-
+    public void onStageDestruction() {
+        speedThread.setEngineRunning(false);
+        try {
+            speedThread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
 }
