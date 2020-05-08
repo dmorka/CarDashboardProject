@@ -53,6 +53,11 @@ public class MusicPlayer  {
 
         mediaPlayer.setVolume(volume);
         mediaPlayer.play();
+
+    }
+
+    public void autoPlayNext(Runnable runnable) {
+        mediaPlayer.setOnEndOfMedia(runnable);
     }
 
     public void pauseSong() {

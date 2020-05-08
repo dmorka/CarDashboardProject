@@ -93,7 +93,7 @@ public class DashboardController extends UIController implements Initializable {
             RecPause2.setVisible(true);
             musicPlayer.playSong();
             progressBarMP(false, false);
-
+            musicPlayer.autoPlayNext(this::nextSongMP);
         } else {
             PolyPlay.setVisible(true);
             RecPause1.setVisible(false);
@@ -131,6 +131,7 @@ public class DashboardController extends UIController implements Initializable {
     @FXML
     private void nextSongMP() {
         musicPlayer.nextSong();
+        musicPlayer.autoPlayNext(this::nextSongMP);
         progressBarMP(true, PolyPlay.isVisible());
         setTitleArtist();
     }
@@ -138,6 +139,7 @@ public class DashboardController extends UIController implements Initializable {
     @FXML
     public void previousSong() {
         musicPlayer.previousSong();
+        musicPlayer.autoPlayNext(this::nextSongMP);
         progressBarMP(true, PolyPlay.isVisible());
         setTitleArtist();
     }
