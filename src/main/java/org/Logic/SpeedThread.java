@@ -28,8 +28,8 @@ public class SpeedThread extends Thread {
             e.printStackTrace();
         }
         if(!engineRunning) {
-            while(dashboard.speed > 0) {
-                dashboard.speed -= 1;
+            while(dashboard.getSpeed() > 0) {
+                dashboard.subSpeed(1);
                 synchronized (uiController) {
                     uiController.refresh();
                 }
@@ -44,27 +44,30 @@ public class SpeedThread extends Thread {
         long startTime = System.currentTimeMillis();
         while(engineRunning) {
             synchronized (uiController) {
-                if (dashboard.isKeyUp() && dashboard.speed < dashboard.getCurrentGearMaxSpeed()) {
-                    dashboard.speed += 2;
-                    if(dashboard.speed > onBoardComputer.getMaxSpeed())
-                        onBoardComputer.setMaxSpeed(dashboard.speed);
+                if (dashboard.isKeyUp() && dashboard.getSpeed() < dashboard.getCurrentGearMaxSpeed()) {
+                    dashboard.addSpeed(2);
                 } else if (dashboard.isKeyDown() && dashboard.getSpeed() >= 8) {
-                    dashboard.speed -= 3;
-                } else if (dashboard.speed > dashboard.getLowerGearMaxSpeed()*(3/5f)) {
-                    dashboard.speed -= 1;
+                    dashboard.subSpeed(3);
+                } else if (dashboard.getSpeed() > dashboard.getLowerGearMaxSpeed()*(3/5f)) {
+                    dashboard.subSpeed(1);
                 }
 
-                if(dashboard.currentGear > 0 )
-                    dashboard.revs = (int)(dashboard.getSettings().maxRevs * ((float)dashboard.speed/(float)dashboard.getCurrentGearMaxSpeed()));
+                if(dashboard.getCurrentGear() > 0 ) {
+                    try {
+                        dashboard.setRevs((int)(dashboard.getSettings().getMaxRevs() * ((float)dashboard.getSpeed()/(float)dashboard.getCurrentGearMaxSpeed())));
+                    } catch (NegativeValueException e) {
+                        e.printStackTrace();
+                    }
+                }
 
                 //Czas próbkowania co 1s
                 if(System.currentTimeMillis() - startTime >= 1000) {
                     startTime = System.currentTimeMillis();
-                    distance = dashboard.speed * (1f/3600f);
-                    dashboard.counter += distance;
-                    dashboard.dayCounter1 += distance;
-                    dashboard.dayCounter2 += distance;
-                    onBoardComputer.journeyDistance += distance;
+                    distance = dashboard.getSpeed() * (1f/3600f);
+                    dashboard.setCounter(dashboard.getCounter() + distance);
+                    dashboard.setDayCounter1(dashboard.getDayCounter1() + distance);
+                    dashboard.setDayCounter2(dashboard.getDayCounter2() + distance);
+                    onBoardComputer.setJourneyDistance(onBoardComputer.getJourneyDistance() + distance);
 
                 }
 

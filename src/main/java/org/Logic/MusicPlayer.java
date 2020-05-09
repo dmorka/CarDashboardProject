@@ -57,7 +57,8 @@ public class MusicPlayer  {
     }
 
     public void autoPlayNext(Runnable runnable) {
-        mediaPlayer.setOnEndOfMedia(runnable);
+        if(mediaPlayer != null)
+            mediaPlayer.setOnEndOfMedia(runnable);
     }
 
     public void pauseSong() {

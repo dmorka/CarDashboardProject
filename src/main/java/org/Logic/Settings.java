@@ -3,13 +3,13 @@ package org.Logic;
 import java.io.Serializable;
 
 public class Settings implements Serializable {
-    public short maxSpeed;
-    public short maxRevs;
-    public short dashboardLightIntesity;
-    public boolean autoLowBeam;
-    public char engineType;
-    public byte numberOfGears;
-    public boolean shuffleMode;
+    private short maxSpeed;
+    private short maxRevs;
+    private short dashboardLightIntesity;
+    private boolean autoLowBeam;
+    private char engineType;
+    private byte numberOfGears;
+    private boolean shuffleMode;
     private String playlistDirectoryPath;
 
     public Settings() {

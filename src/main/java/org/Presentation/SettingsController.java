@@ -32,10 +32,10 @@ public class SettingsController {
     public void loadSettings(Settings settings, DashboardController dashboardController) {
         this.settings = settings;
         this.dashboardController = dashboardController;
-        TFLmaxSpeed.setText(Short.toString(this.settings.maxSpeed));
-        SLdashboardLightIntensity.setValue(this.settings.dashboardLightIntesity);
-        TSautoLowBeam.setSelected(this.settings.autoLowBeam);
-        if(this.settings.engineType == 'P') {
+        TFLmaxSpeed.setText(Short.toString(this.settings.getMaxSpeed()));
+        SLdashboardLightIntensity.setValue(this.settings.getDashboardLightIntesity());
+        TSautoLowBeam.setSelected(this.settings.isAutoLowBeam());
+        if(this.settings.getEngineType() == 'P') {
             RDengineTypePetrol.setSelected(true);
             RDengineTypeDiesel.setSelected(false);
         }
@@ -43,7 +43,7 @@ public class SettingsController {
             RDengineTypePetrol.setSelected(false);
             RDengineTypeDiesel.setSelected(true);
         }
-        if(this.settings.numberOfGears == 5) {
+        if(this.settings.getNumberOfGears() == 5) {
             RDnumberOfGears5.setSelected(true);
             RDnumberOfGears6.setSelected(false);
         }
@@ -51,19 +51,19 @@ public class SettingsController {
             RDnumberOfGears5.setSelected(false);
             RDnumberOfGears6.setSelected(true);
         }
-        TSshuffleMode.setSelected(this.settings.shuffleMode);
+        TSshuffleMode.setSelected(this.settings.isShuffleMode());
         TFplaylistFolderPath.setText(this.settings.getPlaylistDirectoryPath());
     }
 
     @FXML
     private void save() {
-        settings.maxSpeed = Short.parseShort(TFLmaxSpeed.getText());
-        settings.dashboardLightIntesity = (short)SLdashboardLightIntensity.getValue();
-        settings.autoLowBeam = TSautoLowBeam.isSelected();
-        settings.engineType = RDengineTypePetrol.isSelected() ? 'P' : 'D';
-        settings.maxRevs = (short) (RDengineTypePetrol.isSelected() ? 8000 : 6000);
-        settings.numberOfGears = (byte)(RDnumberOfGears5.isSelected() ? 5 : 6);
-        settings.shuffleMode = TSshuffleMode.isSelected();
+        settings.setMaxSpeed(Short.parseShort(TFLmaxSpeed.getText()));
+        settings.setDashboardLightIntesity((short)SLdashboardLightIntensity.getValue());
+        settings.setAutoLowBeam(TSautoLowBeam.isSelected());
+        settings.setEngineType(RDengineTypePetrol.isSelected() ? 'P' : 'D');
+        settings.setMaxRevs((short) (RDengineTypePetrol.isSelected() ? 8000 : 6000));
+        settings.setNumberOfGears((byte)(RDnumberOfGears5.isSelected() ? 5 : 6));
+        settings.setShuffleMode(TSshuffleMode.isSelected());
         settings.setPlaylistDirectoryPath(TFplaylistFolderPath.getText());
 
         dashboardController.reloadAfterSettings();
@@ -78,18 +78,6 @@ public class SettingsController {
         RDnumberOfGears5.setDisable(lock);
         RDnumberOfGears6.setDisable(lock);
     }
-
-//    public static void addTextLimiter(final TextField tf, final int maxLength) {
-//        tf.textProperty().addListener(new ChangeListener<String>() {
-//            @Override
-//            public void changed(final ObservableValue<? extends String> ov, final String oldValue, final String newValue) {
-//                if (tf.getText().length() > maxLength) {
-//                    String s = tf.getText().substring(0, maxLength);
-//                    tf.setText(s);
-//                }
-//            }
-//        });
-//    }
 
     public void chooseDirectory(MouseEvent e) {
         DirectoryChooser directoryChooser = new DirectoryChooser();

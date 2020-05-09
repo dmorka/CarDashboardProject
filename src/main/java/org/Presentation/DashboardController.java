@@ -295,9 +295,9 @@ public class DashboardController extends UIController {
             RecPause1.setVisible(false);
             RecPause2.setVisible(false);
         }
-        speedGauge.setMaxValue(dashboard.getSettings().maxSpeed);
-        revsGauge.setMaxValue(dashboard.getSettings().maxRevs);
-        int color = dashboard.getSettings().dashboardLightIntesity;
+        speedGauge.setMaxValue(dashboard.getSettings().getMaxSpeed());
+        revsGauge.setMaxValue(dashboard.getSettings().getMaxRevs());
+        int color = dashboard.getSettings().getDashboardLightIntesity();
         GPmain.setStyle("-fx-background-color: rgb("+color+", "+color+", "+color+");");
         dashboard.setGears();
     }
@@ -412,7 +412,7 @@ public class DashboardController extends UIController {
 
             speedThread = new SpeedThread(this, 1800);
             speedThread.setEngineRunning(true);
-            speedThread.setDaemon(true); //Wątek uruchamiamy w trybie Deamon by zakończył się razem z aplikacją i jej glownym wątkiem
+            //speedThread.setDaemon(true); //Wątek uruchamiamy w trybie Deamon by zakończył się razem z aplikacją i jej glownym wątkiem
             speedThread.start();
 
         }
@@ -425,7 +425,7 @@ public class DashboardController extends UIController {
                 // Tworzymy wątek dla przypadku gdy zgasło auto podczas jazdy, by prędkość nadal spadała
                 // aż do zera lub ponownego właczenia silnika
                 speedThread = new SpeedThread(this,0);
-                speedThread.setDaemon(true);
+                //speedThread.setDaemon(true);
                 speedThread.start();
                 //speedThread.join();
 
@@ -478,11 +478,13 @@ public class DashboardController extends UIController {
     }
 
     public void onStageDestruction() {
-        speedThread.setEngineRunning(false);
-        try {
-            speedThread.join();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+        if(speedThread != null) {
+            speedThread.setEngineRunning(false);
+            try {
+                speedThread.join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
     }
 }

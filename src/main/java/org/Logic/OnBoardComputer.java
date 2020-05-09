@@ -6,12 +6,12 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class OnBoardComputer implements Serializable, Comparable<OnBoardComputer> {
-    public float avgSpeed;
-    public int maxSpeed;
-    public LocalDateTime journeyTime = null;
-    public float journeyDistance;
-    public float avgCombustion;
-    public float maxCombustion;
+    private float avgSpeed;
+    private int maxSpeed;
+    private LocalDateTime journeyTime = null;
+    private float journeyDistance;
+    private float avgCombustion;
+    private float maxCombustion;
 
     public float avgSpeed() {
         return 0;

@@ -8,25 +8,25 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class Dashboard implements Serializable {
-    OnBoardComputer onBoardComputer;
-    Settings settings;
-    short speed;
-    boolean leftTurnSignal;
-    boolean rightTurnSignal;
-    boolean positionLights;
-    boolean lowBeam;
-    boolean highBeam;
-    boolean frontFogLights;
-    boolean rearFogLights;
-    boolean KeyUp;
-    boolean KeyDown;
-    float counter;
-    float dayCounter1;
-    float dayCounter2;
-    int revs;
-    short currentGear;
-    ArrayList<Short> gears;
-    DecimalFormat decimalFormat;
+    private OnBoardComputer onBoardComputer;
+    private Settings settings;
+    private short speed;
+    private boolean leftTurnSignal;
+    private boolean rightTurnSignal;
+    private boolean positionLights;
+    private boolean highBeam;
+    private boolean lowBeam;
+    private boolean frontFogLights;
+    private boolean rearFogLights;
+    private boolean KeyUp;
+    private boolean KeyDown;
+    private float counter;
+    private float dayCounter1;
+    private float dayCounter2;
+    private int revs;
+    private short currentGear;
+    private ArrayList<Short> gears;
+    private DecimalFormat decimalFormat;
 
 
     public Dashboard() {
@@ -218,20 +218,32 @@ public class Dashboard implements Serializable {
         }
     }
 
+    public void addSpeed(int value) {
+        speed += value;
+        if(speed > settings.getMaxSpeed())
+            speed = settings.getMaxSpeed();
+    }
+
+    public void subSpeed(int value) {
+        speed -= value;
+        if(speed < 0)
+            speed = 0;
+    }
+
     public void setGears(){
         this.gears.clear();
         this.gears.add((short)0);
-        this.gears.add((short) (this.settings.maxSpeed*0.1));
-        this.gears.add((short)(this.settings.maxSpeed*0.15));
-        this.gears.add((short)(this.settings.maxSpeed*0.31));
-        if (this.settings.numberOfGears == 5) {
-            this.gears.add((short)(this.settings.maxSpeed*0.5));
+        this.gears.add((short) (this.settings.getMaxSpeed()*0.1));
+        this.gears.add((short)(this.settings.getMaxSpeed()*0.15));
+        this.gears.add((short)(this.settings.getMaxSpeed()*0.31));
+        if (this.settings.getNumberOfGears() == 5) {
+            this.gears.add((short)(this.settings.getMaxSpeed()*0.5));
         }
         else {
-            this.gears.add((short)(this.settings.maxSpeed*0.4));
-            this.gears.add((short)(this.settings.maxSpeed*0.6));
+            this.gears.add((short)(this.settings.getMaxSpeed()*0.4));
+            this.gears.add((short)(this.settings.getMaxSpeed()*0.6));
         }
-        this.gears.add(this.settings.maxSpeed);
+        this.gears.add(this.settings.getMaxSpeed());
     }
 
     public short getCurrentGearMaxSpeed() {
