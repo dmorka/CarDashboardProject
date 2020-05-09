@@ -1,24 +1,25 @@
 package org.Logic;
 
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-import javafx.fxml.FXML;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicReference;
+
 import javafx.scene.media.*;
 import javafx.util.Duration;
+import org.Data.LoadFiles;
 
 
 public class MusicPlayer  {
-    private ArrayList<Media> playlist;
+    private LoadFiles loadFiles = new LoadFiles();
+    private ArrayList<Media> playlist = new ArrayList<>();
     private MediaPlayer mediaPlayer = null;
     private double volume = 75;
     private int currentSong = 0;
+    private String playlistDirectoryPath;
+    private Runnable autoPlayNext = null;
 
     public String getTitle() {
         if(playlist.isEmpty())
@@ -29,11 +30,12 @@ public class MusicPlayer  {
         } catch (NullPointerException e) {
             return new File(playlist.get(currentSong).getSource()).getName().replaceFirst(".mp3", "");
         }
+
         return title;
 
     }
 
-    public String getArtist() {
+    public String getArtist() throws InterruptedException {
         if(playlist.isEmpty())
             return "Unknown";
         String artistName;
@@ -42,6 +44,7 @@ public class MusicPlayer  {
         } catch (NullPointerException e) {
             return "Unknown";
         }
+
         return artistName;
     }
 
@@ -53,7 +56,8 @@ public class MusicPlayer  {
 
         mediaPlayer.setVolume(volume);
         mediaPlayer.play();
-
+        if(autoPlayNext != null)
+            mediaPlayer.setOnEndOfMedia(autoPlayNext);
     }
 
     public void autoPlayNext(Runnable runnable) {
@@ -77,6 +81,10 @@ public class MusicPlayer  {
             mediaPlayer = null;
             currentSong = 0;
         }
+    }
+
+    public void setAutoPlayNext(Runnable autoPlayNext) {
+        this.autoPlayNext = autoPlayNext;
     }
 
     public void shufflePlaylist() {
@@ -117,26 +125,18 @@ public class MusicPlayer  {
         return mediaPlayer.getStatus() == MediaPlayer.Status.PLAYING;
     }
 
-    @FXML
-    public void loadSongs(String directoryPath)  {
+    public void loadSongs(String directoryPath) throws IOException {
+        playlistDirectoryPath = directoryPath;
+        List<String> result = loadFiles.loadMp3Files(directoryPath);
         playlist = new ArrayList<>();
-        try (Stream<Path> walk = Files.walk(Paths.get(directoryPath))) {
-
-            List<String> result = walk.map(x -> x.toString())
-                    .filter(f -> f.endsWith(".mp3")).collect(Collectors.toList());
-
-            MediaPlayer initMedia = null;
-            int i = 0;
-            // Wpisujemy obiekty Media (pliki mp3) do playlisty a nastepnie je inicjalizujemy
-            // by przy pierwszym odtworzeniu utworu mieć wczytane wszytskie jego parametry (szczególnie czas trwania utworu)
-            for(String path : result) {
-                playlist.add(new Media(new File(path).toURI().toString()));
-                initMedia = new MediaPlayer(playlist.get(i));
-                i+=1;
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
+        // Wpisujemy obiekty Media (pliki mp3) do playlisty a nastepnie je inicjalizujemy
+        // by przy pierwszym odtworzeniu utworu mieć wczytane wszytskie jego parametry (szczególnie czas trwania utworu)
+        MediaPlayer initMedia = null;
+        for(int i = 0; i < result.size(); i++) {
+            playlist.add(new Media(new File(result.get(i)).toURI().toString()));
+            initMedia = new MediaPlayer(playlist.get(i));
         }
+
     }
 
     public void changeVolume(double volume) {
@@ -162,5 +162,18 @@ public class MusicPlayer  {
 
     public boolean isEmpty() {
         return playlist.isEmpty();
+    }
+
+    public String getPlaylistDirectoryPath() {
+        return playlistDirectoryPath;
+    }
+
+    public void onReady(Runnable runnable) {
+        if(mediaPlayer != null)
+            mediaPlayer.setOnReady(runnable);
+    }
+
+    public void setPlaylistDirectoryPath(String playlistDirectoryPath) {
+        this.playlistDirectoryPath = playlistDirectoryPath;
     }
 }

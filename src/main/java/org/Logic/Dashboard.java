@@ -10,6 +10,7 @@ import java.util.ArrayList;
 public class Dashboard implements Serializable {
     private OnBoardComputer onBoardComputer;
     private Settings settings;
+    private MusicPlayer musicPlayer;
     private short speed;
     private boolean leftTurnSignal;
     private boolean rightTurnSignal;
@@ -26,12 +27,12 @@ public class Dashboard implements Serializable {
     private int revs;
     private short currentGear;
     private ArrayList<Short> gears;
-    private DecimalFormat decimalFormat;
 
 
     public Dashboard() {
         this.onBoardComputer = new OnBoardComputer();
         this.settings = new Settings();
+        this.musicPlayer = new MusicPlayer();
         this.speed = 0;
         this.leftTurnSignal = false;
         this.rightTurnSignal = false;
@@ -47,8 +48,8 @@ public class Dashboard implements Serializable {
         this.currentGear = 0;
         gears = new ArrayList<>();
         this.setGears();
-        this.decimalFormat  = new DecimalFormat("#.#");
-        this.decimalFormat.setRoundingMode(RoundingMode.HALF_UP);
+        DecimalFormat decimalFormat = new DecimalFormat("#.#");
+        decimalFormat.setRoundingMode(RoundingMode.HALF_UP);
     }
 
     public boolean isKeyUp() {
@@ -259,6 +260,10 @@ public class Dashboard implements Serializable {
     public void playStartEngineSound() {
         AudioClip audioClip = new AudioClip(Paths.get("src/main/resources/org/Presentation/sounds/engineStartSound.mp3").toUri().toString());
         audioClip.play();
+    }
+
+    public MusicPlayer getMusicPlayer() {
+        return musicPlayer;
     }
 }
 

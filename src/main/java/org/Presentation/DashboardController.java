@@ -38,7 +38,6 @@ import org.Logic.*;
 public class DashboardController extends UIController {
     private FlashingSignalThread flashingSignalThread;
     private SpeedThread speedThread;
-    private MusicPlayer musicPlayer;
     private Timeline progressBar;
     public ImageView IVindicatorsTurnRight;
     public ImageView IVindicatorsTurnLeft;
@@ -75,37 +74,34 @@ public class DashboardController extends UIController {
     public Rectangle RecPause2;
     public ProgressBar PBsongDuration;
 
-//    @Override
-//    public void initialize(URL location, ResourceBundle resources) {
-//
-//    }
-
     @FXML
     public void initialize() {
-        this.musicPlayer = new MusicPlayer();
+        this.dashboard.getMusicPlayer().setAutoPlayNext(this::nextSongMP);
         initClock();
         reloadAfterSettings();
         refresh();
         progressBar = null;
         setTitleArtist();
     }
+
     @FXML
     private void playPauseMP() {
-        if(musicPlayer.isEmpty())
+        if(dashboard.getMusicPlayer().isEmpty())
             return;
 
-        if(PolyPlay.isVisible()) {
+        //if(PolyPlay.isVisible()) {
+        if(!dashboard.getMusicPlayer().isPlaying()) {
             PolyPlay.setVisible(false);
             RecPause1.setVisible(true);
             RecPause2.setVisible(true);
-            musicPlayer.playSong();
+            dashboard.getMusicPlayer().playSong();
             progressBarMP(false, false);
-            musicPlayer.autoPlayNext(this::nextSongMP);
+            //dashboard.getMusicPlayer().autoPlayNext(this::nextSongMP);
         } else {
             PolyPlay.setVisible(true);
             RecPause1.setVisible(false);
             RecPause2.setVisible(false);
-            musicPlayer.pauseSong();
+            dashboard.getMusicPlayer().pauseSong();
             progressBarMP(false, true);
         }
         setTitleArtist();
@@ -113,20 +109,20 @@ public class DashboardController extends UIController {
 
     @FXML
     private void progressBarMP(boolean resetProgress, boolean pause) {
-        if(musicPlayer.isEmpty())
-            return;
         if(resetProgress && progressBar!=null) {
             progressBar.stop();
             progressBar = null;
             PBsongDuration.setProgress(0.0);
         }
+        if(dashboard.getMusicPlayer().isEmpty())
+            return;
         if(!pause) {
-            double progressValue = 1/musicPlayer.getTotalDuration().toSeconds();
+            double progressValue = 1/dashboard.getMusicPlayer().getTotalDuration().toSeconds();
             if(progressBar == null && !Double.isNaN(progressValue)) {
                 progressBar = new Timeline(new KeyFrame(Duration.ZERO, e -> {
                     PBsongDuration.setProgress(PBsongDuration.getProgress() + progressValue);
                 }), new KeyFrame(Duration.seconds(1)));
-                progressBar.setCycleCount((int) musicPlayer.getTotalDuration().toSeconds() + 1);
+                progressBar.setCycleCount((int) dashboard.getMusicPlayer().getTotalDuration().toSeconds() + 1);
             }
             if(progressBar != null)
                 progressBar.play();
@@ -137,29 +133,33 @@ public class DashboardController extends UIController {
 
     @FXML
     private void nextSongMP() {
-        musicPlayer.nextSong();
-        musicPlayer.autoPlayNext(this::nextSongMP);
+        dashboard.getMusicPlayer().nextSong();
+        //dashboard.getMusicPlayer().autoPlayNext(this::nextSongMP);
         progressBarMP(true, PolyPlay.isVisible());
         setTitleArtist();
     }
 
     @FXML
     public void previousSong() {
-        musicPlayer.previousSong();
-        musicPlayer.autoPlayNext(this::nextSongMP);
+        dashboard.getMusicPlayer().previousSong();
+        //dashboard.getMusicPlayer().autoPlayNext(this::nextSongMP);
         progressBarMP(true, PolyPlay.isVisible());
         setTitleArtist();
     }
 
     @FXML
     private void changeVolumeMP() {
-        musicPlayer.changeVolume(SLvolume.getValue()/100);
+        dashboard.getMusicPlayer().changeVolume(SLvolume.getValue()/100);
     }
 
     @FXML
     private void setTitleArtist() {
-        LtitleMP.setText(musicPlayer.getTitle());
-        LartistMP.setText(musicPlayer.getArtist());
+        LtitleMP.setText(dashboard.getMusicPlayer().getTitle());
+        try {
+            LartistMP.setText(dashboard.getMusicPlayer().getArtist());
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
@@ -208,10 +208,10 @@ public class DashboardController extends UIController {
         Image newImage;
         boolean enable;
         if (checkMenuItem.isSelected()) {
-            newImage = new Image(getClass().getResourceAsStream("images/" + id + "On.png"));
+            newImage = new Image(getClass().getResourceAsStream("images/lights/" + id + "On.png"));
             enable = true;
         } else {
-            newImage = new Image(getClass().getResourceAsStream("images/" + id + "Off.png"));
+            newImage = new Image(getClass().getResourceAsStream("images/lights/" + id + "Off.png"));
             enable = false;
         }
         switch (id) {
@@ -283,17 +283,34 @@ public class DashboardController extends UIController {
     }
 
     public void reloadAfterSettings() {
-        if(musicPlayer != null) {
-            musicPlayer.dispose();
-            if(progressBar != null)
-                progressBarMP(true, true);
-            musicPlayer.loadSongs(dashboard.getSettings().getPlaylistDirectoryPath());
+        if(dashboard.getMusicPlayer() != null) {
+            //boolean wasPlaying = dashboard.getMusicPlayer().isPlaying();
+            dashboard.getMusicPlayer().dispose();
+            try {
+                dashboard.getMusicPlayer().loadSongs(dashboard.getSettings().getPlaylistDirectoryPath());
+            } catch (IOException e) {
+                openDialog(AlertType.ERROR, "Error dialog", e.getClass().getSimpleName(), e.getMessage());
+            }
+
+            //progressBarMP(true, !wasPlaying);
+            progressBarMP(true, true);
             if(dashboard.getSettings().isShuffleMode())
-                musicPlayer.shufflePlaylist();
-            setTitleArtist();
+                dashboard.getMusicPlayer().shufflePlaylist();
+
+
+//            if(wasPlaying && !dashboard.getMusicPlayer().isEmpty()) {
+//                playPauseMP();
+//            } else {
+//                PolyPlay.setVisible(true);
+//                RecPause1.setVisible(false);
+//                RecPause2.setVisible(false);
+//            }
+
             PolyPlay.setVisible(true);
             RecPause1.setVisible(false);
             RecPause2.setVisible(false);
+
+            setTitleArtist();
         }
         speedGauge.setMaxValue(dashboard.getSettings().getMaxSpeed());
         revsGauge.setMaxValue(dashboard.getSettings().getMaxRevs());
@@ -318,7 +335,7 @@ public class DashboardController extends UIController {
                 dashboard.setLeftTurnSignal(true);
                 indicatorsTurnLeft.setSelected(true);
                 indicatorSwitch(IVindicatorsTurnLeft,
-                        new Image(getClass().getResourceAsStream("images/indicatorsTurnLeftOn.png")),
+                        new Image(getClass().getResourceAsStream("images/lights/indicatorsTurnLeftOn.png")),
                         true);
             } catch (TurnSignalException e) {
                 openDialog(AlertType.ERROR, "Error Dialog", e.getClass().getSimpleName(), e.getMessage());
@@ -328,7 +345,7 @@ public class DashboardController extends UIController {
                 dashboard.setRightTurnSignal(true);
                 indicatorsTurnRight.setSelected(true);
                 indicatorSwitch(IVindicatorsTurnRight,
-                        new Image(getClass().getResourceAsStream("images/indicatorsTurnRightOn.png")),
+                        new Image(getClass().getResourceAsStream("images/lights/indicatorsTurnRightOn.png")),
                         true);
             } catch (TurnSignalException e) {
                 openDialog(AlertType.ERROR, "Error Dialog", e.getClass().getSimpleName(), e.getMessage());
@@ -354,26 +371,26 @@ public class DashboardController extends UIController {
             dashboard.setLeftTurnSignal(false);
             indicatorsTurnLeft.setSelected(false);
             indicatorSwitch(IVindicatorsTurnLeft,
-                    new Image(getClass().getResourceAsStream("images/indicatorsTurnLeftOff.png")),
+                    new Image(getClass().getResourceAsStream("images/lights/indicatorsTurnLeftOff.png")),
                     false);
         } else if (event.getCode() == KeyCode.RIGHT) {
             dashboard.setRightTurnSignal(false);
             indicatorsTurnRight.setSelected(false);
             indicatorSwitch(IVindicatorsTurnRight,
-                    new Image(getClass().getResourceAsStream("images/indicatorsTurnRightOff.png")),
+                    new Image(getClass().getResourceAsStream("images/lights/indicatorsTurnRightOff.png")),
                     false);
         }
     }
 
     private void switchAllLights(boolean state) {
         String endWith = (state) ? "On.png" : "Off.png";
-        lightSwitch(IVindicatorsTurnRight, new Image(getClass().getResourceAsStream("images/indicatorsTurnRight" +endWith)), state);
-        lightSwitch(IVindicatorsTurnLeft, new Image(getClass().getResourceAsStream("images/indicatorsTurnLeft" +endWith)), state);
-        lightSwitch(IVparkingLights, new Image(getClass().getResourceAsStream("images/parkingLights" +endWith)), state);
-        lightSwitch(IVheadlightsLowBeam, new Image(getClass().getResourceAsStream("images/headlightsLowBeam" +endWith)), state);
-        lightSwitch(IVheadlightsHighBeam, new Image(getClass().getResourceAsStream("images/headlightsHighBeam" +endWith)), state);
-        lightSwitch(IVfogLightsBack, new Image(getClass().getResourceAsStream("images/fogLightsBack" +endWith)), state);
-        lightSwitch(IVfogLightsFront, new Image(getClass().getResourceAsStream("images/fogLightsFront" +endWith)), state);
+        lightSwitch(IVindicatorsTurnRight, new Image(getClass().getResourceAsStream("images/lights/indicatorsTurnRight" +endWith)), state);
+        lightSwitch(IVindicatorsTurnLeft, new Image(getClass().getResourceAsStream("images/lights/indicatorsTurnLeft" +endWith)), state);
+        lightSwitch(IVparkingLights, new Image(getClass().getResourceAsStream("images/lights/parkingLights" +endWith)), state);
+        lightSwitch(IVheadlightsLowBeam, new Image(getClass().getResourceAsStream("images/lights/headlightsLowBeam" +endWith)), state);
+        lightSwitch(IVheadlightsHighBeam, new Image(getClass().getResourceAsStream("images/lights/headlightsHighBeam" +endWith)), state);
+        lightSwitch(IVfogLightsBack, new Image(getClass().getResourceAsStream("images/lights/fogLightsBack" +endWith)), state);
+        lightSwitch(IVfogLightsFront, new Image(getClass().getResourceAsStream("images/lights/fogLightsFront" +endWith)), state);
     }
 
     private void animateEngineStart(boolean forward) {
