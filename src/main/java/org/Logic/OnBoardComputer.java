@@ -2,6 +2,7 @@ package org.Logic;
 
 import java.io.Serializable;
 import java.time.Duration;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalUnit;
@@ -103,23 +104,27 @@ public class OnBoardComputer implements Serializable, Comparable<OnBoardComputer
         if(journeyStartTime != null)
         {
             int min = (int)(Duration.between(journeyStartTime, LocalDateTime.now()).getSeconds() / 60);
-            int h = (int)(min / 60);
-            return h + "h " + min % 60 + " min";
+            int h = min / 60;
+            return h + "h " + min % 60 + " min ";
         }
 
         return "0h 0min";
     }
 
     public void startJourneyTime() {
+        //Pierwsze uruchomienie silnika
         if(journeyStartTime == null)
             this.journeyStartTime = LocalDateTime.now();
 
-        if(journeyPauseTime != null)
-            System.out.println(journeyStartTime.until(journeyPauseTime, ChronoUnit.MILLIS));
+        //Gdy wyłączymy silnika i po pewnym czasie ponownie uruchamiamy silnik to czas podróży jest aktualizowany by
+        // tej przerwy nie wliczać w czas podróży
+        if(journeyPauseTime != null) {
+            journeyStartTime = journeyStartTime.plusSeconds(Duration.between(journeyPauseTime, LocalDateTime.now()).toSeconds());
+        }
     }
 
     public void pauseJourneyTime() {
-        this.journeyStartTime = LocalDateTime.now();
+        this.journeyPauseTime = LocalDateTime.now();
     }
 
     public float getJourneyDistance() {

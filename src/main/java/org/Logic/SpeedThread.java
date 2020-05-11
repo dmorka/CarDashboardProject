@@ -30,6 +30,11 @@ public class SpeedThread extends Thread {
         if(!engineRunning) {
             while(dashboard.getSpeed() > 0) {
                 dashboard.subSpeed(1);
+                try {
+                    dashboard.setRevs((int) ((dashboard.getSettings().getMaxRevs()-1000) * (dashboard.getSpeed() /  (float)dashboard.getCurrentGearMaxSpeed())));
+                } catch (NegativeValueException e) {
+                    e.printStackTrace();
+                }
                 synchronized (uiController) {
                     uiController.refresh();
                 }

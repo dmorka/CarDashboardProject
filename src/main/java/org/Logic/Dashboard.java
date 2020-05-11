@@ -232,19 +232,6 @@ public class Dashboard implements Serializable {
     }
 
     public void setGears(){
-//        this.gears.clear();
-//        this.gears.add((short)0);
-//        this.gears.add((short) (this.settings.getMaxSpeed()*0.1));
-//        this.gears.add((short)(this.settings.getMaxSpeed()*0.15));
-//        this.gears.add((short)(this.settings.getMaxSpeed()*0.31));
-//        if (this.settings.getNumberOfGears() == 5) {
-//            this.gears.add((short)(this.settings.getMaxSpeed()*0.5));
-//        }
-//        else {
-//            this.gears.add((short)(this.settings.getMaxSpeed()*0.4));
-//            this.gears.add((short)(this.settings.getMaxSpeed()*0.6));
-//        }
-//        this.gears.add(this.settings.getMaxSpeed());
         this.gears.clear();
         this.gears.add((short)0);
         this.gears.add((short) (this.settings.getMaxSpeed()*0.2));
