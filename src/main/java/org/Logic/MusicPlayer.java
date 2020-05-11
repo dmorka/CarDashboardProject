@@ -4,16 +4,14 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.atomic.AtomicReference;
 
 import javafx.scene.media.*;
 import javafx.util.Duration;
-import org.Data.LoadFiles;
+import org.Data.LoadFilesFromDisk;
 
 
 public class MusicPlayer  {
-    private LoadFiles loadFiles = new LoadFiles();
+    private LoadFilesFromDisk loadFilesFromDisk = new LoadFilesFromDisk();
     private ArrayList<Media> playlist = new ArrayList<>();
     private MediaPlayer mediaPlayer = null;
     private double volume = 75;
@@ -35,7 +33,7 @@ public class MusicPlayer  {
 
     }
 
-    public String getArtist() throws InterruptedException {
+    public String getArtist() {
         if(playlist.isEmpty())
             return "Unknown";
         String artistName;
@@ -127,7 +125,7 @@ public class MusicPlayer  {
 
     public void loadSongs(String directoryPath) throws IOException {
         playlistDirectoryPath = directoryPath;
-        List<String> result = loadFiles.loadMp3Files(directoryPath);
+        List<String> result = loadFilesFromDisk.loadMp3Files(directoryPath);
         playlist = new ArrayList<>();
         // Wpisujemy obiekty Media (pliki mp3) do playlisty a nastepnie je inicjalizujemy
         // by przy pierwszym odtworzeniu utworu mieć wczytane wszytskie jego parametry (szczególnie czas trwania utworu)

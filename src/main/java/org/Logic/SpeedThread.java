@@ -43,7 +43,7 @@ public class SpeedThread extends Thread {
         float distance = 0.0f;
         long startTime = System.currentTimeMillis();
         while(engineRunning) {
-            synchronized (uiController) {
+            //synchronized (uiController) {
                 if (dashboard.isKeyUp() && dashboard.getSpeed() < dashboard.getCurrentGearMaxSpeed()) {
                     dashboard.addSpeed(2);
                 } else if (dashboard.isKeyDown() && dashboard.getSpeed() >= 8) {
@@ -72,7 +72,7 @@ public class SpeedThread extends Thread {
                 }
 
                 uiController.refresh();
-            }
+            //}
             try {
                 Thread.sleep(100);
             } catch (InterruptedException e) {

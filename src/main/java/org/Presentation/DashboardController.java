@@ -1,13 +1,9 @@
 package org.Presentation;
 
-import java.io.File;
-import java.io.FilenameFilter;
 import java.io.IOException;
-import java.net.URL;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Arrays;
-import java.util.ResourceBundle;
+import java.util.HashMap;
 
 import eu.hansolo.medusa.Gauge;
 import javafx.animation.Animation;
@@ -16,7 +12,6 @@ import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
@@ -33,12 +28,14 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.event.ActionEvent;
 import javafx.util.Duration;
+import org.Data.LoadFilesFromDisk;
 import org.Logic.*;
 
 public class DashboardController extends UIController {
     private FlashingSignalThread flashingSignalThread;
     private SpeedThread speedThread;
     private Timeline progressBar;
+    private HashMap<String, Image[]> lights;
     public ImageView IVindicatorsTurnRight;
     public ImageView IVindicatorsTurnLeft;
     public ImageView IVparkingLights;
@@ -55,6 +52,7 @@ public class DashboardController extends UIController {
     public MenuItem MIsettings;
     public CheckMenuItem indicatorsTurnLeft;
     public CheckMenuItem indicatorsTurnRight;
+    public CheckMenuItem headlightsLowBeam;
     public Text TXTclock;
     public Text TXTgear;
     public Text TXTavgSpeed;
@@ -76,6 +74,13 @@ public class DashboardController extends UIController {
 
     @FXML
     public void initialize() {
+        LoadFilesFromDisk loadFilesFromDisk = new LoadFilesFromDisk();
+        try {
+            lights = loadFilesFromDisk.loadLights();
+        } catch (IOException e) {
+            //e.getStackTrace();
+            openDialog(AlertType.ERROR, "Error dialog", e.getClass().getSimpleName(), e.getMessage());
+        }
         this.dashboard.getMusicPlayer().setAutoPlayNext(this::nextSongMP);
         initClock();
         reloadAfterSettings();
@@ -89,7 +94,6 @@ public class DashboardController extends UIController {
         if(dashboard.getMusicPlayer().isEmpty())
             return;
 
-        //if(PolyPlay.isVisible()) {
         if(!dashboard.getMusicPlayer().isPlaying()) {
             PolyPlay.setVisible(false);
             RecPause1.setVisible(true);
@@ -155,11 +159,7 @@ public class DashboardController extends UIController {
     @FXML
     private void setTitleArtist() {
         LtitleMP.setText(dashboard.getMusicPlayer().getTitle());
-        try {
-            LartistMP.setText(dashboard.getMusicPlayer().getArtist());
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        LartistMP.setText(dashboard.getMusicPlayer().getArtist());
     }
 
     @FXML
@@ -205,15 +205,9 @@ public class DashboardController extends UIController {
     public void lightSwitch(ActionEvent actionEvent)  {
         CheckMenuItem checkMenuItem = (CheckMenuItem) actionEvent.getSource();
         String id = checkMenuItem.getId();
-        Image newImage;
-        boolean enable;
-        if (checkMenuItem.isSelected()) {
-            newImage = new Image(getClass().getResourceAsStream("images/lights/" + id + "On.png"));
-            enable = true;
-        } else {
-            newImage = new Image(getClass().getResourceAsStream("images/lights/" + id + "Off.png"));
-            enable = false;
-        }
+        boolean enable = checkMenuItem.isSelected();
+        Image newImage = lights.get(id)[(enable) ? 1 : 0];
+
         switch (id) {
             case "indicatorsTurnLeft":
                 try{
@@ -334,9 +328,7 @@ public class DashboardController extends UIController {
             try {
                 dashboard.setLeftTurnSignal(true);
                 indicatorsTurnLeft.setSelected(true);
-                indicatorSwitch(IVindicatorsTurnLeft,
-                        new Image(getClass().getResourceAsStream("images/lights/indicatorsTurnLeftOn.png")),
-                        true);
+                indicatorSwitch(IVindicatorsTurnLeft, lights.get("indicatorsTurnLeft")[1], true);
             } catch (TurnSignalException e) {
                 openDialog(AlertType.ERROR, "Error Dialog", e.getClass().getSimpleName(), e.getMessage());
             }
@@ -344,9 +336,7 @@ public class DashboardController extends UIController {
             try {
                 dashboard.setRightTurnSignal(true);
                 indicatorsTurnRight.setSelected(true);
-                indicatorSwitch(IVindicatorsTurnRight,
-                        new Image(getClass().getResourceAsStream("images/lights/indicatorsTurnRightOn.png")),
-                        true);
+                indicatorSwitch(IVindicatorsTurnRight, lights.get("indicatorsTurnRight")[1],true);
             } catch (TurnSignalException e) {
                 openDialog(AlertType.ERROR, "Error Dialog", e.getClass().getSimpleName(), e.getMessage());
             }
@@ -370,31 +360,26 @@ public class DashboardController extends UIController {
         } else if (event.getCode() == KeyCode.LEFT) {
             dashboard.setLeftTurnSignal(false);
             indicatorsTurnLeft.setSelected(false);
-            indicatorSwitch(IVindicatorsTurnLeft,
-                    new Image(getClass().getResourceAsStream("images/lights/indicatorsTurnLeftOff.png")),
-                    false);
+            indicatorSwitch(IVindicatorsTurnLeft,lights.get("indicatorsTurnLeft")[0],false);
         } else if (event.getCode() == KeyCode.RIGHT) {
             dashboard.setRightTurnSignal(false);
             indicatorsTurnRight.setSelected(false);
-            indicatorSwitch(IVindicatorsTurnRight,
-                    new Image(getClass().getResourceAsStream("images/lights/indicatorsTurnRightOff.png")),
-                    false);
+            indicatorSwitch(IVindicatorsTurnRight, lights.get("indicatorsTurnRight")[0],false);
         }
     }
 
     private void switchAllLights(boolean state) {
-        String endWith = (state) ? "On.png" : "Off.png";
-        lightSwitch(IVindicatorsTurnRight, new Image(getClass().getResourceAsStream("images/lights/indicatorsTurnRight" +endWith)), state);
-        lightSwitch(IVindicatorsTurnLeft, new Image(getClass().getResourceAsStream("images/lights/indicatorsTurnLeft" +endWith)), state);
-        lightSwitch(IVparkingLights, new Image(getClass().getResourceAsStream("images/lights/parkingLights" +endWith)), state);
-        lightSwitch(IVheadlightsLowBeam, new Image(getClass().getResourceAsStream("images/lights/headlightsLowBeam" +endWith)), state);
-        lightSwitch(IVheadlightsHighBeam, new Image(getClass().getResourceAsStream("images/lights/headlightsHighBeam" +endWith)), state);
-        lightSwitch(IVfogLightsBack, new Image(getClass().getResourceAsStream("images/lights/fogLightsBack" +endWith)), state);
-        lightSwitch(IVfogLightsFront, new Image(getClass().getResourceAsStream("images/lights/fogLightsFront" +endWith)), state);
+        int isOn = (state) ? 1 : 0;
+        lightSwitch(IVindicatorsTurnLeft, lights.get("indicatorsTurnLeft")[isOn], state);
+        lightSwitch(IVindicatorsTurnRight, lights.get("indicatorsTurnRight")[isOn], state);
+        lightSwitch(IVparkingLights, lights.get("parkingLights")[isOn], state);
+        lightSwitch(IVheadlightsLowBeam, lights.get("headlightsLowBeam")[isOn], state);
+        lightSwitch(IVheadlightsHighBeam, lights.get("headlightsHighBeam")[isOn], state);
+        lightSwitch(IVfogLightsBack, lights.get("fogLightsBack")[isOn], state);
+        lightSwitch(IVfogLightsFront, lights.get("fogLightsFront")[isOn], state);
     }
 
     private void animateEngineStart(boolean forward) {
-
         final double revs = dashboard.getSettings().getMaxRevs() / ((forward) ? 100.0: -100.0);
         final double speed = dashboard.getSettings().getMaxSpeed() / ((forward) ? 100.0: -100.0);
         final double maxRevs = dashboard.getSettings().getMaxRevs();
@@ -417,6 +402,11 @@ public class DashboardController extends UIController {
             e.printStackTrace();
         }
         switchAllLights(forward);
+        if(dashboard.getSettings().isAutoLowBeam() && !forward) {
+            dashboard.setLowBeam(true);
+            headlightsLowBeam.setSelected(true);
+            lightSwitch(IVheadlightsLowBeam, lights.get("headlightsLowBeam")[1], true);
+        }
     }
 
     public void startStopEngine() {
@@ -426,17 +416,20 @@ public class DashboardController extends UIController {
             dashboard.getOnBoardComputer().startJourneyTime();
             dashboard.playStartEngineSound();
             animateEngineStart(true);
-
             speedThread = new SpeedThread(this, 1800);
             speedThread.setEngineRunning(true);
             //speedThread.setDaemon(true); //Wątek uruchamiamy w trybie Deamon by zakończył się razem z aplikacją i jej glownym wątkiem
             speedThread.start();
-
         }
         else {
             MIstartEngine.setDisable(false);
             MIstopEngine.setDisable(true);
             speedThread.setEngineRunning(false);
+            if(dashboard.getSettings().isAutoLowBeam()) {
+                dashboard.setLowBeam(false);
+                headlightsLowBeam.setSelected(false);
+                lightSwitch(IVheadlightsLowBeam, lights.get("headlightsLowBeam")[0], false);
+            }
             try {
                 speedThread.join();
                 // Tworzymy wątek dla przypadku gdy zgasło auto podczas jazdy, by prędkość nadal spadała
@@ -457,8 +450,7 @@ public class DashboardController extends UIController {
         GPmain.requestFocus();
     }
 
-
-    public void refresh() {
+    public synchronized void refresh() {
         speedGauge.setValue(dashboard.getSpeed());
         revsGauge.setValue(dashboard.getRevs());
         TXTgear.setText(String.valueOf(dashboard.getCurrentGear()));
