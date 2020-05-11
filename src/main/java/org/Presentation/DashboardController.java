@@ -382,8 +382,6 @@ public class DashboardController extends UIController {
     private void animateEngineStart(boolean forward) {
         final double revs = dashboard.getSettings().getMaxRevs() / ((forward) ? 100.0: -100.0);
         final double speed = dashboard.getSettings().getMaxSpeed() / ((forward) ? 100.0: -100.0);
-        final double maxRevs = dashboard.getSettings().getMaxRevs();
-        final double maxSpeed = dashboard.getSettings().getMaxSpeed();
         Timeline animEngineStartGrow = new Timeline(new KeyFrame(Duration.ZERO, e -> {
             speedGauge.setValue(speedGauge.getValue() + speed);
             revsGauge.setValue(revsGauge.getValue() + revs);
@@ -414,8 +412,9 @@ public class DashboardController extends UIController {
             MIstopEngine.setDisable(false);
             MIstartEngine.setDisable(true);
             dashboard.getOnBoardComputer().startJourneyTime();
-            dashboard.playStartEngineSound();
-            animateEngineStart(true);
+            //dashboard.playStartEngineSound();
+           // if(dashboard.getSpeed() == 0)
+             //   animateEngineStart(true);
             speedThread = new SpeedThread(this, 1800);
             speedThread.setEngineRunning(true);
             //speedThread.setDaemon(true); //Wątek uruchamiamy w trybie Deamon by zakończył się razem z aplikacją i jej glownym wątkiem

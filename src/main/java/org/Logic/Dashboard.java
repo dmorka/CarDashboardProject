@@ -210,9 +210,9 @@ public class Dashboard implements Serializable {
 
     public void setCurrentGear(short currentGear) throws GearException {
         if(currentGear < gears.size()){
-            if(currentGear == 0)
+            if(currentGear <= 1)
                 this.currentGear = currentGear;
-            else if(speed >= (float)gears.get(currentGear-1)*(3f/5f))
+            else if(revs >= 1999)
                 this.currentGear = currentGear;
             else
                 throw new GearException("You cannot change the gear to "+currentGear+" at this speed!");
@@ -232,17 +232,30 @@ public class Dashboard implements Serializable {
     }
 
     public void setGears(){
+//        this.gears.clear();
+//        this.gears.add((short)0);
+//        this.gears.add((short) (this.settings.getMaxSpeed()*0.1));
+//        this.gears.add((short)(this.settings.getMaxSpeed()*0.15));
+//        this.gears.add((short)(this.settings.getMaxSpeed()*0.31));
+//        if (this.settings.getNumberOfGears() == 5) {
+//            this.gears.add((short)(this.settings.getMaxSpeed()*0.5));
+//        }
+//        else {
+//            this.gears.add((short)(this.settings.getMaxSpeed()*0.4));
+//            this.gears.add((short)(this.settings.getMaxSpeed()*0.6));
+//        }
+//        this.gears.add(this.settings.getMaxSpeed());
         this.gears.clear();
         this.gears.add((short)0);
-        this.gears.add((short) (this.settings.getMaxSpeed()*0.1));
-        this.gears.add((short)(this.settings.getMaxSpeed()*0.15));
-        this.gears.add((short)(this.settings.getMaxSpeed()*0.31));
+        this.gears.add((short) (this.settings.getMaxSpeed()*0.2));
+        this.gears.add((short)(this.settings.getMaxSpeed()*0.3));
+        this.gears.add((short)(this.settings.getMaxSpeed()*0.4));
         if (this.settings.getNumberOfGears() == 5) {
-            this.gears.add((short)(this.settings.getMaxSpeed()*0.5));
+            this.gears.add((short)(this.settings.getMaxSpeed()*0.6));
         }
         else {
-            this.gears.add((short)(this.settings.getMaxSpeed()*0.4));
-            this.gears.add((short)(this.settings.getMaxSpeed()*0.6));
+            this.gears.add((short)(this.settings.getMaxSpeed()*0.5));
+            this.gears.add((short)(this.settings.getMaxSpeed()*0.7));
         }
         this.gears.add(this.settings.getMaxSpeed());
     }

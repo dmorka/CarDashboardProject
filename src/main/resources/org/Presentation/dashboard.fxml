@@ -529,7 +529,7 @@
                   <Line endX="118.0" layoutX="115.0" layoutY="249.0" startX="-100.0" stroke="WHITE" strokeWidth="3.0" />
                   <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="5.0">
                      <children>
-                        <Label text="Dystans:" textFill="WHITE">
+                        <Label text="Distance" textFill="WHITE">
                            <font>
                               <Font size="10.0" />
                            </font>
@@ -544,7 +544,7 @@
                               <Font size="10.0" />
                            </font>
                         </Label>
-                        <Label layoutX="107.0" layoutY="10.0" text="Czas podróży:" textFill="WHITE">
+                        <Label layoutX="107.0" layoutY="10.0" text="Journey time:" textFill="WHITE">
                            <HBox.margin>
                               <Insets left="20.0" />
                            </HBox.margin>

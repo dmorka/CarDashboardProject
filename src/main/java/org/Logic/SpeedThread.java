@@ -42,23 +42,31 @@ public class SpeedThread extends Thread {
         }
         float distance = 0.0f;
         long startTime = System.currentTimeMillis();
+        float revs = 0;
+        float gearMaxSpeed = 0;
         while(engineRunning) {
-            //synchronized (uiController) {
+            synchronized (uiController) {
                 if (dashboard.isKeyUp() && dashboard.getSpeed() < dashboard.getCurrentGearMaxSpeed()) {
-                    dashboard.addSpeed(2);
-                } else if (dashboard.isKeyDown() && dashboard.getSpeed() >= 8) {
+                    dashboard.addSpeed(1);
+                } else if (dashboard.isKeyDown() && dashboard.getSpeed() >= 3) {
                     dashboard.subSpeed(3);
-                } else if (dashboard.getSpeed() > dashboard.getLowerGearMaxSpeed()*(3/5f)) {
+                } else if (dashboard.getCurrentGear() <= 1 || dashboard.getRevs() > 2000) {
                     dashboard.subSpeed(1);
                 }
 
-                if(dashboard.getCurrentGear() > 0 ) {
+                //if(dashboard.getCurrentGear() > 0 ) {
                     try {
-                        dashboard.setRevs((int)(dashboard.getSettings().getMaxRevs() * ((float)dashboard.getSpeed()/(float)dashboard.getCurrentGearMaxSpeed())));
+
+                        if(dashboard.getCurrentGear() != 0 )
+                            gearMaxSpeed = dashboard.getCurrentGearMaxSpeed();
+
+                        revs = dashboard.getSettings().getMaxRevs() * (dashboard.getSpeed() /  gearMaxSpeed);
+
+                        dashboard.setRevs((int)revs);
                     } catch (NegativeValueException e) {
                         e.printStackTrace();
                     }
-                }
+                //}
 
                 //Czas próbkowania co 1s
                 if(System.currentTimeMillis() - startTime >= 1000) {
@@ -72,7 +80,7 @@ public class SpeedThread extends Thread {
                 }
 
                 uiController.refresh();
-            //}
+            }
             try {
                 Thread.sleep(100);
             } catch (InterruptedException e) {
