@@ -17,17 +17,26 @@ import java.io.File;
 public class SettingsController {
     private Settings settings;
     private DashboardController dashboardController;
-    public Slider SLdashboardLightIntensity;
-    public ToggleSwitch TSautoLowBeam;
-    public ToggleSwitch TSshuffleMode;
-    public RadioButton RDengineTypePetrol;
-    public RadioButton RDengineTypeDiesel;
-    public RadioButton RDnumberOfGears5;
-    public RadioButton RDnumberOfGears6;
-    public Button saveButton;
-    public Button BTNchoosePlaylistFolder;
-    public TextField TFplaylistFolderPath;
-    public TextFieldLimited TFLmaxSpeed;
+    @FXML
+    private Slider SLdashboardLightIntensity;
+    @FXML
+    private ToggleSwitch TSautoLowBeam;
+    @FXML
+    private ToggleSwitch TSshuffleMode;
+    @FXML
+    private RadioButton RDengineTypePetrol;
+    @FXML
+    private RadioButton RDengineTypeDiesel;
+    @FXML
+    private RadioButton RDnumberOfGears5;
+    @FXML
+    private RadioButton RDnumberOfGears6;
+    @FXML
+    private Button saveButton;
+    @FXML
+    private TextField TFplaylistFolderPath;
+    @FXML
+    private TextFieldLimited TFLmaxSpeed;
 
     public void loadSettings(Settings settings, DashboardController dashboardController) {
         this.settings = settings;
@@ -79,7 +88,8 @@ public class SettingsController {
         RDnumberOfGears6.setDisable(lock);
     }
 
-    public void chooseDirectory(MouseEvent e) {
+    @FXML
+    private void chooseDirectory(MouseEvent e) {
         DirectoryChooser directoryChooser = new DirectoryChooser();
         File selectedDirectory = directoryChooser.showDialog(((Node)e.getSource()).getScene().getWindow());
         if(selectedDirectory != null)

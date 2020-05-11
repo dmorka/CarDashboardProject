@@ -50,7 +50,7 @@ public class SpeedThread extends Thread {
                     dashboard.addSpeed(1);
                 } else if (dashboard.isKeyDown() && dashboard.getSpeed() >= 3) {
                     dashboard.subSpeed(3);
-                } else if (dashboard.getCurrentGear() <= 1 || dashboard.getRevs() > 2000) {
+                } else {
                     dashboard.subSpeed(1);
                 }
 
@@ -60,7 +60,7 @@ public class SpeedThread extends Thread {
                         if(dashboard.getCurrentGear() != 0 )
                             gearMaxSpeed = dashboard.getCurrentGearMaxSpeed();
 
-                        revs = dashboard.getSettings().getMaxRevs() * (dashboard.getSpeed() /  gearMaxSpeed);
+                        revs = (dashboard.getSettings().getMaxRevs()-1000) * (dashboard.getSpeed() /  gearMaxSpeed);
 
                         dashboard.setRevs((int)revs);
                     } catch (NegativeValueException e) {

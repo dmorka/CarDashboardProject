@@ -3,12 +3,15 @@ package org.Logic;
 import java.io.Serializable;
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
+import java.time.temporal.TemporalUnit;
 import java.util.Objects;
 
 public class OnBoardComputer implements Serializable, Comparable<OnBoardComputer> {
     private float avgSpeed;
     private int maxSpeed;
-    private LocalDateTime journeyTime = null;
+    private LocalDateTime journeyStartTime = null;
+    private LocalDateTime journeyPauseTime = null;
     private float journeyDistance;
     private float avgCombustion;
     private float maxCombustion;
@@ -53,7 +56,7 @@ public class OnBoardComputer implements Serializable, Comparable<OnBoardComputer
         return Objects.equals(avgSpeed, person.avgSpeed) &&
                 Objects.equals(avgCombustion, person.avgCombustion) &&
                 Objects.equals(maxSpeed, person.maxSpeed) &&
-                Objects.equals(journeyTime, person.journeyTime) &&
+                Objects.equals(journeyStartTime, person.journeyStartTime) &&
                 Objects.equals(journeyDistance, person.journeyDistance);
     }
 
@@ -64,7 +67,7 @@ public class OnBoardComputer implements Serializable, Comparable<OnBoardComputer
         }
         int journeyDistanceCmp = Float.compare(journeyDistance, o.journeyDistance);
         if(journeyDistanceCmp == 0) {
-            int journeyTimeCmp = journeyTime.compareTo(o.journeyTime);
+            int journeyTimeCmp = journeyStartTime.compareTo(o.journeyStartTime);
             if(journeyTimeCmp == 0) {
                 int avgSpeedCmp = Float.compare(avgSpeed, o.avgSpeed);
 
@@ -96,10 +99,10 @@ public class OnBoardComputer implements Serializable, Comparable<OnBoardComputer
         this.maxSpeed = maxSpeed;
     }
 
-    public String getJourneyTime() {
-        if(journeyTime != null)
+    public String getJourneyStartTime() {
+        if(journeyStartTime != null)
         {
-            int min = (int)(Duration.between(journeyTime, LocalDateTime.now()).getSeconds() / 60);
+            int min = (int)(Duration.between(journeyStartTime, LocalDateTime.now()).getSeconds() / 60);
             int h = (int)(min / 60);
             return h + "h " + min % 60 + " min";
         }
@@ -108,7 +111,15 @@ public class OnBoardComputer implements Serializable, Comparable<OnBoardComputer
     }
 
     public void startJourneyTime() {
-        this.journeyTime = LocalDateTime.now();
+        if(journeyStartTime == null)
+            this.journeyStartTime = LocalDateTime.now();
+
+        if(journeyPauseTime != null)
+            System.out.println(journeyStartTime.until(journeyPauseTime, ChronoUnit.MILLIS));
+    }
+
+    public void pauseJourneyTime() {
+        this.journeyStartTime = LocalDateTime.now();
     }
 
     public float getJourneyDistance() {

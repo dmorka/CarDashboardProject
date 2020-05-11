@@ -35,45 +35,89 @@ public class DashboardController extends UIController {
     private FlashingSignalThread flashingSignalThread;
     private SpeedThread speedThread;
     private Timeline progressBar;
+    @FXML
     private HashMap<String, Image[]> lights;
-    public ImageView IVindicatorsTurnRight;
-    public ImageView IVindicatorsTurnLeft;
-    public ImageView IVparkingLights;
-    public ImageView IVheadlightsLowBeam;
-    public ImageView IVheadlightsHighBeam;
-    public ImageView IVfogLightsBack;
-    public ImageView IVfogLightsFront;
-    public Gauge speedGauge;
-    public Gauge revsGauge;
-    public GridPane GPmain;
-    public MenuItem MIexit;
-    public MenuItem MIstartEngine;
-    public MenuItem MIstopEngine;
-    public MenuItem MIsettings;
-    public CheckMenuItem indicatorsTurnLeft;
-    public CheckMenuItem indicatorsTurnRight;
-    public CheckMenuItem headlightsLowBeam;
-    public Text TXTclock;
-    public Text TXTgear;
-    public Text TXTavgSpeed;
-    public Text TXTmaxSpeed;
-    public Text TXTavgFuelUsage;
-    public Text TXTmaxFuelUsage;
-    public Text TXTmainCounter;
-    public Text TXTdayCounter1;
-    public Text TXTdayCounter2;
-    public Text TXTjourneyDistance;
-    public Text TXTjourneyTime;
-    public Label LtitleMP;
-    public Label LartistMP;
-    public Slider SLvolume;
-    public Polygon PolyPlay;
-    public Rectangle RecPause1;
-    public Rectangle RecPause2;
-    public ProgressBar PBsongDuration;
+    @FXML
+    private ImageView IVindicatorsTurnRight;
+    @FXML
+    private ImageView IVindicatorsTurnLeft;
+    @FXML
+    private ImageView IVparkingLights;
+    @FXML
+    private ImageView IVheadlightsLowBeam;
+    @FXML
+    private ImageView IVheadlightsHighBeam;
+    @FXML
+    private ImageView IVfogLightsBack;
+    @FXML
+    private ImageView IVfogLightsFront;
+    @FXML
+    private Gauge speedGauge;
+    @FXML
+    private Gauge revsGauge;
+    @FXML
+    private GridPane GPmain;
+    @FXML
+    private MenuItem MIexit;
+    @FXML
+    private MenuItem MIstartEngine;
+    @FXML
+    private MenuItem MIstopEngine;
+    @FXML
+    private MenuItem MIsettings;
+    @FXML
+    private CheckMenuItem indicatorsTurnLeft;
+    @FXML
+    private CheckMenuItem indicatorsTurnRight;
+    @FXML
+    private CheckMenuItem headlightsLowBeam;
+    @FXML
+    private CheckMenuItem headlightsHighBeam;
+    @FXML
+    private CheckMenuItem fogLightsFront;
+    @FXML
+    private CheckMenuItem fogLightsBack;
+    @FXML
+    private CheckMenuItem parkingLights;
+    @FXML
+    private Text TXTclock;
+    @FXML
+    private Text TXTgear;
+    @FXML
+    private Text TXTavgSpeed;
+    @FXML
+    private Text TXTmaxSpeed;
+    @FXML
+    private Text TXTavgFuelUsage;
+    @FXML
+    private Text TXTmaxFuelUsage;
+    @FXML
+    private Text TXTmainCounter;
+    @FXML
+    private Text TXTdayCounter1;
+    @FXML
+    private Text TXTdayCounter2;
+    @FXML
+    private Text TXTjourneyDistance;
+    @FXML
+    private Text TXTjourneyTime;
+    @FXML
+    private Label LtitleMP;
+    @FXML
+    private Label LartistMP;
+    @FXML
+    private Slider SLvolume;
+    @FXML
+    private Polygon PolyPlay;
+    @FXML
+    private Rectangle RecPause1;
+    @FXML
+    private Rectangle RecPause2;
+    @FXML
+    private ProgressBar PBsongDuration;
 
     @FXML
-    public void initialize() {
+    private void initialize() {
         LoadFilesFromDisk loadFilesFromDisk = new LoadFilesFromDisk();
         try {
             lights = loadFilesFromDisk.loadLights();
@@ -138,15 +182,13 @@ public class DashboardController extends UIController {
     @FXML
     private void nextSongMP() {
         dashboard.getMusicPlayer().nextSong();
-        //dashboard.getMusicPlayer().autoPlayNext(this::nextSongMP);
         progressBarMP(true, PolyPlay.isVisible());
         setTitleArtist();
     }
 
     @FXML
-    public void previousSong() {
+    private void previousSong() {
         dashboard.getMusicPlayer().previousSong();
-        //dashboard.getMusicPlayer().autoPlayNext(this::nextSongMP);
         progressBarMP(true, PolyPlay.isVisible());
         setTitleArtist();
     }
@@ -194,7 +236,8 @@ public class DashboardController extends UIController {
         stage.show();
     }
 
-    public void openDialog(AlertType alertType, String title, String headerText, String contentText) {
+    @FXML
+    private void openDialog(AlertType alertType, String title, String headerText, String contentText) {
         Alert alert = new Alert(alertType);
         alert.setTitle(title);
         alert.setHeaderText(headerText);
@@ -202,7 +245,8 @@ public class DashboardController extends UIController {
         alert.showAndWait();
     }
 
-    public void lightSwitch(ActionEvent actionEvent)  {
+    @FXML
+    private void lightSwitch(ActionEvent actionEvent)  {
         CheckMenuItem checkMenuItem = (CheckMenuItem) actionEvent.getSource();
         String id = checkMenuItem.getId();
         boolean enable = checkMenuItem.isSelected();
@@ -258,12 +302,14 @@ public class DashboardController extends UIController {
         }
     }
 
-    public void lightSwitch(ImageView imageView, Image newImage, boolean enable) {
+    @FXML
+    private void lightSwitch(ImageView imageView, Image newImage, boolean enable) {
         imageView.setImage(newImage);
         imageView.setOpacity(enable ? 0.88 : 0.2);
     }
 
-    public void indicatorSwitch(ImageView imageView, Image newImage, boolean enable) {
+    @FXML
+    private void indicatorSwitch(ImageView imageView, Image newImage, boolean enable) {
         if (enable) {
             flashingSignalThread = new FlashingSignalThread(imageView, newImage);
             flashingSignalThread.setRunning(true);
@@ -347,8 +393,6 @@ public class DashboardController extends UIController {
                 openDialog(AlertType.ERROR, "Error dialog", e.getClass().getSimpleName(), e.getMessage());
             }
         }
-
-
     }
 
     @FXML
@@ -368,17 +412,47 @@ public class DashboardController extends UIController {
         }
     }
 
+    @FXML
     private void switchAllLights(boolean state) {
         int isOn = (state) ? 1 : 0;
         lightSwitch(IVindicatorsTurnLeft, lights.get("indicatorsTurnLeft")[isOn], state);
+        if(indicatorsTurnLeft.isSelected()) {
+            indicatorsTurnLeft.setSelected(false);
+            try {
+                dashboard.setLeftTurnSignal(false);
+            } catch (TurnSignalException e) {
+                openDialog(AlertType.ERROR, "Error Dialog", e.getClass().getSimpleName(), e.getMessage());
+            }
+            indicatorSwitch(IVindicatorsTurnLeft, lights.get("indicatorsTurnLeft")[0], false);
+        }
         lightSwitch(IVindicatorsTurnRight, lights.get("indicatorsTurnRight")[isOn], state);
+        if(indicatorsTurnRight.isSelected()) {
+            indicatorsTurnRight.setSelected(false);
+            try {
+                dashboard.setRightTurnSignal(false);
+            } catch (TurnSignalException e) {
+                openDialog(AlertType.ERROR, "Error Dialog", e.getClass().getSimpleName(), e.getMessage());
+            }
+            indicatorSwitch(IVindicatorsTurnRight, lights.get("indicatorsTurnRight")[0], false);
+        }
         lightSwitch(IVparkingLights, lights.get("parkingLights")[isOn], state);
+        parkingLights.setSelected(state);
+        dashboard.setPositionLights(state);
         lightSwitch(IVheadlightsLowBeam, lights.get("headlightsLowBeam")[isOn], state);
+        headlightsLowBeam.setSelected(state);
+        dashboard.setLowBeam(state);
         lightSwitch(IVheadlightsHighBeam, lights.get("headlightsHighBeam")[isOn], state);
+        headlightsHighBeam.setSelected(state);
+        dashboard.setHighBeam(state);
         lightSwitch(IVfogLightsBack, lights.get("fogLightsBack")[isOn], state);
+        fogLightsBack.setSelected(state);
+        dashboard.setRearFogLights(state);
         lightSwitch(IVfogLightsFront, lights.get("fogLightsFront")[isOn], state);
+        fogLightsFront.setSelected(state);
+        dashboard.setFrontFogLights(state);
     }
 
+    @FXML
     private void animateEngineStart(boolean forward) {
         final double revs = dashboard.getSettings().getMaxRevs() / ((forward) ? 100.0: -100.0);
         final double speed = dashboard.getSettings().getMaxSpeed() / ((forward) ? 100.0: -100.0);
@@ -407,14 +481,15 @@ public class DashboardController extends UIController {
         }
     }
 
+    @FXML
     public void startStopEngine() {
         if(!MIstartEngine.isDisable()) {
             MIstopEngine.setDisable(false);
             MIstartEngine.setDisable(true);
             dashboard.getOnBoardComputer().startJourneyTime();
-            //dashboard.playStartEngineSound();
-           // if(dashboard.getSpeed() == 0)
-             //   animateEngineStart(true);
+            dashboard.playStartEngineSound();
+            if(dashboard.getSpeed() == 0)
+               animateEngineStart(true);
             speedThread = new SpeedThread(this, 1800);
             speedThread.setEngineRunning(true);
             //speedThread.setDaemon(true); //Wątek uruchamiamy w trybie Deamon by zakończył się razem z aplikacją i jej glownym wątkiem
@@ -424,11 +499,8 @@ public class DashboardController extends UIController {
             MIstartEngine.setDisable(false);
             MIstopEngine.setDisable(true);
             speedThread.setEngineRunning(false);
-            if(dashboard.getSettings().isAutoLowBeam()) {
-                dashboard.setLowBeam(false);
-                headlightsLowBeam.setSelected(false);
-                lightSwitch(IVheadlightsLowBeam, lights.get("headlightsLowBeam")[0], false);
-            }
+            dashboard.getOnBoardComputer().pauseJourneyTime();
+            switchAllLights(false);
             try {
                 speedThread.join();
                 // Tworzymy wątek dla przypadku gdy zgasło auto podczas jazdy, by prędkość nadal spadała
@@ -445,7 +517,7 @@ public class DashboardController extends UIController {
     }
 
     @FXML
-    public void removeFocus(){
+    private void removeFocus(){
         GPmain.requestFocus();
     }
 
@@ -461,9 +533,10 @@ public class DashboardController extends UIController {
         TXTdayCounter1.setText(String.valueOf(dashboard.getDayCounter1()));
         TXTdayCounter2.setText(String.valueOf(dashboard.getDayCounter2()));
         TXTjourneyDistance.setText(String.valueOf(dashboard.getOnBoardComputer().getJourneyDistance()));
-        TXTjourneyTime.setText(dashboard.getOnBoardComputer().getJourneyTime());
+        TXTjourneyTime.setText(dashboard.getOnBoardComputer().getJourneyStartTime());
     }
 
+    @FXML
     private void initClock() {
         Timeline clock = new Timeline(new KeyFrame(Duration.ZERO, e -> {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
