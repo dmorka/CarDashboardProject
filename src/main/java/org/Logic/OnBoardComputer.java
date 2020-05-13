@@ -82,6 +82,8 @@ public class OnBoardComputer implements Serializable, Comparable<OnBoardComputer
     }
 
     public int getJourneyTime(){
+        if(journeyStartTime == null)
+            return 0;
         return (int)(Duration.between(journeyStartTime, LocalDateTime.now()).getSeconds() / 60);
     }
 
