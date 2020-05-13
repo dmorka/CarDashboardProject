@@ -34,22 +34,22 @@ public class Database implements DataHandling{
     }
 
     @Override
-    public void write(Path path, Dashboard dashboard) throws Exception {
+    public void write(Path path, RecordModel record) throws Exception {
         connect();
         String query = "INSERT INTO DashboardData(avg_speed, max_speed, avg_fuel, max_fuel, " +
                        "journey_distance, journey_time, total_counter, day_counter1, day_counter2)" +
                        "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         PreparedStatement preparedStatement = con.prepareStatement(query);
-        preparedStatement.setFloat(1, dashboard.getOnBoardComputer().getAvgSpeed());
-        preparedStatement.setFloat(2, dashboard.getOnBoardComputer().getMaxSpeed());
-        preparedStatement.setFloat(3, dashboard.getOnBoardComputer().getAvgCombustion());
-        preparedStatement.setFloat(4, dashboard.getOnBoardComputer().getMaxCombustion());
-        preparedStatement.setFloat(5, dashboard.getOnBoardComputer().getJourneyDistance());
-        preparedStatement.setInt(6, dashboard.getOnBoardComputer().getJourneyTime());
-        preparedStatement.setInt(7, (int)dashboard.getCounter());
-        preparedStatement.setFloat(8, dashboard.getDayCounter1());
-        preparedStatement.setFloat(9, dashboard.getDayCounter2());
-        preparedStatement.executeUpdate(query);
+        preparedStatement.setFloat(1, record.getAvgSpeed());
+        preparedStatement.setFloat(2, record.getMaxSpeed());
+        preparedStatement.setFloat(3, record.getAvgFuel());
+        preparedStatement.setFloat(4, record.getMaxFuel());
+        preparedStatement.setFloat(5, record.getJourneyDistance());
+        preparedStatement.setInt(6, record.getJourneyTime());
+        preparedStatement.setInt(7, record.getCounter());
+        preparedStatement.setFloat(8, record.getDayCounter1());
+        preparedStatement.setFloat(9, record.getDayCounter2());
+        preparedStatement.executeUpdate();
         disconnect();
     }
 

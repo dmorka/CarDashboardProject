@@ -35,8 +35,8 @@
                                 </Menu>
                                 <Menu mnemonicParsing="false" text="Export to">
                                     <items>
-                                        <MenuItem mnemonicParsing="false" text="XML file" />
-                                        <MenuItem mnemonicParsing="false" text="JDBC Database" />
+                                        <MenuItem fx:id="MIxmlFile" mnemonicParsing="false" text="XML file" />
+                                        <MenuItem fx:id="MIjdbcDatabase" mnemonicParsing="false" onAction="#onImportClicked" text="JDBC Database" />
                                     </items>
                                 </Menu>
                                 <MenuItem fx:id="MIsettings" mnemonicParsing="false" onAction="#openNewWindow" text="Settings" />

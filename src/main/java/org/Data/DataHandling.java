@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public interface DataHandling {
-    public void write(Path path, Dashboard dashboard) throws Exception;
+    public void write(Path path, RecordModel record) throws Exception;
     public ObservableList<RecordModel> read(Path path) throws Exception;
     public String printAllData(Path path);
 }

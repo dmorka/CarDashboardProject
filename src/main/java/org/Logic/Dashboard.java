@@ -1,6 +1,8 @@
 package org.Logic;
 
+import javafx.collections.ObservableList;
 import javafx.scene.media.AudioClip;
+import org.Data.Database;
 import org.Data.RecordModel;
 
 import java.io.Serializable;
@@ -57,6 +59,26 @@ public class Dashboard implements Serializable {
 
     public boolean isKeyUp() {
         return KeyUp;
+    }
+
+    public ObservableList<RecordModel> readFromDB(){
+        Database loadFromDatabase = new Database();
+        ObservableList<RecordModel> set = null;
+        try {
+            set = loadFromDatabase.read(null);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return set;
+    }
+
+    public void writeToDB() throws Exception {
+        RecordModel record = new RecordModel(0, onBoardComputer.getAvgSpeed(),
+                onBoardComputer.getMaxSpeed(), onBoardComputer.getAvgCombustion(),
+                onBoardComputer.getMaxCombustion(), onBoardComputer.getJourneyDistance(),
+                onBoardComputer.getJourneyTime(), (int)counter, dayCounter1, dayCounter2, null);
+        Database db = new Database();
+        db.write(null, record);
     }
 
     public OnBoardComputer getOnBoardComputer() {

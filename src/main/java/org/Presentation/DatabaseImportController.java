@@ -11,6 +11,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import org.Data.*;
+import org.Logic.Dashboard;
 
 import java.sql.Date;
 import java.sql.SQLException;
@@ -43,16 +44,7 @@ public class DatabaseImportController {
     @FXML
     private TableColumn<RecordModel, Date> col_create_date;
 
-    @FXML
-    private void initialize(){
-        Database loadFromDatabase = new Database();
-        loadFromDatabase.connect();
-        ObservableList<RecordModel> set = null;
-        try {
-            set = loadFromDatabase.read(null);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public void loadDB(ObservableList<RecordModel> set){
         col_id.setCellValueFactory(new PropertyValueFactory<RecordModel, Integer>("id"));
         col_avg_speed.setCellValueFactory(new PropertyValueFactory<RecordModel, Float>("avgSpeed"));
         col_max_speed.setCellValueFactory(new PropertyValueFactory<RecordModel, Float>("maxSpeed"));
@@ -65,11 +57,6 @@ public class DatabaseImportController {
         col_counter.setCellValueFactory(new PropertyValueFactory<RecordModel, Integer>("counter"));
         col_create_date.setCellValueFactory(new PropertyValueFactory<RecordModel, Date>("createDate"));
         table.setItems(set);
-        try {
-            loadFromDatabase.disconnect();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
     }
 
     @FXML

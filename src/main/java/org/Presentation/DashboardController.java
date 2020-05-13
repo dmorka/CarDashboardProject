@@ -238,6 +238,7 @@ public class DashboardController extends UIController {
         }
         else if(filename.equals("databaseImport.fxml")) {
             dbController = root.getController();
+            dbController.loadDB(dashboard.readFromDB());
         }
 
         Stage stage = new Stage();
@@ -427,6 +428,20 @@ public class DashboardController extends UIController {
             dashboard.setRightTurnSignal(false);
             indicatorsTurnRight.setSelected(false);
             indicatorSwitch(IVindicatorsTurnRight, lights.get("indicatorsTurnRight")[0],false);
+        }
+    }
+
+    @FXML
+    private void onImportClicked(ActionEvent actionEvent){
+        MenuItem menuItem = (MenuItem) actionEvent.getSource();
+        String id = menuItem.getId();
+        if(id.equals("MIjdbcDatabase")) {
+            try {
+                dashboard.writeToDB();
+            } catch (Exception e) {
+                e.printStackTrace();
+                //openDialog(AlertType.ERROR, "Error Dialog", e.getClass().getSimpleName(), e.getMessage());
+            }
         }
     }
 
