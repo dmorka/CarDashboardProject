@@ -247,7 +247,7 @@ public class DashboardController extends UIController {
         stage.show();
         DatabaseImportController finalDbController = dbController;
         stage.setOnCloseRequest(e->{
-            if(filename.equals("databaseImport.fxml")){
+            if(filename.equals("databaseImport.fxml") && finalDbController.getSelectedRecord() != null){
                 dashboard.updateDashboard(finalDbController.getSelectedRecord());
                 refresh();
             }
@@ -442,6 +442,8 @@ public class DashboardController extends UIController {
                 e.printStackTrace();
                 //openDialog(AlertType.ERROR, "Error Dialog", e.getClass().getSimpleName(), e.getMessage());
             }
+            openDialog(AlertType.INFORMATION, "Information dialog", "Export finished",
+                    "Succesfully exported to database!");
         }
     }
 

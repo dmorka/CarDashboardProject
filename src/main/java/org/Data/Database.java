@@ -44,11 +44,11 @@ public class Database implements DataHandling{
         preparedStatement.setFloat(2, record.getMaxSpeed());
         preparedStatement.setFloat(3, record.getAvgFuel());
         preparedStatement.setFloat(4, record.getMaxFuel());
-        preparedStatement.setFloat(5, record.getJourneyDistance());
+        preparedStatement.setFloat(5, Math.round(record.getJourneyDistance()*100.0)/100.0f);
         preparedStatement.setInt(6, record.getJourneyTime());
         preparedStatement.setInt(7, record.getCounter());
-        preparedStatement.setFloat(8, record.getDayCounter1());
-        preparedStatement.setFloat(9, record.getDayCounter2());
+        preparedStatement.setFloat(8, Math.round(record.getDayCounter1()*100.0)/100.0f);
+        preparedStatement.setFloat(9, Math.round(record.getDayCounter2()*100.0)/100.0f);
         preparedStatement.executeUpdate();
         disconnect();
     }
