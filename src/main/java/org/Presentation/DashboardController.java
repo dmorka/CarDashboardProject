@@ -1,6 +1,7 @@
 package org.Presentation;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
@@ -28,6 +29,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.event.ActionEvent;
 import javafx.util.Duration;
+import org.Data.Database;
 import org.Data.LoadFilesFromDisk;
 import org.Logic.*;
 

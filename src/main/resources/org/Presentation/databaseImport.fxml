@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="840.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.Presentation.DatabaseImportController">
+   <children>
+      <TableView prefHeight="400.0" prefWidth="762.0">
+         <columns>
+            <TableColumn fx:id="col_id" prefWidth="39.999998450279236" text="ID" />
+            <TableColumn fx:id="col_avg_speed" prefWidth="72.79998779296875" text="AVG Speed" />
+            <TableColumn fx:id="col_max_speed" prefWidth="79.99994659423828" text="MAX Speed" />
+            <TableColumn fx:id="col_avg_fuel" prefWidth="72.79998779296875" text="AVG Fuel" />
+            <TableColumn fx:id="col_max_fuel" prefWidth="76.00006103515625" text="MAX Fuel" />
+            <TableColumn fx:id="col_journey_dist" prefWidth="84.79998779296875" text="Journey dist" />
+            <TableColumn fx:id="col_journey_time" prefWidth="87.19992065429688" text="Journey time" />
+            <TableColumn fx:id="col_counter" prefWidth="64.0" text="Counter" />
+            <TableColumn fx:id="col_day_counter_1" prefWidth="90.39996337890625" text="Day counter 1" />
+            <TableColumn fx:id="col_day_counter_2" prefWidth="93.5999755859375" text="Day counter 2" />
+            <TableColumn fx:id="col_create_date" prefWidth="80.7999267578125" text="Create date" />
+         </columns>
+      </TableView>
+   </children>
+</VBox>
