@@ -77,7 +77,7 @@ public class SpeedThread extends Thread {
                 if(System.currentTimeMillis() - startTime >= 1000) {
                     startTime = System.currentTimeMillis();
                     distance = dashboard.getSpeed() * (1f/3600f);
-                    dashboard.setCounter(dashboard.getCounter() + distance);
+                    dashboard.setCounter((dashboard.getCounter() + distance));
                     dashboard.setDayCounter1(dashboard.getDayCounter1() + distance);
                     dashboard.setDayCounter2(dashboard.getDayCounter2() + distance);
                     onBoardComputer.setJourneyDistance(onBoardComputer.getJourneyDistance() + distance);

@@ -10,32 +10,17 @@ import java.util.Objects;
 
 public class OnBoardComputer implements Serializable, Comparable<OnBoardComputer> {
     private float avgSpeed;
-    private int maxSpeed;
+    private float maxSpeed;
+
+    public void setJourneyStartTime(LocalDateTime journeyStartTime) {
+        this.journeyStartTime = journeyStartTime;
+    }
+
     private LocalDateTime journeyStartTime = null;
     private LocalDateTime journeyPauseTime = null;
     private float journeyDistance;
     private float avgCombustion;
     private float maxCombustion;
-
-    public float avgSpeed() {
-        return 0;
-    }
-
-    public int maxSpeed() {
-        return 0;
-    }
-
-    public long journeyTime() {
-        return 0;
-    }
-
-    public float journeyDistance() {
-        return 0;
-    }
-
-    public float avgCombustion() {
-        return 0;
-    }
 
     public float getMaxCombustion() {
         return maxCombustion;
@@ -76,7 +61,7 @@ public class OnBoardComputer implements Serializable, Comparable<OnBoardComputer
                     int avgCombustionCmp = Float.compare(avgCombustion, o.avgCombustion);
 
                     if(avgCombustionCmp == 0)
-                        return Integer.compare(maxSpeed, o.maxSpeed);
+                        return Float.compare(maxSpeed, o.maxSpeed);
 
                     return avgCombustionCmp;
                 }
@@ -92,11 +77,15 @@ public class OnBoardComputer implements Serializable, Comparable<OnBoardComputer
         this.avgSpeed = avgSpeed;
     }
 
-    public int getMaxSpeed() {
+    public float getMaxSpeed() {
         return maxSpeed;
     }
 
-    public void setMaxSpeed(int maxSpeed) {
+    public int getJourneyTime(){
+        return (int)(Duration.between(journeyStartTime, LocalDateTime.now()).getSeconds() / 60);
+    }
+
+    public void setMaxSpeed(float maxSpeed) {
         this.maxSpeed = maxSpeed;
     }
 
@@ -128,7 +117,7 @@ public class OnBoardComputer implements Serializable, Comparable<OnBoardComputer
     }
 
     public float getJourneyDistance() {
-        return Math.round(journeyDistance * 10.0) / 10.0f;
+        return journeyDistance;
     }
 
     public void setJourneyDistance(float journeyDistance) {

@@ -31,6 +31,7 @@ import javafx.event.ActionEvent;
 import javafx.util.Duration;
 import org.Data.Database;
 import org.Data.LoadFilesFromDisk;
+import org.Data.RecordModel;
 import org.Logic.*;
 
 public class DashboardController extends UIController {
@@ -227,7 +228,7 @@ public class DashboardController extends UIController {
                 filename ="";
                 title ="";
         }
-
+        DatabaseImportController dbController = null;
         FXMLLoader root = new FXMLLoader(GUI.class.getResource(filename));
         Scene scene = new Scene(root.load());
         if(filename.equals("settings.fxml")) {
@@ -235,11 +236,22 @@ public class DashboardController extends UIController {
             settingsController.lockSettings(MIstartEngine.isDisable());
             settingsController.loadSettings(this.dashboard.getSettings(), this);
         }
+        else if(filename.equals("databaseImport.fxml")) {
+            dbController = root.getController();
+        }
 
         Stage stage = new Stage();
         stage.setTitle(title);
         stage.setScene(scene);
         stage.show();
+        DatabaseImportController finalDbController = dbController;
+        stage.setOnCloseRequest(e->{
+            if(filename.equals("databaseImport.fxml")){
+                dashboard.updateDashboard(finalDbController.getSelectedRecord());
+                refresh();
+            }
+        });
+
     }
 
     @FXML
@@ -535,12 +547,13 @@ public class DashboardController extends UIController {
         TXTmaxSpeed.setText(String.valueOf(dashboard.getOnBoardComputer().getMaxSpeed()));
         TXTavgFuelUsage.setText(String.valueOf(dashboard.getOnBoardComputer().getAvgCombustion()));
         TXTmaxFuelUsage.setText(String.valueOf(dashboard.getOnBoardComputer().getMaxCombustion()));
-        TXTmainCounter.setText(String.valueOf(dashboard.getCounter()));
-        TXTdayCounter1.setText(String.valueOf(dashboard.getDayCounter1()));
-        TXTdayCounter2.setText(String.valueOf(dashboard.getDayCounter2()));
-        TXTjourneyDistance.setText(String.valueOf(dashboard.getOnBoardComputer().getJourneyDistance()));
+        TXTmainCounter.setText(String.valueOf(Math.round(dashboard.getCounter()*10.0)/10.0f));
+        TXTdayCounter1.setText(String.valueOf(Math.round(dashboard.getDayCounter1()*10.0)/10.0f));
+        TXTdayCounter2.setText(String.valueOf(Math.round(dashboard.getDayCounter2()*10.0)/10.0f));
+        TXTjourneyDistance.setText(String.valueOf(Math.round(dashboard.getOnBoardComputer().getJourneyDistance()*10.0)/10.0f));
         TXTjourneyTime.setText(dashboard.getOnBoardComputer().getJourneyStartTime());
     }
+
 
     @FXML
     private void initClock() {

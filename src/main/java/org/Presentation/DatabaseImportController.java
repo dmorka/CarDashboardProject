@@ -1,5 +1,6 @@
 package org.Presentation;
 
+import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -7,6 +8,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import org.Data.*;
 
 import java.sql.Date;
@@ -14,6 +17,7 @@ import java.sql.SQLException;
 
 
 public class DatabaseImportController {
+    private RecordModel selectedRecord = null;
     @FXML
     private TableView<RecordModel> table;
     @FXML
@@ -71,7 +75,13 @@ public class DatabaseImportController {
     @FXML
     private void onMousePressed(MouseEvent mouseEvent) {
         if (mouseEvent.getClickCount() == 2) {
-            System.out.println(table.getSelectionModel().getSelectedItem());
+            selectedRecord = table.getSelectionModel().getSelectedItem();
+            Stage stage = (Stage) table.getScene().getWindow();
+            stage.fireEvent(new WindowEvent(stage, WindowEvent.WINDOW_CLOSE_REQUEST));
         }
+    }
+
+    public RecordModel getSelectedRecord(){
+        return selectedRecord;
     }
 }

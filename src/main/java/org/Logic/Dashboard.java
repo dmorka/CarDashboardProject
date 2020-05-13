@@ -1,10 +1,13 @@
 package org.Logic;
 
 import javafx.scene.media.AudioClip;
+import org.Data.RecordModel;
+
 import java.io.Serializable;
 import java.math.RoundingMode;
 import java.nio.file.Paths;
 import java.text.DecimalFormat;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class Dashboard implements Serializable {
@@ -58,10 +61,6 @@ public class Dashboard implements Serializable {
 
     public OnBoardComputer getOnBoardComputer() {
         return onBoardComputer;
-    }
-
-    public void setCounter(float counter) {
-        this.counter = counter;
     }
 
     public void setDayCounter1(float dayCounter1) {
@@ -121,15 +120,15 @@ public class Dashboard implements Serializable {
     }
 
     public float getCounter() {
-        return Math.round(counter * 10.0) / 10.0f;
+        return counter;
     }
 
     public float getDayCounter1() {
-        return Math.round(dayCounter1 * 10.0) / 10.0f;
+        return dayCounter1;
     }
 
     public float getDayCounter2() {
-        return Math.round(dayCounter2 * 10.0) / 10.0f;
+        return dayCounter2;
     }
 
     public int getRevs() {
@@ -138,6 +137,18 @@ public class Dashboard implements Serializable {
 
     public short getCurrentGear() {
         return currentGear;
+    }
+
+    public void updateDashboard(RecordModel selectedRecord){
+        this.onBoardComputer.setAvgSpeed(selectedRecord.getAvgSpeed());
+        this.onBoardComputer.setMaxSpeed(selectedRecord.getMaxSpeed());
+        this.onBoardComputer.setJourneyDistance(selectedRecord.getJourneyDistance());
+        this.onBoardComputer.setMaxCombustion(selectedRecord.getMaxFuel());
+        this.onBoardComputer.setAvgCombustion(selectedRecord.getAvgFuel());
+        this.dayCounter1 = selectedRecord.getDayCounter1();
+        this.dayCounter2 = selectedRecord.getDayCounter2();
+        LocalDateTime journeyTime = LocalDateTime.now();
+        this.onBoardComputer.setJourneyStartTime(journeyTime.minusMinutes(selectedRecord.getJourneyTime()));
     }
 
     public void setSpeed(short speed) throws NegativeValueException {
@@ -181,10 +192,7 @@ public class Dashboard implements Serializable {
         this.rearFogLights = rearFogLights;
     }
 
-    public void setCounter(int counter) throws NegativeValueException {
-        if(counter < 0)
-            throw new NegativeValueException("The counter  can't be negative!");
-
+    public void setCounter(float counter) {
         this.counter = counter;
     }
 
