@@ -219,6 +219,10 @@ public class DashboardController extends UIController {
                     filename = "settings.fxml";
                     title = "Settings";
                 break;
+            case "MIdatabaseImport":
+                    filename = "databaseImport.fxml";
+                    title = "Database Import";
+                break;
             default:
                 filename ="";
                 title ="";

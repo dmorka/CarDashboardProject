@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="840.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.Presentation.DatabaseImportController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="840.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.Presentation.DatabaseImportController">
    <children>
-      <TableView prefHeight="400.0" prefWidth="762.0">
+      <TableView fx:id="table" onMousePressed="#onMousePressed" prefHeight="400.0" prefWidth="762.0">
          <columns>
             <TableColumn fx:id="col_id" prefWidth="39.999998450279236" text="ID" />
             <TableColumn fx:id="col_avg_speed" prefWidth="72.79998779296875" text="AVG Speed" />

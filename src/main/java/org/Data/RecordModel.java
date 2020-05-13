@@ -1,13 +1,15 @@
 package org.Data;
 
-import java.time.LocalDateTime;
+import java.sql.Date;
 
 public class RecordModel {
     private int id, counter, journeyTime;
     private float avgSpeed, maxSpeed, avgFuel, maxFuel, journeyDistance, dayCounter1, dayCounter2;
-    private LocalDateTime createDate;
+    private Date createDate;
 
-    public RecordModel(int id, int counter, int journeyTime, float avgSpeed, float maxSpeed, float avgFuel, float maxFuel, float journeyDistance, float dayCounter1, float dayCounter2, LocalDateTime createDate) {
+    public RecordModel(int id, float avgSpeed, float maxSpeed, float avgFuel, float maxFuel,
+                       float journeyDistance, int journeyTime, int counter,
+                       float dayCounter1, float dayCounter2, Date createDate) {
         this.id = id;
         this.counter = counter;
         this.journeyTime = journeyTime;
@@ -61,7 +63,7 @@ public class RecordModel {
         this.dayCounter2 = dayCounter2;
     }
 
-    public void setCreateDate(LocalDateTime createDate) {
+    public void setCreateDate(Date createDate) {
         this.createDate = createDate;
     }
 
@@ -105,7 +107,7 @@ public class RecordModel {
         return dayCounter2;
     }
 
-    public LocalDateTime getCreateDate() {
+    public Date getCreateDate() {
         return createDate;
     }
 }

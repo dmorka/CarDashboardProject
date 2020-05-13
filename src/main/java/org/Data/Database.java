@@ -6,8 +6,6 @@ import org.Logic.Dashboard;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.HashMap;
 
 public class Database implements DataHandling{
     static final String connectionString = "jdbc:sqlserver://localhost:1433;databaseName=dashboard";
@@ -47,18 +45,17 @@ public class Database implements DataHandling{
 
         ObservableList<RecordModel> set = FXCollections.observableArrayList();
         while(result.next()){
-            RecordModel record = new RecordModel(result.getInt(1), result.getFloat(2), );
-            record.setId(result.getInt(1));
-            record.put("avgSpeed", result.getFloat(2));
-            record.put("maxSpeed", result.getFloat(3));
-            record.put("avgFuel", result.getFloat(4));
-            record.put("maxFuel", result.getFloat(5));
-            record.put("journeyDistance", result.getFloat(6));
-            record.put("journeyTime", result.getInt(7));
-            record.put("counter", result.getInt(8));
-            record.put("dayCounter1", result.getFloat(9));
-            record.put("dayCounter2", result.getFloat(10));
-            record.put("createTime", result.getDate(11));
+            RecordModel record = new RecordModel(result.getInt("id"),
+                                                result.getFloat("avg_speed"),
+                                                result.getFloat("max_speed"),
+                                                result.getFloat("avg_fuel"),
+                                                result.getFloat("max_fuel"),
+                                                result.getFloat("journey_distance"),
+                                                result.getInt("journey_time"),
+                                                result.getInt("total_counter"),
+                                                result.getFloat("day_counter1"),
+                                                result.getFloat("day_counter2"),
+                                                result.getDate("create_data"));
             set.add(record);
         }
         return set;

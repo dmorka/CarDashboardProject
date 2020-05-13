@@ -8,5 +8,6 @@ module org.cardashboardproject {
     requires java.sql;
 
     opens org.Presentation to javafx.fxml;
+    opens org.Data to javafx.base;
     exports org.Presentation;
 }
