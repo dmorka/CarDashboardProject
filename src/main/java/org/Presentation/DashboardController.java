@@ -2,9 +2,6 @@ package org.Presentation;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
@@ -16,7 +13,6 @@ import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
@@ -28,17 +24,14 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
-import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.event.ActionEvent;
-import javafx.stage.Window;
 import javafx.util.Duration;
-import org.Data.Database;
 import org.Data.LoadFilesFromDisk;
-import org.Data.RecordModel;
+import org.Data.Serialization;
 import org.Logic.*;
 
 import javax.xml.stream.XMLStreamException;
@@ -141,6 +134,7 @@ public class DashboardController extends UIController {
         initClock();
         reloadAfterSettings();
         refresh();
+        startupLightSwitch();
         progressBar = null;
         setTitleArtist();
     }
@@ -303,19 +297,22 @@ public class DashboardController extends UIController {
     }
 
     @FXML
-    private void lightSwitch(ActionEvent actionEvent)  {
+    private void menuLightSwitch(ActionEvent actionEvent)  {
         CheckMenuItem checkMenuItem = (CheckMenuItem) actionEvent.getSource();
-        String id = checkMenuItem.getId();
-        boolean enable = checkMenuItem.isSelected();
-        Image newImage = lights.get(id)[(enable) ? 1 : 0];
+        lightSwitch(checkMenuItem.getId(), checkMenuItem.isSelected());
+    }
 
-        switch (id) {
+    private void lightSwitch(String lightName, boolean enable) {
+        Image newImage = lights.get(lightName)[(enable) ? 1 : 0];
+
+        switch (lightName) {
             case "indicatorsTurnLeft":
                 try{
                     dashboard.setLeftTurnSignal(enable);
+                    indicatorsTurnLeft.setSelected(enable);
                 } catch (TurnSignalException e) {
                     openDialog(AlertType.ERROR, "Error Dialog", e.getClass().getSimpleName(), e.getMessage());
-                    checkMenuItem.setSelected(false);
+                    indicatorsTurnLeft.setSelected(false);
                     break;
                 }
                 indicatorSwitch(IVindicatorsTurnLeft, newImage, enable);
@@ -324,48 +321,52 @@ public class DashboardController extends UIController {
             case "indicatorsTurnRight":
                 try{
                     dashboard.setRightTurnSignal(enable);
+                    indicatorsTurnRight.setSelected(enable);
                 } catch (TurnSignalException e) {
                     openDialog(AlertType.ERROR, "Error Dialog", e.getClass().getSimpleName(), e.getMessage());
-                    checkMenuItem.setSelected(false);
+                    indicatorsTurnRight.setSelected(false);
                     break;
                 }
                 indicatorSwitch(IVindicatorsTurnRight, newImage, enable);
                 break;
 
             case "parkingLights":
+                parkingLights.setSelected(enable);
                 dashboard.setPositionLights(enable);
                 lightSwitch(IVparkingLights, newImage, enable);
                 break;
 
             case "headlightsLowBeam":
+                headlightsLowBeam.setSelected(enable);
                 dashboard.setLowBeam(enable);
                 lightSwitch(IVheadlightsLowBeam, newImage, enable);
                 break;
 
             case "headlightsHighBeam":
+                headlightsHighBeam.setSelected(enable);
                 dashboard.setHighBeam(enable);
                 lightSwitch(IVheadlightsHighBeam, newImage, enable);
                 break;
 
             case "fogLightsFront":
+                fogLightsFront.setSelected(enable);
                 dashboard.setFrontFogLights(enable);
                 lightSwitch(IVfogLightsFront, newImage, enable);
                 break;
 
             case "fogLightsBack":
+                fogLightsBack.setSelected(enable);
                 dashboard.setRearFogLights(enable);
                 lightSwitch(IVfogLightsBack, newImage, enable);
                 break;
         }
     }
 
-    @FXML
     private void lightSwitch(ImageView imageView, Image newImage, boolean enable) {
         imageView.setImage(newImage);
         imageView.setOpacity(enable ? 0.88 : 0.2);
     }
 
-    @FXML
     private void indicatorSwitch(ImageView imageView, Image newImage, boolean enable) {
         if (enable) {
             flashingSignalThread = new FlashingSignalThread(imageView, newImage);
@@ -377,6 +378,19 @@ public class DashboardController extends UIController {
             imageView.setImage(newImage);
             imageView.setOpacity(0.2);
         };
+    }
+
+    private void startupLightSwitch() {
+        if(dashboard.isPositionLights())
+            lightSwitch("parkingLights", true);
+        if(dashboard.isLowBeam())
+            lightSwitch("headlightsLowBeam", true);
+        if(dashboard.isHighBeam())
+            lightSwitch("headlightsHighBeam", true);
+        if(dashboard.isFrontFogLights())
+            lightSwitch("fogLightsFront", true);
+        if(dashboard.isRearFogLights())
+            lightSwitch("fogLightsFront", true);
     }
 
     public void reloadAfterSettings() {
@@ -489,40 +503,14 @@ public class DashboardController extends UIController {
     private void switchAllLights(boolean state) {
         int isOn = (state) ? 1 : 0;
         lightSwitch(IVindicatorsTurnLeft, lights.get("indicatorsTurnLeft")[isOn], state);
-        if(indicatorsTurnLeft.isSelected()) {
-            indicatorsTurnLeft.setSelected(false);
-            try {
-                dashboard.setLeftTurnSignal(false);
-            } catch (TurnSignalException e) {
-                openDialog(AlertType.ERROR, "Error Dialog", e.getClass().getSimpleName(), e.getMessage());
-            }
-            indicatorSwitch(IVindicatorsTurnLeft, lights.get("indicatorsTurnLeft")[0], false);
-        }
+        if(indicatorsTurnLeft.isSelected()) lightSwitch("indicatorsTurnLeft", false);
         lightSwitch(IVindicatorsTurnRight, lights.get("indicatorsTurnRight")[isOn], state);
-        if(indicatorsTurnRight.isSelected()) {
-            indicatorsTurnRight.setSelected(false);
-            try {
-                dashboard.setRightTurnSignal(false);
-            } catch (TurnSignalException e) {
-                openDialog(AlertType.ERROR, "Error Dialog", e.getClass().getSimpleName(), e.getMessage());
-            }
-            indicatorSwitch(IVindicatorsTurnRight, lights.get("indicatorsTurnRight")[0], false);
-        }
-        lightSwitch(IVparkingLights, lights.get("parkingLights")[isOn], state);
-        parkingLights.setSelected(state);
-        dashboard.setPositionLights(state);
-        lightSwitch(IVheadlightsLowBeam, lights.get("headlightsLowBeam")[isOn], state);
-        headlightsLowBeam.setSelected(state);
-        dashboard.setLowBeam(state);
-        lightSwitch(IVheadlightsHighBeam, lights.get("headlightsHighBeam")[isOn], state);
-        headlightsHighBeam.setSelected(state);
-        dashboard.setHighBeam(state);
-        lightSwitch(IVfogLightsBack, lights.get("fogLightsBack")[isOn], state);
-        fogLightsBack.setSelected(state);
-        dashboard.setRearFogLights(state);
-        lightSwitch(IVfogLightsFront, lights.get("fogLightsFront")[isOn], state);
-        fogLightsFront.setSelected(state);
-        dashboard.setFrontFogLights(state);
+        if(indicatorsTurnRight.isSelected()) lightSwitch("indicatorsTurnRight", false);
+        lightSwitch("parkingLights", state);
+        lightSwitch("headlightsLowBeam", state);
+        lightSwitch("headlightsHighBeam", state);
+        lightSwitch("fogLightsBack", state);
+        lightSwitch("fogLightsFront", state);
     }
 
     @FXML
@@ -602,7 +590,7 @@ public class DashboardController extends UIController {
         TXTmaxSpeed.setText(String.valueOf(dashboard.getOnBoardComputer().getMaxSpeed()));
         TXTavgFuelUsage.setText(String.valueOf(dashboard.getOnBoardComputer().getAvgCombustion()));
         TXTmaxFuelUsage.setText(String.valueOf(dashboard.getOnBoardComputer().getMaxCombustion()));
-        TXTmainCounter.setText(String.valueOf(Math.round(dashboard.getCounter()*10.0)/10.0f));
+        TXTmainCounter.setText(String.valueOf(Math.round(dashboard.getCounter())));
         TXTdayCounter1.setText(String.valueOf(Math.round(dashboard.getDayCounter1()*10.0)/10.0f));
         TXTdayCounter2.setText(String.valueOf(Math.round(dashboard.getDayCounter2()*10.0)/10.0f));
         TXTjourneyDistance.setText(String.valueOf(Math.round(dashboard.getOnBoardComputer().getJourneyDistance()*10.0)/10.0f));
@@ -640,6 +628,11 @@ public class DashboardController extends UIController {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+        }
+        try {
+            Serialization.write(dashboard);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }

@@ -23,15 +23,15 @@ public class OnBoardComputer implements Serializable, Comparable<OnBoardComputer
     private float maxCombustion;
 
     public float getMaxCombustion() {
-        return maxCombustion;
+        return Math.round(maxCombustion * 100f) / 100f;
     }
 
     public void setMaxCombustion(float maxCombustion) {
         this.maxCombustion = maxCombustion;
     }
 
-    public float getAvgSpeed() {
-        return avgSpeed;
+    public int getAvgSpeed() {
+        return Math.round(avgSpeed);
     }
 
     @Override
@@ -77,8 +77,8 @@ public class OnBoardComputer implements Serializable, Comparable<OnBoardComputer
         this.avgSpeed = avgSpeed;
     }
 
-    public float getMaxSpeed() {
-        return maxSpeed;
+    public int getMaxSpeed() {
+        return Math.round(maxSpeed);
     }
 
     public int getJourneyTime(){
@@ -127,7 +127,7 @@ public class OnBoardComputer implements Serializable, Comparable<OnBoardComputer
     }
 
     public float getAvgCombustion() {
-        return avgCombustion;
+        return Math.round(avgCombustion * 100f) / 100f;
     }
 
     public void setAvgCombustion(float avgCombustion) {

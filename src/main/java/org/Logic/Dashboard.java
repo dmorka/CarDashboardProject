@@ -10,31 +10,29 @@ import javax.xml.stream.XMLStreamException;
 import java.io.IOException;
 import java.io.Serializable;
 import java.math.RoundingMode;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.Date;
 import java.text.DecimalFormat;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class Dashboard implements Serializable {
-    private OnBoardComputer onBoardComputer;
+    private transient OnBoardComputer onBoardComputer;
     private Settings settings;
-    private MusicPlayer musicPlayer;
-    private short speed;
-    private boolean leftTurnSignal;
-    private boolean rightTurnSignal;
+    private transient MusicPlayer musicPlayer;
+    private transient short speed;
+    private transient boolean leftTurnSignal;
+    private transient boolean rightTurnSignal;
     private boolean positionLights;
     private boolean highBeam;
     private boolean lowBeam;
     private boolean frontFogLights;
     private boolean rearFogLights;
-    private boolean KeyUp;
-    private boolean KeyDown;
+    private transient boolean KeyUp;
+    private transient boolean KeyDown;
     private float counter;
     private float dayCounter1;
     private float dayCounter2;
-    private int revs;
+    private transient int revs;
     private short currentGear;
     private ArrayList<Short> gears;
 
@@ -60,6 +58,17 @@ public class Dashboard implements Serializable {
         this.setGears();
         DecimalFormat decimalFormat = new DecimalFormat("#.#");
         decimalFormat.setRoundingMode(RoundingMode.HALF_UP);
+    }
+
+    public void init() {
+        this.onBoardComputer = new OnBoardComputer();
+        this.musicPlayer = new MusicPlayer();
+        this.speed = 0;
+        this.revs = 0;
+        this.KeyUp = false;
+        this.KeyDown = false;
+        this.leftTurnSignal = false;
+        this.rightTurnSignal = false;
     }
 
     public boolean isKeyUp() {
@@ -313,5 +322,3 @@ public class Dashboard implements Serializable {
         return musicPlayer;
     }
 }
-
-

@@ -49,10 +49,18 @@ public class SpeedThread extends Thread {
         long startTime = System.currentTimeMillis();
         float revs = 0;
         float gearMaxSpeed = 0;
+        float maxSpeed = 0;
+        long sumSpeed = 0;
+        long sumAvgFuel = 0;
+        int iter = 1;
+        float fuelcoeff = (dashboard.getSettings().getEngineType() == 'P') ? 3.33f : 4.2f;
+        float currFuelComb = 0f;
         while(engineRunning) {
             synchronized (uiController) {
                 if (dashboard.isKeyUp() && dashboard.getSpeed() < dashboard.getCurrentGearMaxSpeed()) {
                     dashboard.addSpeed(1);
+                    if(dashboard.getSpeed() > maxSpeed)
+                        onBoardComputer.setMaxSpeed(dashboard.getSpeed());
                 } else if (dashboard.isKeyDown() && dashboard.getSpeed() >= 3) {
                     dashboard.subSpeed(3);
                 } else {
@@ -77,11 +85,18 @@ public class SpeedThread extends Thread {
                 if(System.currentTimeMillis() - startTime >= 1000) {
                     startTime = System.currentTimeMillis();
                     distance = dashboard.getSpeed() * (1f/3600f);
-                    dashboard.setCounter((dashboard.getCounter() + distance));
+                    sumSpeed += dashboard.getSpeed();
+                    onBoardComputer.setAvgSpeed((float)sumSpeed/iter);
+                    currFuelComb = (dashboard.getRevs() * fuelcoeff)/1000;
+                    sumAvgFuel += currFuelComb;
+                    onBoardComputer.setAvgCombustion((float)sumAvgFuel/iter);
+                    if(onBoardComputer.getMaxCombustion() < currFuelComb)
+                        onBoardComputer.setMaxCombustion(currFuelComb);
+                    iter += 1;
+                    dashboard.setCounter(dashboard.getCounter() + distance);
                     dashboard.setDayCounter1(dashboard.getDayCounter1() + distance);
                     dashboard.setDayCounter2(dashboard.getDayCounter2() + distance);
                     onBoardComputer.setJourneyDistance(onBoardComputer.getJourneyDistance() + distance);
-
                 }
 
                 uiController.refresh();
