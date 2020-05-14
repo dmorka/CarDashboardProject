@@ -1,6 +1,9 @@
 package org.Presentation;
 
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -13,6 +16,7 @@ import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
@@ -24,15 +28,20 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
+import javafx.stage.DirectoryChooser;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.event.ActionEvent;
+import javafx.stage.Window;
 import javafx.util.Duration;
 import org.Data.Database;
 import org.Data.LoadFilesFromDisk;
 import org.Data.RecordModel;
 import org.Logic.*;
+
+import javax.xml.stream.XMLStreamException;
 
 public class DashboardController extends UIController {
     private FlashingSignalThread flashingSignalThread;
@@ -253,6 +262,35 @@ public class DashboardController extends UIController {
             }
         });
 
+    }
+
+    @FXML
+    private void importFromXML(ActionEvent e) {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("XML file (*.xml)", "*.xml"));
+        File selectedDirectory = fileChooser.showOpenDialog(GPmain.getScene().getWindow());
+        if(selectedDirectory != null) {
+            try {
+                dashboard.readFromXml(selectedDirectory.getPath());
+                refresh();
+            } catch (IOException | XMLStreamException ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
+
+    @FXML
+    private void exportToXML(ActionEvent e) {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("XML file (*.xml)", "*.xml"));
+        File selectedDirectory = fileChooser.showSaveDialog(GPmain.getScene().getWindow());
+        if(selectedDirectory != null) {
+            try {
+                dashboard.writeToXml(selectedDirectory.getPath());
+            } catch (IOException | XMLStreamException ex) {
+                ex.printStackTrace();
+            }
+        }
     }
 
     @FXML

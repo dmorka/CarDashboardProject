@@ -29,13 +29,13 @@
                             <items>
                                 <Menu mnemonicParsing="false" text="Import from">
                                     <items>
-                                        <MenuItem mnemonicParsing="false" text="XML file" />
+                                        <MenuItem mnemonicParsing="false" onAction="#importFromXML" text="XML file" />
                                         <MenuItem fx:id="MIdatabaseImport" mnemonicParsing="false" onAction="#openNewWindow" text="JDBC Database" />
                                     </items>
                                 </Menu>
                                 <Menu mnemonicParsing="false" text="Export to">
                                     <items>
-                                        <MenuItem fx:id="MIxmlFile" mnemonicParsing="false" text="XML file" />
+                                        <MenuItem fx:id="MIxmlFile" mnemonicParsing="false" onAction="#exportToXML" text="XML file" />
                                         <MenuItem fx:id="MIjdbcDatabase" mnemonicParsing="false" onAction="#onImportClicked" text="JDBC Database" />
                                     </items>
                                 </Menu>

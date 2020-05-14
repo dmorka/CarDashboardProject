@@ -4,10 +4,15 @@ import javafx.collections.ObservableList;
 import javafx.scene.media.AudioClip;
 import org.Data.Database;
 import org.Data.RecordModel;
+import org.Data.XML;
 
+import javax.xml.stream.XMLStreamException;
+import java.io.IOException;
 import java.io.Serializable;
 import java.math.RoundingMode;
+import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.sql.Date;
 import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -72,13 +77,26 @@ public class Dashboard implements Serializable {
         return set;
     }
 
-    public void writeToDB() throws Exception {
-        RecordModel record = new RecordModel(0, onBoardComputer.getAvgSpeed(),
+    private RecordModel getRecordModel() {
+        return new RecordModel(0, onBoardComputer.getAvgSpeed(),
                 onBoardComputer.getMaxSpeed(), onBoardComputer.getAvgCombustion(),
                 onBoardComputer.getMaxCombustion(), onBoardComputer.getJourneyDistance(),
-                onBoardComputer.getJourneyTime(), (int)counter, dayCounter1, dayCounter2, null);
+                onBoardComputer.getJourneyTime(), (int)counter, dayCounter1, dayCounter2, new Date(System.currentTimeMillis()));
+    }
+
+    public void writeToDB() throws Exception {
         Database db = new Database();
-        db.write(null, record);
+        db.write(null, getRecordModel());
+    }
+
+    public void writeToXml(String path) throws IOException, XMLStreamException {
+        XML xml =  new XML();
+        xml.write(path, getRecordModel());
+    }
+
+    public void readFromXml(String path) throws IOException, XMLStreamException {
+        XML xml =  new XML();
+        updateDashboard(xml.read(path));
     }
 
     public OnBoardComputer getOnBoardComputer() {
@@ -169,8 +187,7 @@ public class Dashboard implements Serializable {
         this.onBoardComputer.setAvgCombustion(selectedRecord.getAvgFuel());
         this.dayCounter1 = selectedRecord.getDayCounter1();
         this.dayCounter2 = selectedRecord.getDayCounter2();
-        LocalDateTime journeyTime = LocalDateTime.now();
-        this.onBoardComputer.setJourneyStartTime(journeyTime.minusMinutes(selectedRecord.getJourneyTime()));
+        this.onBoardComputer.setJourneyTime(selectedRecord.getJourneyTime());
     }
 
     public void setSpeed(short speed) throws NegativeValueException {

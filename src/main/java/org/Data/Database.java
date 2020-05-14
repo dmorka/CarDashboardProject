@@ -14,7 +14,7 @@ public class Database implements DataHandling{
     Connection con = null;
     Statement stsm = null;
 
-    public void connect(){
+    public void connect() {
         try {
             Class.forName(driver);
             con = DriverManager.getConnection(connectionString, "car", "12345678");

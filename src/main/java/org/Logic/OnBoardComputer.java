@@ -134,6 +134,9 @@ public class OnBoardComputer implements Serializable, Comparable<OnBoardComputer
         this.avgCombustion = avgCombustion;
     }
 
-
+    public void setJourneyTime(int minutes) {
+        LocalDateTime localDateTime = LocalDateTime.now();
+        setJourneyStartTime(localDateTime.minusMinutes(minutes));
+    }
 
 }
