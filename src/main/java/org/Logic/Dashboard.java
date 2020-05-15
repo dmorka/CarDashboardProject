@@ -164,7 +164,7 @@ public class Dashboard implements Serializable {
         return frontFogLights;
     }
 
-    public boolean isRearFogLights() {
+    public boolean isBackFogLights() {
         return rearFogLights;
     }
 
@@ -264,11 +264,15 @@ public class Dashboard implements Serializable {
         this.revs = revs;
     }
 
-    public void setCurrentGear(short currentGear) throws GearException {
+    public void setCurrentGear(short currentGear, boolean engineRunning) throws GearException {
         if(currentGear < gears.size()){
-            if(currentGear <= 1)
+            if(currentGear == 0)
                 this.currentGear = currentGear;
-            else if(revs >= 1999)
+            else if(this.speed > gears.get(currentGear))
+                throw new GearException("You cannot change the gear to "+currentGear+" at this speed!");
+            else if(currentGear == 1)
+                this.currentGear = currentGear;
+            else if(revs >= 1999 || engineRunning )
                 this.currentGear = currentGear;
             else
                 throw new GearException("You cannot change the gear to "+currentGear+" at this speed!");

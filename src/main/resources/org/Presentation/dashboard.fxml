@@ -1,17 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import eu.hansolo.medusa.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.effect.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.paint.*?>
-<?import javafx.scene.shape.*?>
-<?import javafx.scene.text.*?>
+<?import eu.hansolo.medusa.Gauge?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.CheckMenuItem?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.effect.Glow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.input.KeyCodeCombination?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.shape.Polygon?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<GridPane fx:id="GPmain" minHeight="-Infinity" minWidth="-Infinity" onKeyPressed="#keyPressed" onKeyReleased="#keyReleased" prefHeight="388.0" prefWidth="760.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.Presentation.DashboardController">
+<GridPane fx:id="GPmain" minHeight="-Infinity" minWidth="-Infinity" onKeyPressed="#keyPressed" onKeyReleased="#keyReleased" prefHeight="388.0" prefWidth="760.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.Presentation.DashboardController">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
   </columnConstraints>
@@ -21,66 +38,133 @@
     <RowConstraints maxHeight="63.0" minHeight="10.0" prefHeight="32.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <VBox prefHeight="0.0" prefWidth="760.0">
+      <GridPane alignment="TOP_RIGHT" maxWidth="-Infinity" prefHeight="0.0" prefWidth="4096.0">
+         <GridPane.margin>
+            <Insets top="10.0" />
+         </GridPane.margin>
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="703.0" minWidth="10.0" percentWidth="90.0" prefWidth="699.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="369.0" minWidth="10.0" prefWidth="61.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+         </rowConstraints>
          <children>
-                <MenuBar>
-                    <menus>
-                        <Menu mnemonicParsing="false" text="File">
-                            <items>
-                                <Menu mnemonicParsing="false" text="Import from">
-                                    <items>
-                                        <MenuItem mnemonicParsing="false" onAction="#importFromXML" text="XML file" />
-                                        <MenuItem fx:id="MIdatabaseImport" mnemonicParsing="false" onAction="#openNewWindow" text="JDBC Database" />
-                                    </items>
-                                </Menu>
-                                <Menu mnemonicParsing="false" text="Export to">
-                                    <items>
-                                        <MenuItem fx:id="MIxmlFile" mnemonicParsing="false" onAction="#exportToXML" text="XML file" />
-                                        <MenuItem fx:id="MIjdbcDatabase" mnemonicParsing="false" onAction="#onImportClicked" text="JDBC Database" />
-                                    </items>
-                                </Menu>
-                                <MenuItem fx:id="MIsettings" mnemonicParsing="false" onAction="#openNewWindow" text="Settings" />
-                        <MenuItem fx:id="MIexit" mnemonicParsing="false" onAction="#closeWindow" text="Exit" />
-                            </items>
+            <VBox prefHeight="28.0" prefWidth="727.0">
+               <children>
+                      <MenuBar stylesheets="@style.css">
+                          <menus>
+                              <Menu mnemonicParsing="false" text="File">
+                                  <items>
+                                      <Menu mnemonicParsing="false" text="Import from">
+                                          <items>
+                                              <MenuItem mnemonicParsing="false" onAction="#importFromXML" text="XML file" />
+                                              <MenuItem fx:id="MIdatabaseImport" mnemonicParsing="false" onAction="#openNewWindow" text="JDBC Database" />
+                                          </items>
+                                      </Menu>
+                                      <Menu mnemonicParsing="false" text="Export to">
+                                          <items>
+                                              <MenuItem fx:id="MIxmlFile" mnemonicParsing="false" onAction="#exportToXML" text="XML file" />
+                                              <MenuItem fx:id="MIjdbcDatabase" mnemonicParsing="false" onAction="#exportToDB" text="JDBC Database" />
+                                          </items>
+                                      </Menu>
+                                      <MenuItem fx:id="MIsettings" mnemonicParsing="false" onAction="#openNewWindow" text="Settings" />
+                              <MenuItem fx:id="MIexit" mnemonicParsing="false" onAction="#closeWindow" text="Exit" />
+                                  </items>
+                              </Menu>
+                        <Menu mnemonicParsing="false" text="Engine">
+                           <items>
+                              <MenuItem fx:id="MIstartEngine" mnemonicParsing="false" onAction="#startStopEngine" text="Start">
+                                 <accelerator>
+                                    <KeyCodeCombination alt="UP" code="W" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                                 </accelerator>
+                              </MenuItem>
+                              <MenuItem fx:id="MIstopEngine" disable="true" mnemonicParsing="false" onAction="#startStopEngine" text="Stop">
+                                 <accelerator>
+                                    <KeyCodeCombination alt="UP" code="Q" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                                 </accelerator>
+                              </MenuItem>
+                           </items>
                         </Menu>
-                  <Menu mnemonicParsing="false" text="Engine">
-                     <items>
-                        <MenuItem fx:id="MIstartEngine" mnemonicParsing="false" onAction="#startStopEngine" text="Start" />
-                        <MenuItem fx:id="MIstopEngine" disable="true" mnemonicParsing="false" onAction="#startStopEngine" text="Stop" />
-                     </items>
-                  </Menu>
-                        <Menu mnemonicParsing="false" text="Lights">
-                            <items>
-                                <CheckMenuItem fx:id="parkingLights" mnemonicParsing="false" onAction="#menuLightSwitch" text="Parking lights" />
-                                <Menu mnemonicParsing="false" text="Headlights">
-                                    <items>
-                                        <CheckMenuItem fx:id="headlightsLowBeam" mnemonicParsing="false" onAction="#menuLightSwitch" text="Low beam" />
-                                        <CheckMenuItem fx:id="headlightsHighBeam" mnemonicParsing="false" onAction="#menuLightSwitch" text="High beam" />
-                                    </items>
-                                </Menu>
-                                <Menu mnemonicParsing="false" text="Fog lights">
-                                    <items>
-                                        <CheckMenuItem fx:id="fogLightsBack" mnemonicParsing="false" onAction="#menuLightSwitch" text="Back" />
-                                        <CheckMenuItem fx:id="fogLightsFront" mnemonicParsing="false" onAction="#menuLightSwitch" text="Front" />
-                                    </items>
-                                </Menu>
-                                <Menu mnemonicParsing="false" text="Indicators">
-                                    <items>
-                                        <CheckMenuItem fx:id="indicatorsTurnLeft" mnemonicParsing="false" onAction="#menuLightSwitch" text="Turn left" />
-                                        <CheckMenuItem fx:id="indicatorsTurnRight" mnemonicParsing="false" onAction="#menuLightSwitch" text="Turn right" />
-                                    </items>
-                                </Menu>
-                            </items>
-                        </Menu>
-                        <Menu mnemonicParsing="false" text="Help">
-                            <items>
-                                <MenuItem fx:id="MIabout" mnemonicParsing="false" onAction="#openNewWindow" text="About" />
-                            </items>
-                        </Menu>
-                    </menus>
-                </MenuBar>
+                              <Menu mnemonicParsing="false" text="Lights">
+                                  <items>
+                                      <CheckMenuItem fx:id="parkingLights" mnemonicParsing="false" onAction="#menuLightSwitch" text="Parking lights">
+                                         <accelerator>
+                                            <KeyCodeCombination alt="UP" code="Z" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                                         </accelerator>
+                                      </CheckMenuItem>
+                                      <Menu mnemonicParsing="false" text="Headlights">
+                                          <items>
+                                              <CheckMenuItem fx:id="headlightsLowBeam" mnemonicParsing="false" onAction="#menuLightSwitch" text="Low beam">
+                                                 <accelerator>
+                                                    <KeyCodeCombination alt="UP" code="X" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                                                 </accelerator>
+                                              </CheckMenuItem>
+                                              <CheckMenuItem fx:id="headlightsHighBeam" mnemonicParsing="false" onAction="#menuLightSwitch" text="High beam">
+                                                 <accelerator>
+                                                    <KeyCodeCombination alt="UP" code="C" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                                                 </accelerator>
+                                              </CheckMenuItem>
+                                          </items>
+                                      </Menu>
+                                      <Menu mnemonicParsing="false" text="Fog lights">
+                                          <items>
+                                             <CheckMenuItem fx:id="fogLightsBack" mnemonicParsing="false" onAction="#menuLightSwitch" text="Back">
+                                                <accelerator>
+                                                   <KeyCodeCombination alt="UP" code="V" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                                                </accelerator>
+                                             </CheckMenuItem>
+                                             <CheckMenuItem fx:id="fogLightsFront" mnemonicParsing="false" onAction="#menuLightSwitch" text="Front">
+                                                <accelerator>
+                                                   <KeyCodeCombination alt="UP" code="B" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                                                </accelerator>
+                                             </CheckMenuItem>
+                                          </items>
+                                      </Menu>
+                                      <Menu mnemonicParsing="false" text="Indicators">
+                                          <items>
+                                              <CheckMenuItem fx:id="indicatorsTurnLeft" mnemonicParsing="false" onAction="#menuLightSwitch" text="Turn left" />
+                                              <CheckMenuItem fx:id="indicatorsTurnRight" mnemonicParsing="false" onAction="#menuLightSwitch" text="Turn right" />
+                                          </items>
+                                      </Menu>
+                                  </items>
+                              </Menu>
+                              <Menu mnemonicParsing="false" text="Help">
+                                  <items>
+                                      <MenuItem fx:id="MIabout" mnemonicParsing="false" onAction="#openNewWindow" text="About" />
+                                  </items>
+                              </Menu>
+                          </menus>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                      </MenuBar>
+               </children>
+            </VBox>
+            <HBox alignment="TOP_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="5.0" GridPane.columnIndex="1">
+               <children>
+                  <Label text="m" textFill="#757575">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Label text="M" textFill="#757575">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Label text="X" textFill="#757575">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+               </children>
+               <GridPane.margin>
+                  <Insets right="10.0" />
+               </GridPane.margin>
+            </HBox>
          </children>
-      </VBox>
+      </GridPane>
       <HBox alignment="CENTER" prefHeight="251.0" prefWidth="760.0" GridPane.rowIndex="1">
          <children>
             <Gauge fx:id="revsGauge" borderPaint="#8009ab" borderWidth="3.0" decimals="0" knobType="FLAT" lcdDesign="ORANGE" lcdFont="LCD" majorTickSpace="1000.0" maxValue="8000.0" needleShape="FLAT" prefHeight="230.0" prefWidth="221.0" skinType="DIGITAL" styleClass="gaugeSize" stylesheets="@style.css" value="3200.0">

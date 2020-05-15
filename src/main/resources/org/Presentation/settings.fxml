@@ -18,7 +18,7 @@
 <?import org.controlsfx.control.ToggleSwitch?>
 
 <?import org.Presentation.*?>
-<GridPane alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="612.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.Presentation.SettingsController">
+<GridPane alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="612.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="org.Presentation.SettingsController">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="280.0" minWidth="10.0" prefWidth="279.0" />
       <ColumnConstraints hgrow="SOMETIMES" maxWidth="191.0" minWidth="7.0" prefWidth="22.0" />

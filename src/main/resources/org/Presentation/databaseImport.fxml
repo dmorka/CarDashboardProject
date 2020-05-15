@@ -4,7 +4,7 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox alignment="TOP_CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="840.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.Presentation.DatabaseImportController">
+<VBox alignment="TOP_CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="840.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="org.Presentation.DatabaseImportController">
    <children>
       <TableView fx:id="table" maxHeight="-Infinity" maxWidth="-Infinity" onMousePressed="#onMousePressed" prefHeight="4096.0" prefWidth="4096.0" stylesheets="@style.css">
          <columns>

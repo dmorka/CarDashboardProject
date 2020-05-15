@@ -134,7 +134,6 @@ public class DashboardController extends UIController {
         initClock();
         reloadAfterSettings();
         refresh();
-        startupLightSwitch();
         progressBar = null;
         setTitleArtist();
     }
@@ -389,8 +388,8 @@ public class DashboardController extends UIController {
             lightSwitch("headlightsHighBeam", true);
         if(dashboard.isFrontFogLights())
             lightSwitch("fogLightsFront", true);
-        if(dashboard.isRearFogLights())
-            lightSwitch("fogLightsFront", true);
+        if(dashboard.isBackFogLights())
+            lightSwitch("fogLightsBack", true);
     }
 
     public void reloadAfterSettings() {
@@ -423,6 +422,7 @@ public class DashboardController extends UIController {
 
             setTitleArtist();
         }
+        TXTgear.setText(String.valueOf(dashboard.getCurrentGear()));
         speedGauge.setMaxValue(dashboard.getSettings().getMaxSpeed());
         revsGauge.setMaxValue(dashboard.getSettings().getMaxRevs());
         int color = dashboard.getSettings().getDashboardLightIntesity();
@@ -445,7 +445,8 @@ public class DashboardController extends UIController {
             try {
                 dashboard.setLeftTurnSignal(true);
                 indicatorsTurnLeft.setSelected(true);
-                indicatorSwitch(IVindicatorsTurnLeft, lights.get("indicatorsTurnLeft")[1], true);
+                lightSwitch("indicatorsTurnLeft", true);
+                //indicatorSwitch(IVindicatorsTurnLeft, lights.get("indicatorsTurnLeft")[1], true);
             } catch (TurnSignalException e) {
                 openDialog(AlertType.ERROR, "Error Dialog", e.getClass().getSimpleName(), e.getMessage());
             }
@@ -453,13 +454,15 @@ public class DashboardController extends UIController {
             try {
                 dashboard.setRightTurnSignal(true);
                 indicatorsTurnRight.setSelected(true);
-                indicatorSwitch(IVindicatorsTurnRight, lights.get("indicatorsTurnRight")[1],true);
+                lightSwitch("indicatorsTurnRight", true);
+                //indicatorSwitch(IVindicatorsTurnRight, lights.get("indicatorsTurnRight")[1],true);
             } catch (TurnSignalException e) {
                 openDialog(AlertType.ERROR, "Error Dialog", e.getClass().getSimpleName(), e.getMessage());
             }
-        } else if(event.getText().compareTo("0") >= 0 && 0 >= event.getText().compareTo("6") && MIstartEngine.isDisable()) {
+        } else if(event.getText().compareTo("0") >= 0 && 0 >= event.getText().compareTo("6")) {
             try {
-                dashboard.setCurrentGear(Short.parseShort(event.getText()));
+                dashboard.setCurrentGear(Short.parseShort(event.getText()), MIstopEngine.isDisable());
+                refresh();
             } catch (GearException e) {
                 openDialog(AlertType.ERROR, "Error dialog", e.getClass().getSimpleName(), e.getMessage());
             }
@@ -475,27 +478,25 @@ public class DashboardController extends UIController {
         } else if (event.getCode() == KeyCode.LEFT) {
             dashboard.setLeftTurnSignal(false);
             indicatorsTurnLeft.setSelected(false);
-            indicatorSwitch(IVindicatorsTurnLeft,lights.get("indicatorsTurnLeft")[0],false);
+            lightSwitch("indicatorsTurnLeft", false);
+            //indicatorSwitch(IVindicatorsTurnLeft,lights.get("indicatorsTurnLeft")[0],false);
         } else if (event.getCode() == KeyCode.RIGHT) {
             dashboard.setRightTurnSignal(false);
             indicatorsTurnRight.setSelected(false);
-            indicatorSwitch(IVindicatorsTurnRight, lights.get("indicatorsTurnRight")[0],false);
+            lightSwitch("indicatorsTurnRight", false);
+            //indicatorSwitch(IVindicatorsTurnRight, lights.get("indicatorsTurnRight")[0],false);
         }
     }
 
     @FXML
-    private void onImportClicked(ActionEvent actionEvent){
-        MenuItem menuItem = (MenuItem) actionEvent.getSource();
-        String id = menuItem.getId();
-        if(id.equals("MIjdbcDatabase")) {
-            try {
-                dashboard.writeToDB();
-            } catch (Exception e) {
-                e.printStackTrace();
-                //openDialog(AlertType.ERROR, "Error Dialog", e.getClass().getSimpleName(), e.getMessage());
-            }
+    private void exportToDB(){
+        try {
+            dashboard.writeToDB();
             openDialog(AlertType.INFORMATION, "Information dialog", "Export finished",
                     "Succesfully exported to database!");
+        } catch (Exception e) {
+            //e.printStackTrace();
+            openDialog(AlertType.ERROR, "Error Dialog", e.getClass().getSimpleName(), e.getMessage());
         }
     }
 
@@ -506,11 +507,16 @@ public class DashboardController extends UIController {
         if(indicatorsTurnLeft.isSelected()) lightSwitch("indicatorsTurnLeft", false);
         lightSwitch(IVindicatorsTurnRight, lights.get("indicatorsTurnRight")[isOn], state);
         if(indicatorsTurnRight.isSelected()) lightSwitch("indicatorsTurnRight", false);
-        lightSwitch("parkingLights", state);
-        lightSwitch("headlightsLowBeam", state);
-        lightSwitch("headlightsHighBeam", state);
-        lightSwitch("fogLightsBack", state);
-        lightSwitch("fogLightsFront", state);
+        lightSwitch(IVparkingLights, lights.get("parkingLights")[isOn], state);
+        parkingLights.setSelected(state);
+        lightSwitch(IVheadlightsLowBeam, lights.get("headlightsLowBeam")[isOn], state);
+        headlightsLowBeam.setSelected(state);
+        lightSwitch(IVheadlightsHighBeam, lights.get("headlightsHighBeam")[isOn], state);
+        headlightsHighBeam.setSelected(state);
+        lightSwitch(IVfogLightsBack, lights.get("fogLightsBack")[isOn], state);
+        fogLightsBack.setSelected(state);
+        lightSwitch(IVfogLightsFront, lights.get("fogLightsFront")[isOn], state);
+        fogLightsFront.setSelected(state);
     }
 
     @FXML
@@ -518,8 +524,8 @@ public class DashboardController extends UIController {
         final double revs = dashboard.getSettings().getMaxRevs() / ((forward) ? 100.0: -100.0);
         final double speed = dashboard.getSettings().getMaxSpeed() / ((forward) ? 100.0: -100.0);
         Timeline animEngineStartGrow = new Timeline(new KeyFrame(Duration.ZERO, e -> {
-            speedGauge.setValue(speedGauge.getValue() + speed);
-            revsGauge.setValue(revsGauge.getValue() + revs);
+            speedGauge.setValue((speedGauge.getValue() + speed > 0) ? speedGauge.getValue() + speed : 0);
+            revsGauge.setValue((revsGauge.getValue() + revs > 0) ? revsGauge.getValue() + revs : 0);
         }), new KeyFrame(Duration.millis(8)));
         animEngineStartGrow.setCycleCount(100);
         animEngineStartGrow.setDelay(Duration.millis((forward) ? 500 : 200));
@@ -535,6 +541,8 @@ public class DashboardController extends UIController {
             e.printStackTrace();
         }
         switchAllLights(forward);
+        if(!forward)
+            startupLightSwitch();
         if(dashboard.getSettings().isAutoLowBeam() && !forward) {
             dashboard.setLowBeam(true);
             headlightsLowBeam.setSelected(true);
@@ -544,36 +552,46 @@ public class DashboardController extends UIController {
 
     @FXML
     public void startStopEngine() {
-        if(!MIstartEngine.isDisable()) {
+        if(!MIstartEngine.isDisable())
+            switchEngine(true, false);
+        else
+            switchEngine(false, false);
+    }
+
+    public void switchEngine(boolean enable, boolean interrupted) {
+        if(enable) {
             MIstopEngine.setDisable(false);
             MIstartEngine.setDisable(true);
             dashboard.getOnBoardComputer().startJourneyTime();
             dashboard.playStartEngineSound();
             if(dashboard.getSpeed() == 0)
-               animateEngineStart(true);
-            speedThread = new SpeedThread(this, 1800);
-            speedThread.setEngineRunning(true);
-            //speedThread.setDaemon(true); //Wątek uruchamiamy w trybie Deamon by zakończył się razem z aplikacją i jej glownym wątkiem
-            speedThread.start();
+                animateEngineStart(true);
+            try {
+                speedThread = new SpeedThread(this, 1800);
+                speedThread.setEngineRunning(true);
+                //speedThread.setDaemon(true); //Wątek uruchamiamy w trybie Deamon by zakończył się razem z aplikacją i jej glownym wątkiem
+                speedThread.start();
+            }catch (IllegalStateException e) {
+                System.out.println(e.getMessage());
+            }
+
         }
         else {
+            if(interrupted)
+                Platform.runLater(() -> {
+                    openDialog(AlertType.ERROR, "Error dialog",
+                            "EngineException", "The engine went out!");
+                });
             MIstartEngine.setDisable(false);
             MIstopEngine.setDisable(true);
             speedThread.setEngineRunning(false);
             dashboard.getOnBoardComputer().pauseJourneyTime();
             switchAllLights(false);
-            try {
-                speedThread.join();
-                // Tworzymy wątek dla przypadku gdy zgasło auto podczas jazdy, by prędkość nadal spadała
-                // aż do zera lub ponownego właczenia silnika
-                speedThread = new SpeedThread(this,0);
-                //speedThread.setDaemon(true);
-                speedThread.start();
-                //speedThread.join();
-
-            } catch (InterruptedException e) {
-                openDialog(AlertType.ERROR, "Error dialog", e.getClass().getSimpleName(), e.getMessage());
-            }
+            // Tworzymy wątek dla przypadku gdy zgasło auto podczas jazdy, by prędkość nadal spadała
+            // aż do zera lub ponownego właczenia silnika
+            speedThread = new SpeedThread(this,0);
+            //speedThread.setDaemon(true);
+            speedThread.start();
         }
     }
 
@@ -582,7 +600,7 @@ public class DashboardController extends UIController {
         GPmain.requestFocus();
     }
 
-    public synchronized void refresh() {
+    public void refresh() {
         speedGauge.setValue(dashboard.getSpeed());
         revsGauge.setValue(dashboard.getRevs());
         TXTgear.setText(String.valueOf(dashboard.getCurrentGear()));
