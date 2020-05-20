@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 
+import com.goxr3plus.fxborderlessscene.borderless.BorderlessPane;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDialog;
 import com.jfoenix.controls.events.JFXDialogEvent;
@@ -488,7 +489,7 @@ public class DashboardController extends UIController {
     }
 
     @FXML
-    private void keyPressed(KeyEvent event) {
+   void keyPressed(KeyEvent event) {
         if (event.getCode() == KeyCode.UP && !dashboard.isKeyUp()) {
             dashboard.setKeyUp(true);
         } else if (event.getCode() == KeyCode.DOWN) {
@@ -522,7 +523,7 @@ public class DashboardController extends UIController {
     }
 
     @FXML
-    private void keyReleased(KeyEvent event) throws TurnSignalException {
+   void keyReleased(KeyEvent event) throws TurnSignalException {
         if (event.getCode() == KeyCode.UP) {
             dashboard.setKeyUp(false);
         } else if (event.getCode() == KeyCode.DOWN) {
@@ -657,7 +658,7 @@ public class DashboardController extends UIController {
             // aż do zera lub ponownego właczenia silnika
             speedThread = new SpeedThread(this,0);
             speedThread.setAnimationToZero(true);
-            //speedThread.setDaemon(true);
+            speedThread.setDaemon(true);
             speedThread.start();
         }
     }
@@ -723,11 +724,6 @@ public class DashboardController extends UIController {
     public void onStageDestruction() {
         if(speedThread != null) {
             speedThread.setEngineRunning(false);
-            try {
-                speedThread.join();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
         }
         try {
             Serialization.write(dashboard);
