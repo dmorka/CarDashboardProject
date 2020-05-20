@@ -47,6 +47,12 @@ public class DashboardController extends UIController {
     private SpeedThread speedThread;
     private Timeline progressBar;
     @FXML
+    private MenuItem MIspeedUp;
+    @FXML
+    private MenuItem MIspeedDown;
+    @FXML
+    private CheckMenuItem cruiseControl;
+    @FXML
     private StackPane stackPane;
     @FXML
     private HashMap<String, Image[]> lights;
@@ -64,6 +70,8 @@ public class DashboardController extends UIController {
     private ImageView IVfogLightsBack;
     @FXML
     private ImageView IVfogLightsFront;
+    @FXML
+    private ImageView IVcruiseControl;
     @FXML
     private Gauge speedGauge;
     @FXML
@@ -390,6 +398,18 @@ public class DashboardController extends UIController {
                 dashboard.setRearFogLights(enable);
                 lightSwitch(IVfogLightsBack, newImage, enable);
                 break;
+
+            case "cruiseControl":
+                try {
+                    dashboard.setCruiseSpeed(dashboard.getSpeed());
+                    cruiseControl.setSelected(enable);
+                    dashboard.setCruiseControl(enable);
+                    lightSwitch(IVcruiseControl, newImage, enable);
+                } catch (CruiseControlException e) {
+                    openDialog(e.getClass().getSimpleName(), e.getMessage());
+                    cruiseControl.setSelected(false);
+                }
+                break;
         }
     }
 
@@ -549,6 +569,8 @@ public class DashboardController extends UIController {
         fogLightsBack.setSelected(state);
         lightSwitch(IVfogLightsFront, lights.get("fogLightsFront")[isOn], state);
         fogLightsFront.setSelected(state);
+        lightSwitch(IVcruiseControl, lights.get("cruiseControl")[isOn], state);
+        cruiseControl.setSelected(state);
     }
 
     @FXML
@@ -675,6 +697,21 @@ public class DashboardController extends UIController {
             dashboard.setDayCounter2(0.0f);
             TXTdayCounter2.setText("0.0");
         }
+    }
+
+    @FXML
+    private void changeSpeedCruiseControl(ActionEvent event) {
+        MenuItem menuItem = (MenuItem) event.getSource();
+        String id = menuItem.getId();
+        if(id.equals("MIspeedUp"))
+            dashboard.cruiseControlSpeedChange(true);
+        else
+            dashboard.cruiseControlSpeedChange(false);
+    }
+
+    public void switchOffCruiseControl() {
+        dashboard.setCruiseControl(false);
+        this.lightSwitch("cruiseControl", false);
     }
 
     public void onStageDestruction() {

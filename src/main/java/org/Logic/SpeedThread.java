@@ -80,14 +80,21 @@ public class SpeedThread extends Thread {
 
         while(engineRunning) {
             synchronized (uiController) {
-                if (dashboard.isKeyUp() && dashboard.getSpeed() < dashboard.getCurrentGearMaxSpeed()) {
+                if ((dashboard.isKeyUp() && dashboard.getSpeed() < dashboard.getCurrentGearMaxSpeed()) ||
+                    (dashboard.getCruiseSpeed() > dashboard.getSpeed() && dashboard.isCruiseControl())) {
                     dashboard.addSpeed(1);
                     if(dashboard.getSpeed() > maxSpeed)
                         onBoardComputer.setMaxSpeed(dashboard.getSpeed());
                 } else if (dashboard.isKeyDown() && dashboard.getSpeed() >= 3) {
+                    uiController.switchOffCruiseControl();
                     dashboard.subSpeed(3);
                 } else {
-                    dashboard.subSpeed(1);
+                    if(!uiController.getDashboard().isCruiseControl())
+                        dashboard.subSpeed(1);
+                    else if(dashboard.getSpeed() > dashboard.getCruiseSpeed())
+                        dashboard.subSpeed(1);
+                    else dashboard.addSpeed(1);
+
                 }
 
                 //if(dashboard.getCurrentGear() > 0 ) {

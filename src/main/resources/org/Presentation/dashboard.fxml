@@ -14,14 +14,14 @@
 
 <StackPane fx:id="stackPane" stylesheets="@openDialogStyle.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.Presentation.DashboardController">
    <children>
-      <GridPane fx:id="GPmain" minHeight="-Infinity" minWidth="-Infinity" onKeyPressed="#keyPressed" onKeyReleased="#keyReleased" prefHeight="388.0" prefWidth="760.0" style="-fx-background-color: black;">
+      <GridPane fx:id="GPmain" minHeight="-Infinity" minWidth="-Infinity" onKeyPressed="#keyPressed" onKeyReleased="#keyReleased" prefHeight="482.0" prefWidth="760.0" style="-fx-background-color: black;">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
         </columnConstraints>
         <rowConstraints>
           <RowConstraints maxHeight="125.0" minHeight="0.0" prefHeight="0.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" prefHeight="307.0" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="63.0" minHeight="10.0" prefHeight="32.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="359.2" minHeight="10.0" prefHeight="351.2" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="63.0" minHeight="10.0" prefHeight="20.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
             <GridPane alignment="TOP_RIGHT" maxWidth="-Infinity" prefHeight="0.0" prefWidth="4096.0">
@@ -115,6 +115,25 @@
                                             </Menu>
                                         </items>
                                     </Menu>
+                              <Menu mnemonicParsing="false" text="Cruise control">
+                                <items>
+                                  <MenuItem fx:id="MIspeedUp" mnemonicParsing="false" onAction="#changeSpeedCruiseControl" text="+5 km/h">
+                                     <accelerator>
+                                        <KeyCodeCombination alt="UP" code="BRACERIGHT" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                                     </accelerator>
+                                  </MenuItem>
+                                    <CheckMenuItem fx:id="cruiseControl" mnemonicParsing="false" onAction="#menuLightSwitch" text="Active">
+                                       <accelerator>
+                                           <KeyCodeCombination alt="UP" code="G" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                                       </accelerator>
+                                    </CheckMenuItem>
+                                    <MenuItem fx:id="MIspeedDown" mnemonicParsing="false" onAction="#changeSpeedCruiseControl" text="-5 km/h">
+                                       <accelerator>
+                                          <KeyCodeCombination alt="UP" code="BRACELEFT" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                                       </accelerator>
+                                    </MenuItem>
+                                </items>
+                              </Menu>
                                     <Menu mnemonicParsing="false" text="Help">
                                         <items>
                                             <MenuItem fx:id="MIabout" mnemonicParsing="false" onAction="#openNewWindow" text="About" />
@@ -151,7 +170,7 @@
                   </HBox>
                </children>
             </GridPane>
-            <HBox alignment="CENTER" prefHeight="251.0" prefWidth="760.0" GridPane.rowIndex="1">
+            <HBox alignment="CENTER" prefHeight="284.0" prefWidth="760.0" GridPane.rowIndex="1">
                <children>
                   <Gauge fx:id="revsGauge" borderPaint="#8009ab" borderWidth="3.0" decimals="0" knobType="FLAT" lcdDesign="ORANGE" lcdFont="LCD" majorTickSpace="1000.0" maxValue="8000.0" needleShape="FLAT" prefHeight="230.0" prefWidth="221.0" skinType="DIGITAL" styleClass="gaugeSize" stylesheets="@style.css" value="3200.0">
                      <effect>
@@ -161,13 +180,13 @@
                         <Insets left="20.0" />
                      </HBox.margin>
                   </Gauge>
-                  <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="264.0" prefWidth="227.0" style="-fx-border-color: white; -fx-border-width: 3px;">
+                  <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="321.0" prefWidth="228.0" style="-fx-border-color: white; -fx-border-width: 3px;">
                      <children>
                         <HBox alignment="CENTER_LEFT" prefHeight="27.0" prefWidth="221.0">
                            <children>
-                              <AnchorPane prefHeight="25.0" prefWidth="111.0">
+                              <AnchorPane prefHeight="24.0" prefWidth="51.0">
                                  <children>
-                                    <Text fx:id="TXTclock" fill="WHITE" layoutX="10.0" layoutY="12.0" strokeType="OUTSIDE" strokeWidth="0.0" text="16:26" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <Text fx:id="TXTclock" fill="WHITE" layoutX="10.0" layoutY="12.0" strokeType="OUTSIDE" strokeWidth="0.0" text="16:26" wrappingWidth="128.2920036315918" AnchorPane.bottomAnchor="2.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="-72.0" AnchorPane.topAnchor="0.0">
                                        <font>
                                           <Font name="System Bold" size="18.0" />
                                        </font>
@@ -177,7 +196,18 @@
                                     </Text>
                                  </children>
                               </AnchorPane>
-                              <AnchorPane nodeOrientation="RIGHT_TO_LEFT" prefHeight="200.0" prefWidth="200.0">
+                              <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                                 <children>
+                                    <ImageView fx:id="IVcruiseControl" fitHeight="24.0" fitWidth="27.0" layoutX="32.0" layoutY="1.0" opacity="0.2" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@images/lights/cruiseControlOff.png" />
+                                       </image>
+                                       <effect>
+                                          <Glow />
+                                       </effect></ImageView>
+                                 </children>
+                              </AnchorPane>
+                              <AnchorPane nodeOrientation="RIGHT_TO_LEFT" prefHeight="24.0" prefWidth="174.0">
                                  <children>
                                     <Text fx:id="TXTgear" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="5" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                        <font>

@@ -27,13 +27,24 @@ public class Dashboard implements Serializable {
     private boolean lowBeam;
     private boolean frontFogLights;
     private boolean rearFogLights;
-    private transient boolean KeyUp;
-    private transient boolean KeyDown;
+    private transient short cruiseSpeed;
+    private transient boolean cruiseControl;
+    private transient boolean keyUp;
+    private transient boolean keyDown;
     private float counter;
     private float dayCounter1;
     private float dayCounter2;
     private transient int revs;
     private short currentGear;
+
+    public boolean isCruiseControl() {
+        return cruiseControl;
+    }
+
+    public void setCruiseControl(boolean cruiseControl) {
+        this.cruiseControl = cruiseControl;
+    }
+
     private ArrayList<Short> gears;
 
 
@@ -49,6 +60,7 @@ public class Dashboard implements Serializable {
         this.highBeam = false;
         this.frontFogLights = false;
         this.rearFogLights = false;
+        this.cruiseControl = false;
         this.counter = 0;
         this.dayCounter1 = 0;
         this.dayCounter2 = 0;
@@ -60,19 +72,32 @@ public class Dashboard implements Serializable {
         decimalFormat.setRoundingMode(RoundingMode.HALF_UP);
     }
 
+    public short getCruiseSpeed() {
+        return cruiseSpeed;
+    }
+
+    public void setCruiseSpeed(short cruiseSpeed) throws CruiseControlException {
+        if(cruiseSpeed >= 80)
+            this.cruiseSpeed = cruiseSpeed;
+        else
+            throw new CruiseControlException("Too low speed to enable Cruise Control!");
+    }
+
     public void init() {
         this.onBoardComputer = new OnBoardComputer();
         this.musicPlayer = new MusicPlayer();
         this.speed = 0;
+        this.cruiseControl = false;
         this.revs = 0;
-        this.KeyUp = false;
-        this.KeyDown = false;
+        this.cruiseSpeed = 0;
+        this.keyUp = false;
+        this.keyDown = false;
         this.leftTurnSignal = false;
         this.rightTurnSignal = false;
     }
 
     public boolean isKeyUp() {
-        return KeyUp;
+        return keyUp;
     }
 
     public ObservableList<RecordModel> readFromDB(){
@@ -121,15 +146,15 @@ public class Dashboard implements Serializable {
     }
 
     public void setKeyUp(boolean keyUp) {
-        KeyUp = keyUp;
+        this.keyUp = keyUp;
     }
 
     public boolean isKeyDown() {
-        return KeyDown;
+        return keyDown;
     }
 
     public void setKeyDown(boolean keyDown) {
-        KeyDown = keyDown;
+        this.keyDown = keyDown;
     }
 
     public Settings getSettings() {
@@ -268,14 +293,34 @@ public class Dashboard implements Serializable {
         if(currentGear < gears.size()){
             if(currentGear == 0)
                 this.currentGear = currentGear;
-            else if(this.speed > gears.get(currentGear))
-                throw new GearException("You cannot change the gear to "+currentGear+" at this speed!");
+            else if(this.speed > gears.get(currentGear)) {
+                this.keyUp = false;
+                this.keyDown = false;
+                throw new GearException("You cannot change the gear to " + currentGear + " at this speed!");
+            }
             else if(currentGear == 1)
                 this.currentGear = currentGear;
             else if(revs >= 1999 || engineRunning )
                 this.currentGear = currentGear;
-            else
-                throw new GearException("You cannot change the gear to "+currentGear+" at this speed!");
+            else {
+                this.keyUp = false;
+                this.keyDown = false;
+                throw new GearException("You cannot change the gear to " + currentGear + " at this speed!");
+            }
+        }
+    }
+
+    public void cruiseControlSpeedChange(boolean speedChange) {
+        if(speedChange) {
+            this.cruiseSpeed += 5;
+            if(this.cruiseSpeed > settings.getMaxSpeed())
+                this.cruiseSpeed = settings.getMaxSpeed();
+        }
+        else{
+            this.cruiseSpeed -= 5;
+            if(this.cruiseSpeed < 80)
+                this.cruiseSpeed = 80;
+
         }
     }
 

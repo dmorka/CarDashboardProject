@@ -30,7 +30,7 @@ public class LoadFilesFromDisk {
 
     public HashMap<String, Image[]> loadLights() throws IOException {
         String[] lightList = {"parkingLights", "indicatorsTurnLeft", "indicatorsTurnRight", "headlightsLowBeam",
-                    "headlightsHighBeam", "fogLightsFront", "fogLightsBack"};
+                    "headlightsHighBeam", "fogLightsFront", "fogLightsBack", "cruiseControl"};
         HashMap<String, Image[]> result = new HashMap<>();
         String absolutePath =  (new File("src\\main\\resources\\org\\Presentation\\images\\lights").getAbsolutePath())+"\\";
         for(String name : lightList) {
