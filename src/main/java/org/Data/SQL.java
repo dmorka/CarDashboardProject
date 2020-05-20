@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.sql.*;
 
-public class Database implements DataHandling{
+public class SQL implements DataHandling{
     static final String connectionString = "jdbc:sqlserver://localhost:1433;databaseName=dashboard";
     static final String driver = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
 

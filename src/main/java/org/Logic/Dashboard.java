@@ -2,7 +2,7 @@ package org.Logic;
 
 import javafx.collections.ObservableList;
 import javafx.scene.media.AudioClip;
-import org.Data.Database;
+import org.Data.SQL;
 import org.Data.RecordModel;
 import org.Data.XML;
 
@@ -76,7 +76,7 @@ public class Dashboard implements Serializable {
     }
 
     public ObservableList<RecordModel> readFromDB(){
-        Database loadFromDatabase = new Database();
+        SQL loadFromDatabase = new SQL();
         ObservableList<RecordModel> set = null;
         try {
             set = loadFromDatabase.read(null);
@@ -94,7 +94,7 @@ public class Dashboard implements Serializable {
     }
 
     public void writeToDB() throws Exception {
-        Database db = new Database();
+        SQL db = new SQL();
         db.write(null, getRecordModel());
     }
 
