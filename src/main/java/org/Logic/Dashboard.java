@@ -2,34 +2,37 @@ package org.Logic;
 
 import javafx.collections.ObservableList;
 import javafx.scene.media.AudioClip;
-import org.Data.Database;
+import org.Data.SQL;
 import org.Data.RecordModel;
+import org.Data.XML;
 
+import javax.xml.stream.XMLStreamException;
+import java.io.IOException;
 import java.io.Serializable;
 import java.math.RoundingMode;
 import java.nio.file.Paths;
+import java.sql.Date;
 import java.text.DecimalFormat;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class Dashboard implements Serializable {
-    private OnBoardComputer onBoardComputer;
+    private transient OnBoardComputer onBoardComputer;
     private Settings settings;
-    private MusicPlayer musicPlayer;
-    private short speed;
-    private boolean leftTurnSignal;
-    private boolean rightTurnSignal;
+    private transient MusicPlayer musicPlayer;
+    private transient short speed;
+    private transient boolean leftTurnSignal;
+    private transient boolean rightTurnSignal;
     private boolean positionLights;
     private boolean highBeam;
     private boolean lowBeam;
     private boolean frontFogLights;
     private boolean rearFogLights;
-    private boolean KeyUp;
-    private boolean KeyDown;
+    private transient boolean KeyUp;
+    private transient boolean KeyDown;
     private float counter;
     private float dayCounter1;
     private float dayCounter2;
-    private int revs;
+    private transient int revs;
     private short currentGear;
     private ArrayList<Short> gears;
 
@@ -57,12 +60,23 @@ public class Dashboard implements Serializable {
         decimalFormat.setRoundingMode(RoundingMode.HALF_UP);
     }
 
+    public void init() {
+        this.onBoardComputer = new OnBoardComputer();
+        this.musicPlayer = new MusicPlayer();
+        this.speed = 0;
+        this.revs = 0;
+        this.KeyUp = false;
+        this.KeyDown = false;
+        this.leftTurnSignal = false;
+        this.rightTurnSignal = false;
+    }
+
     public boolean isKeyUp() {
         return KeyUp;
     }
 
     public ObservableList<RecordModel> readFromDB(){
-        Database loadFromDatabase = new Database();
+        SQL loadFromDatabase = new SQL();
         ObservableList<RecordModel> set = null;
         try {
             set = loadFromDatabase.read(null);
@@ -72,13 +86,26 @@ public class Dashboard implements Serializable {
         return set;
     }
 
-    public void writeToDB() throws Exception {
-        RecordModel record = new RecordModel(0, onBoardComputer.getAvgSpeed(),
+    private RecordModel getRecordModel() {
+        return new RecordModel(0, onBoardComputer.getAvgSpeed(),
                 onBoardComputer.getMaxSpeed(), onBoardComputer.getAvgCombustion(),
                 onBoardComputer.getMaxCombustion(), onBoardComputer.getJourneyDistance(),
-                onBoardComputer.getJourneyTime(), (int)counter, dayCounter1, dayCounter2, null);
-        Database db = new Database();
-        db.write(null, record);
+                onBoardComputer.getJourneyTime(), (int)counter, dayCounter1, dayCounter2, new Date(System.currentTimeMillis()));
+    }
+
+    public void writeToDB() throws Exception {
+        SQL db = new SQL();
+        db.write(null, getRecordModel());
+    }
+
+    public void writeToXml(String path) throws IOException, XMLStreamException {
+        XML xml =  new XML();
+        xml.write(path, getRecordModel());
+    }
+
+    public void readFromXml(String path) throws IOException, XMLStreamException {
+        XML xml =  new XML();
+        updateDashboard(xml.read(path));
     }
 
     public OnBoardComputer getOnBoardComputer() {
@@ -137,7 +164,7 @@ public class Dashboard implements Serializable {
         return frontFogLights;
     }
 
-    public boolean isRearFogLights() {
+    public boolean isBackFogLights() {
         return rearFogLights;
     }
 
@@ -169,8 +196,7 @@ public class Dashboard implements Serializable {
         this.onBoardComputer.setAvgCombustion(selectedRecord.getAvgFuel());
         this.dayCounter1 = selectedRecord.getDayCounter1();
         this.dayCounter2 = selectedRecord.getDayCounter2();
-        LocalDateTime journeyTime = LocalDateTime.now();
-        this.onBoardComputer.setJourneyStartTime(journeyTime.minusMinutes(selectedRecord.getJourneyTime()));
+        this.onBoardComputer.setJourneyTime(selectedRecord.getJourneyTime());
     }
 
     public void setSpeed(short speed) throws NegativeValueException {
@@ -238,11 +264,15 @@ public class Dashboard implements Serializable {
         this.revs = revs;
     }
 
-    public void setCurrentGear(short currentGear) throws GearException {
+    public void setCurrentGear(short currentGear, boolean engineRunning) throws GearException {
         if(currentGear < gears.size()){
-            if(currentGear <= 1)
+            if(currentGear == 0)
                 this.currentGear = currentGear;
-            else if(revs >= 1999)
+            else if(this.speed > gears.get(currentGear))
+                throw new GearException("You cannot change the gear to "+currentGear+" at this speed!");
+            else if(currentGear == 1)
+                this.currentGear = currentGear;
+            else if(revs >= 1999 || engineRunning )
                 this.currentGear = currentGear;
             else
                 throw new GearException("You cannot change the gear to "+currentGear+" at this speed!");
@@ -296,5 +326,3 @@ public class Dashboard implements Serializable {
         return musicPlayer;
     }
 }
-
-

@@ -58,11 +58,6 @@ public class MusicPlayer  {
             mediaPlayer.setOnEndOfMedia(autoPlayNext);
     }
 
-    public void autoPlayNext(Runnable runnable) {
-        if(mediaPlayer != null)
-            mediaPlayer.setOnEndOfMedia(runnable);
-    }
-
     public void pauseSong() {
         if(mediaPlayer != null)
             mediaPlayer.pause();
@@ -166,12 +161,4 @@ public class MusicPlayer  {
         return playlistDirectoryPath;
     }
 
-    public void onReady(Runnable runnable) {
-        if(mediaPlayer != null)
-            mediaPlayer.setOnReady(runnable);
-    }
-
-    public void setPlaylistDirectoryPath(String playlistDirectoryPath) {
-        this.playlistDirectoryPath = playlistDirectoryPath;
-    }
 }

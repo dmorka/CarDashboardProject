@@ -1,14 +1,11 @@
 package org.Presentation;
 
 import javafx.application.Application;
-import javafx.application.Platform;
-import javafx.event.EventHandler;
-import javafx.event.EventType;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
+import javafx.stage.StageStyle;
+
 import java.io.IOException;
 
 
@@ -21,6 +18,8 @@ public class GUI extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
+        //TODO: Try to remove windows borders
+        //stage.initStyle(StageStyle.UNDECORATED);
         FXMLLoader fxmlLoader = new FXMLLoader(GUI.class.getResource("dashboard.fxml"));
         scene = new Scene(fxmlLoader.load());
         stage.setScene(scene);

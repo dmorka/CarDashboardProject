@@ -7,3 +7,92 @@
 .gaugeSize {
 	-fx-pref-width:400px; 
 }
+
+.table-view {
+    -fx-base: #1d1d1d;
+    -fx-control-inner-background: #1d1d1d;
+    -fx-background-color: #1d1d1d;
+    -fx-table-cell-border-color: transparent;
+    -fx-table-header-border-color: transparent;
+    -fx-padding: 5;
+}
+
+.table-view .column-header-background {
+    -fx-background-color: transparent;
+}
+
+.table-view .column-header, .table-view .filler {
+    -fx-size: 35;
+    -fx-border-width: 0 0 1 0;
+    -fx-background-color: transparent;
+    -fx-border-color: 
+        transparent
+        transparent
+        derive(rgb(63, 0, 146), 80%) 
+        transparent;
+    -fx-border-insets: 0 10 1 0;
+}
+
+.table-view .column-header .label {
+    -fx-font-size: 12pt;
+    -fx-font-family: "Segoe UI Light";
+    -fx-text-fill: white;
+    -fx-alignment: center-left;
+    -fx-opacity: 1;
+}
+
+.table-row-cell:focused {
+    -fx-font-weight: bolder;
+    -fx-background-color: rgb(63, 0, 146);
+    -fx-dark-text-color: white;
+    -fx-mid-text-color: white;
+    -fx-light-text-color: white;
+    -fx-alignment: CENTER_LEFT;
+    -fx-table-cell-border-color: transparent;
+}
+
+.menu-bar {
+    -fx-background-color: black;
+}
+
+.menu-bar .label {
+    -fx-text-fill: rgb(77, 77, 77);
+    -fx-font-size:14;
+}
+
+.menu:hover {   
+    -fx-background-color: rgb(123, 0, 180);
+}
+
+.menu-item .label, .menu:hover .label {
+    -fx-text-fill: white;
+}
+
+.menu-item:focused {
+     -fx-background-color: rgb(123, 0, 180);
+}
+
+.menu-item .label {
+    -fx-font-size:13;
+}
+
+.context-menu {
+    -fx-background-color: black;
+    -fx-background-insets: 0, 1, 2;
+    -fx-background-radius: 0 6 6 6, 0 5 5 5, 0 4 4 4;
+/*    -fx-padding: 0.666667em 0.083333em 0.666667em 0.083333em;  8 1 8 1 */
+    -fx-padding: 0.333333em 0.083333em 0.666667em 0.083333em; /* 4 1 8 1 */
+    -fx-effect: dropshadow(two-pass-box, rgb(213, 123, 255),5,0.0,0.1,2);
+}
+
+.button {
+    -fx-background-color:black;
+    -fx-border-width:3;
+    -fx-border-radius:10;
+    -fx-border-color:grey;
+}
+
+.buttonHover:hover {
+    -fx-border-color:purple;
+}
+

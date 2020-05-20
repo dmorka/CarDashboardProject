@@ -1,11 +1,15 @@
 package org.Data;
 
+import org.Logic.OnBoardComputer;
+
 import java.sql.Date;
 
 public class RecordModel {
     private int id, counter, journeyTime;
     private float avgSpeed, maxSpeed, avgFuel, maxFuel, journeyDistance, dayCounter1, dayCounter2;
     private Date createDate;
+
+    public RecordModel() {}
 
     public RecordModel(int id, float avgSpeed, float maxSpeed, float avgFuel, float maxFuel,
                        float journeyDistance, int journeyTime, int counter,
@@ -67,6 +71,10 @@ public class RecordModel {
         this.createDate = createDate;
     }
 
+    public void setCreateDate(String createDate) {
+        this.createDate = Date.valueOf(createDate);
+    }
+
     public int getId() {
         return id;
     }
@@ -109,5 +117,14 @@ public class RecordModel {
 
     public Date getCreateDate() {
         return createDate;
+    }
+
+    public void setOnBoardComputer(OnBoardComputer onBoardComputer) {
+        avgSpeed = onBoardComputer.getAvgSpeed();
+        maxSpeed = onBoardComputer.getMaxSpeed();
+        avgFuel = onBoardComputer.getAvgCombustion();
+        maxFuel = onBoardComputer.getMaxCombustion();
+        journeyDistance = onBoardComputer.getJourneyDistance();
+        journeyTime = onBoardComputer.getJourneyTime();
     }
 }

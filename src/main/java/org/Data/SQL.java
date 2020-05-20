@@ -7,14 +7,14 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.sql.*;
 
-public class Database implements DataHandling{
+public class SQL implements DataHandling{
     static final String connectionString = "jdbc:sqlserver://localhost:1433;databaseName=dashboard";
     static final String driver = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
 
     Connection con = null;
     Statement stsm = null;
 
-    public void connect(){
+    public void connect() {
         try {
             Class.forName(driver);
             con = DriverManager.getConnection(connectionString, "car", "12345678");

@@ -18,7 +18,7 @@
 <?import org.controlsfx.control.ToggleSwitch?>
 
 <?import org.Presentation.*?>
-<GridPane alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="612.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.Presentation.SettingsController">
+<GridPane alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="612.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.Presentation.SettingsController">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="280.0" minWidth="10.0" prefWidth="279.0" />
       <ColumnConstraints hgrow="SOMETIMES" maxWidth="191.0" minWidth="7.0" prefWidth="22.0" />
@@ -29,18 +29,18 @@
       <RowConstraints maxHeight="68.0" minHeight="10.0" prefHeight="39.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <VBox prefHeight="200.0" prefWidth="100.0" spacing="10.0">
+      <VBox prefHeight="200.0" prefWidth="100.0" spacing="10.0" stylesheets="@style.css">
          <children>
             <HBox alignment="CENTER_LEFT" prefHeight="25.0" prefWidth="226.0" spacing="5.0">
                <children>
-                  <Label text="Max speed:">
+                  <Label text="Max speed:" textFill="WHITE">
                      <font>
                         <Font size="15.0" />
                      </font>
                   </Label>
                   <!--<TextField fx:id="TFLmaxSpeed" prefHeight="25.0" prefWidth="51.0" />-->
                   <TextFieldLimited fx:id="TFLmaxSpeed" prefHeight="25.0" prefWidth="51.0" promptText="280" />
-                  <Label text="km/h">
+                  <Label text="km/h" textFill="WHITE">
                      <font>
                         <Font size="15.0" />
                      </font>
@@ -52,7 +52,7 @@
             </HBox>
             <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="10.0" prefHeight="25.0" prefWidth="226.0" spacing="5.0">
                <children>
-                  <Label text="Dashboard light intensity:">
+                  <Label text="Dashboard light intensity:" textFill="WHITE">
                      <font>
                         <Font size="15.0" />
                      </font>
@@ -65,7 +65,12 @@
             </HBox>
             <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="80.0" prefHeight="25.0" prefWidth="226.0" spacing="5.0">
                <children>
-                  <ToggleSwitch fx:id="TSautoLowBeam" text="Automatic low beam">
+                  <Label text="Automatic low beam:" textFill="WHITE">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Label>
+                  <ToggleSwitch fx:id="TSautoLowBeam" style="-fx-text-fill: white;" textFill="WHITE">
                      <font>
                         <Font size="15.0" />
                      </font>
@@ -81,12 +86,12 @@
          <children>
             <HBox alignment="CENTER_LEFT" prefHeight="25.0" prefWidth="226.0" spacing="5.0">
                <children>
-                  <Label text="Engine type:">
+                  <Label text="Engine type:" textFill="WHITE">
                      <font>
                         <Font size="15.0" />
                      </font>
                   </Label>
-                  <RadioButton fx:id="RDengineTypePetrol" mnemonicParsing="false" selected="true" text="Petrol">
+                  <RadioButton fx:id="RDengineTypePetrol" mnemonicParsing="false" selected="true" stylesheets="@style.css" text="Petrol" textFill="WHITE">
                      <font>
                         <Font size="15.0" />
                      </font>
@@ -94,7 +99,7 @@
                         <ToggleGroup fx:id="TG_engineType" />
                      </toggleGroup>
                   </RadioButton>
-                  <RadioButton fx:id="RDengineTypeDiesel" mnemonicParsing="false" text="Diesel" toggleGroup="$TG_engineType">
+                  <RadioButton fx:id="RDengineTypeDiesel" mnemonicParsing="false" text="Diesel" textFill="WHITE" toggleGroup="$TG_engineType">
                      <font>
                         <Font size="15.0" />
                      </font>
@@ -106,12 +111,12 @@
             </HBox>
             <HBox alignment="CENTER_LEFT" prefHeight="25.0" prefWidth="226.0" spacing="5.0">
                <children>
-                  <Label text="Number of gears:">
+                  <Label text="Number of gears:" textFill="WHITE">
                      <font>
                         <Font size="15.0" />
                      </font>
                   </Label>
-                  <RadioButton fx:id="RDnumberOfGears5" mnemonicParsing="false" text="5">
+                  <RadioButton fx:id="RDnumberOfGears5" mnemonicParsing="false" text="5" textFill="WHITE">
                      <font>
                         <Font size="15.0" />
                      </font>
@@ -119,7 +124,7 @@
                         <ToggleGroup fx:id="TG_numberOfGears" />
                      </toggleGroup>
                   </RadioButton>
-                  <RadioButton fx:id="RDnumberOfGears6" mnemonicParsing="false" selected="true" text="6" toggleGroup="$TG_numberOfGears">
+                  <RadioButton fx:id="RDnumberOfGears6" mnemonicParsing="false" selected="true" text="6" textFill="WHITE" toggleGroup="$TG_numberOfGears">
                      <font>
                         <Font size="15.0" />
                      </font>
@@ -131,7 +136,12 @@
             </HBox>
             <HBox alignment="CENTER_LEFT" prefHeight="25.0" prefWidth="226.0" spacing="5.0">
                <children>
-                  <ToggleSwitch fx:id="TSshuffleMode" text="Music player shuffle mode">
+                  <Label text="Music player shuffle mode:" textFill="WHITE">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Label>
+                  <ToggleSwitch fx:id="TSshuffleMode" textFill="WHITE">
                      <font>
                         <Font size="15.0" />
                      </font>
@@ -143,13 +153,16 @@
             </HBox>
             <HBox prefHeight="100.0" prefWidth="200.0" spacing="5.0">
                <children>
-                  <Label text="Playlist folder:">
+                  <Label text="Playlist folder:" textFill="WHITE">
                      <font>
                         <Font size="15.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="TFplaylistFolderPath" maxWidth="-Infinity" prefHeight="25.0" prefWidth="114.0" />
-                  <Button fx:id="BTNchoosePlaylistFolder" mnemonicParsing="false" onMouseClicked="#chooseDirectory" text="Choose" />
+                  <TextField fx:id="TFplaylistFolderPath" maxWidth="-Infinity" prefHeight="25.0" prefWidth="104.0" />
+                  <Button fx:id="BTNchoosePlaylistFolder" mnemonicParsing="false" onMouseClicked="#chooseDirectory" styleClass="buttonHover" stylesheets="@style.css" text="Choose" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font></Button>
                </children>
             </HBox>
          </children>
@@ -163,9 +176,9 @@
       </AnchorPane>
       <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
          <children>
-            <Button fx:id="saveButton" layoutX="220.0" layoutY="1.0" mnemonicParsing="false" onMouseClicked="#save" text="Save">
+            <Button fx:id="saveButton" layoutX="220.0" layoutY="1.0" mnemonicParsing="false" onMouseClicked="#save" styleClass="buttonHover" stylesheets="@style.css" text="Save" textFill="WHITE">
                <font>
-                  <Font size="15.0" />
+                  <Font name="System Bold" size="15.0" />
                </font>
             </Button>
          </children>

@@ -52,23 +52,23 @@
                         </Menu>
                         <Menu mnemonicParsing="false" text="Lights">
                             <items>
-                                <CheckMenuItem fx:id="parkingLights" mnemonicParsing="false" onAction="#lightSwitch" text="Parking lights" />
+                                <CheckMenuItem fx:id="parkingLights" mnemonicParsing="false" onAction="#menuLightSwitch" text="Parking lights" />
                                 <Menu mnemonicParsing="false" text="Headlights">
                                     <items>
-                                        <CheckMenuItem fx:id="headlightsLowBeam" mnemonicParsing="false" onAction="#lightSwitch" text="Low beam" />
-                                        <CheckMenuItem fx:id="headlightsHighBeam" mnemonicParsing="false" onAction="#lightSwitch" text="High beam" />
+                                        <CheckMenuItem fx:id="headlightsLowBeam" mnemonicParsing="false" onAction="#menuLightSwitch" text="Low beam" />
+                                        <CheckMenuItem fx:id="headlightsHighBeam" mnemonicParsing="false" onAction="#menuLightSwitch" text="High beam" />
                                     </items>
                                 </Menu>
                                 <Menu mnemonicParsing="false" text="Fog lights">
                                     <items>
-                                        <CheckMenuItem fx:id="fogLightsBack" mnemonicParsing="false" onAction="#lightSwitch" text="Back" />
-                                        <CheckMenuItem fx:id="fogLightsFront" mnemonicParsing="false" onAction="#lightSwitch" text="Front" />
+                                        <CheckMenuItem fx:id="fogLightsBack" mnemonicParsing="false" onAction="#menuLightSwitch" text="Back" />
+                                        <CheckMenuItem fx:id="fogLightsFront" mnemonicParsing="false" onAction="#menuLightSwitch" text="Front" />
                                     </items>
                                 </Menu>
                                 <Menu mnemonicParsing="false" text="Indicators">
                                     <items>
-                                        <CheckMenuItem fx:id="indicatorsTurnLeft" mnemonicParsing="false" onAction="#lightSwitch" text="Turn left" />
-                                        <CheckMenuItem fx:id="indicatorsTurnRight" mnemonicParsing="false" onAction="#lightSwitch" text="Turn right" />
+                                        <CheckMenuItem fx:id="indicatorsTurnLeft" mnemonicParsing="false" onAction="#menuLightSwitch" text="Turn left" />
+                                        <CheckMenuItem fx:id="indicatorsTurnRight" mnemonicParsing="false" onAction="#menuLightSwitch" text="Turn right" />
                                     </items>
                                 </Menu>
                             </items>

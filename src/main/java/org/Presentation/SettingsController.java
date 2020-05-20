@@ -9,6 +9,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
+import org.Logic.GearException;
 import org.Logic.Settings;
 import org.controlsfx.control.ToggleSwitch;
 import java.io.File;
@@ -65,7 +66,7 @@ public class SettingsController {
     }
 
     @FXML
-    private void save() {
+    private void save() throws GearException {
         settings.setMaxSpeed(Short.parseShort(TFLmaxSpeed.getText()));
         settings.setDashboardLightIntesity((short)SLdashboardLightIntensity.getValue());
         settings.setAutoLowBeam(TSautoLowBeam.isSelected());
@@ -74,7 +75,8 @@ public class SettingsController {
         settings.setNumberOfGears((byte)(RDnumberOfGears5.isSelected() ? 5 : 6));
         settings.setShuffleMode(TSshuffleMode.isSelected());
         settings.setPlaylistDirectoryPath(TFplaylistFolderPath.getText());
-
+        if(dashboardController.getDashboard().getCurrentGear() > settings.getNumberOfGears())
+            dashboardController.getDashboard().setCurrentGear((short)5, true);
         dashboardController.reloadAfterSettings();
         Stage stage = (Stage) saveButton.getScene().getWindow();
         stage.close();
