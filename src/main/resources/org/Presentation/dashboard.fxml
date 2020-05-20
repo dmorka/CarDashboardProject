@@ -228,7 +228,7 @@
                         </AnchorPane>
                         <VBox alignment="CENTER" prefHeight="129.0" prefWidth="221.0">
                            <children>
-                              <Label fx:id="LtitleMP" alignment="CENTER" focusTraversable="false" text="Slow Dance In A Parking Lot" textFill="#6e19dd">
+                              <Label fx:id="LtitleMP" alignment="CENTER" focusTraversable="false" opacity="0.0" text="Slow Dance In A Parking Lot" textFill="#6e19dd">
                                  <font>
                                     <Font size="15.0" />
                                  </font>
@@ -239,7 +239,7 @@
                                     <Insets left="5.0" right="5.0" top="3.0" />
                                  </VBox.margin>
                               </Label>
-                              <Label fx:id="LartistMP" alignment="CENTER" focusTraversable="false" text="Jordan Davis" textFill="WHITE">
+                              <Label fx:id="LartistMP" alignment="CENTER" focusTraversable="false" opacity="0.0" text="Jordan Davis" textFill="WHITE">
                                  <VBox.margin>
                                     <Insets left="5.0" right="5.0" />
                                  </VBox.margin>

@@ -606,10 +606,16 @@ public class DashboardController extends UIController {
 
     @FXML
     public void startStopEngine() {
-        if(!MIstartEngine.isDisable())
+        if(!MIstartEngine.isDisable()) {
             switchEngine(true, false);
-        else
+            LtitleMP.setOpacity(1);
+            LartistMP.setOpacity(1);
+        }
+        else {
             switchEngine(false, false);
+            LtitleMP.setOpacity(0);
+            LartistMP.setOpacity(0);
+        }
     }
 
     public void switchEngine(boolean enable, boolean interrupted) {
