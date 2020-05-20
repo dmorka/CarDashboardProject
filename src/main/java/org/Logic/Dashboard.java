@@ -227,7 +227,6 @@ public class Dashboard implements Serializable {
     public void setSpeed(short speed) throws NegativeValueException {
         if(speed < 0)
             throw new NegativeValueException("The speed  can't be negative!");
-
         this.speed = speed;
     }
 
@@ -313,8 +312,8 @@ public class Dashboard implements Serializable {
     public void cruiseControlSpeedChange(boolean speedChange) {
         if(speedChange) {
             this.cruiseSpeed += 5;
-            if(this.cruiseSpeed > settings.getMaxSpeed())
-                this.cruiseSpeed = settings.getMaxSpeed();
+            if(this.cruiseSpeed > this.getCurrentGearMaxSpeed())
+                this.cruiseSpeed = this.getCurrentGearMaxSpeed();
         }
         else{
             this.cruiseSpeed -= 5;
