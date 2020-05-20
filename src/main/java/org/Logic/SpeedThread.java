@@ -8,6 +8,17 @@ public class SpeedThread extends Thread {
     private final Dashboard dashboard;
     private OnBoardComputer onBoardComputer;
     private int startAfter;
+    private boolean animationToZero;
+
+
+    public boolean isAnimationToZero() {
+        return animationToZero;
+    }
+
+    public void setAnimationToZero(boolean animationToZero) {
+        this.animationToZero = animationToZero;
+    }
+
 
     //Konstruktor klasy
     public SpeedThread(UIController uiController, int startAfter) {
@@ -40,10 +51,13 @@ public class SpeedThread extends Thread {
         }
         if(!engineRunning) {
             revs = dashboard.getRevs();
-            while(dashboard.getSpeed() > 0 || dashboard.getRevs() > 0) {
+            while((dashboard.getSpeed() > 0 || dashboard.getRevs() > 0) && animationToZero) {
                 if(dashboard.getSpeed() > 0) {
                     dashboard.subSpeed(1);
-                    revs = (dashboard.getSettings().getMaxRevs()-1000) * (dashboard.getSpeed() /  (float)dashboard.getCurrentGearMaxSpeed());
+                    if(dashboard.getCurrentGear() != 0)
+                        revs = (dashboard.getSettings().getMaxRevs()-1000) * (dashboard.getSpeed() /  (float)dashboard.getCurrentGearMaxSpeed());
+                    else
+                        revs *= 0.99;
                 }
                 else {
                     revs -= 100;

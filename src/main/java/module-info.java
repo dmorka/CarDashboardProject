@@ -6,6 +6,7 @@ module org.cardashboardproject {
     requires org.controlsfx.controls;
     requires javafx.media;
     requires java.sql;
+    requires com.jfoenix;
 
     opens org.Presentation to javafx.fxml;
     opens org.Data to javafx.base;

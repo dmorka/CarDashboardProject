@@ -6,6 +6,9 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXDialog;
+import com.jfoenix.controls.events.JFXDialogEvent;
 import eu.hansolo.medusa.Gauge;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
@@ -16,10 +19,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.effect.BoxBlur;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
@@ -33,6 +38,7 @@ import javafx.util.Duration;
 import org.Data.LoadFilesFromDisk;
 import org.Data.Serialization;
 import org.Logic.*;
+import com.jfoenix.controls.JFXDialogLayout;
 
 import javax.xml.stream.XMLStreamException;
 
@@ -40,6 +46,8 @@ public class DashboardController extends UIController {
     private FlashingSignalThread flashingSignalThread;
     private SpeedThread speedThread;
     private Timeline progressBar;
+    @FXML
+    private StackPane stackPane;
     @FXML
     private HashMap<String, Image[]> lights;
     @FXML
@@ -128,7 +136,7 @@ public class DashboardController extends UIController {
             lights = loadFilesFromDisk.loadLights();
         } catch (IOException e) {
             //e.getStackTrace();
-            openDialog(AlertType.ERROR, "Error dialog", e.getClass().getSimpleName(), e.getMessage());
+            openDialog(e.getClass().getSimpleName(), e.getMessage());
         }
         this.dashboard.getMusicPlayer().setAutoPlayNext(this::nextSongMP);
         initClock();
@@ -286,13 +294,37 @@ public class DashboardController extends UIController {
         }
     }
 
+//    @FXML
+//    private void openDialog(AlertType alertType, String title, String headerText, String contentText) {
+//        Alert alert = new Alert(alertType);
+//        alert.setTitle(title);
+//        alert.setHeaderText(headerText);
+//        alert.setContentText(contentText);
+//        alert.showAndWait();
+//    }
+
     @FXML
-    private void openDialog(AlertType alertType, String title, String headerText, String contentText) {
-        Alert alert = new Alert(alertType);
-        alert.setTitle(title);
-        alert.setHeaderText(headerText);
-        alert.setContentText(contentText);
-        alert.showAndWait();
+    private void openDialog(String header, String message) {
+        BoxBlur blur = new BoxBlur(4, 4, 4);
+        JFXDialogLayout dialogLayout = new JFXDialogLayout();
+        dialogLayout.getStyleClass().add("dialog-layout");
+        dialogLayout.setHeading(new Text(header));
+        dialogLayout.setBody(new Text(message));
+        JFXDialog dialog = new JFXDialog(stackPane, dialogLayout, JFXDialog.DialogTransition.TOP);
+        dialog.getStyleClass().add("dialog-dialog");
+        JFXButton button = new JFXButton("Okay");
+        button.getStyleClass().add("dialog-button");
+        button.setOnAction(
+                event -> dialog.close());
+        button.setButtonType(JFXButton.ButtonType.RAISED);
+        dialogLayout.setActions(button);
+        GPmain.setDisable(true);
+        dialog.show();
+        dialog.setOnDialogClosed((JFXDialogEvent event1) -> {
+            GPmain.setEffect(null);
+            GPmain.setDisable(false);
+        });
+        GPmain.setEffect(blur);
     }
 
     @FXML
@@ -310,7 +342,7 @@ public class DashboardController extends UIController {
                     dashboard.setLeftTurnSignal(enable);
                     indicatorsTurnLeft.setSelected(enable);
                 } catch (TurnSignalException e) {
-                    openDialog(AlertType.ERROR, "Error Dialog", e.getClass().getSimpleName(), e.getMessage());
+                    openDialog(e.getClass().getSimpleName(), e.getMessage());
                     indicatorsTurnLeft.setSelected(false);
                     break;
                 }
@@ -322,7 +354,7 @@ public class DashboardController extends UIController {
                     dashboard.setRightTurnSignal(enable);
                     indicatorsTurnRight.setSelected(enable);
                 } catch (TurnSignalException e) {
-                    openDialog(AlertType.ERROR, "Error Dialog", e.getClass().getSimpleName(), e.getMessage());
+                    openDialog(e.getClass().getSimpleName(), e.getMessage());
                     indicatorsTurnRight.setSelected(false);
                     break;
                 }
@@ -399,7 +431,7 @@ public class DashboardController extends UIController {
             try {
                 dashboard.getMusicPlayer().loadSongs(dashboard.getSettings().getPlaylistDirectoryPath());
             } catch (IOException e) {
-                openDialog(AlertType.ERROR, "Error dialog", e.getClass().getSimpleName(), e.getMessage());
+                openDialog(e.getClass().getSimpleName(), e.getMessage());
             }
 
             //progressBarMP(true, !wasPlaying);
@@ -448,7 +480,7 @@ public class DashboardController extends UIController {
                 lightSwitch("indicatorsTurnLeft", true);
                 //indicatorSwitch(IVindicatorsTurnLeft, lights.get("indicatorsTurnLeft")[1], true);
             } catch (TurnSignalException e) {
-                openDialog(AlertType.ERROR, "Error Dialog", e.getClass().getSimpleName(), e.getMessage());
+                openDialog(e.getClass().getSimpleName(), e.getMessage());
             }
         } else if ((event.getCode() == KeyCode.RIGHT) && (!this.dashboard.isRightTurnSignal())) {
             try {
@@ -457,14 +489,14 @@ public class DashboardController extends UIController {
                 lightSwitch("indicatorsTurnRight", true);
                 //indicatorSwitch(IVindicatorsTurnRight, lights.get("indicatorsTurnRight")[1],true);
             } catch (TurnSignalException e) {
-                openDialog(AlertType.ERROR, "Error Dialog", e.getClass().getSimpleName(), e.getMessage());
+                openDialog(e.getClass().getSimpleName(), e.getMessage());
             }
         } else if(event.getText().compareTo("0") >= 0 && 0 >= event.getText().compareTo("6")) {
             try {
                 dashboard.setCurrentGear(Short.parseShort(event.getText()), MIstopEngine.isDisable());
                 refresh();
             } catch (GearException e) {
-                openDialog(AlertType.ERROR, "Error dialog", e.getClass().getSimpleName(), e.getMessage());
+                openDialog(e.getClass().getSimpleName(), e.getMessage());
             }
         }
     }
@@ -492,11 +524,11 @@ public class DashboardController extends UIController {
     private void exportToDB(){
         try {
             dashboard.writeToDB();
-            openDialog(AlertType.INFORMATION, "Information dialog", "Export finished",
+            openDialog("Export finished",
                     "Succesfully exported to database!");
         } catch (Exception e) {
             //e.printStackTrace();
-            openDialog(AlertType.ERROR, "Error Dialog", e.getClass().getSimpleName(), e.getMessage());
+            openDialog(e.getClass().getSimpleName(), e.getMessage());
         }
     }
 
@@ -560,6 +592,8 @@ public class DashboardController extends UIController {
 
     public void switchEngine(boolean enable, boolean interrupted) {
         if(enable) {
+            if(speedThread != null)
+                speedThread.setAnimationToZero(false);
             MIstopEngine.setDisable(false);
             MIstartEngine.setDisable(true);
             dashboard.getOnBoardComputer().startJourneyTime();
@@ -567,7 +601,12 @@ public class DashboardController extends UIController {
             if(dashboard.getSpeed() == 0)
                 animateEngineStart(true);
             try {
-                speedThread = new SpeedThread(this, 1800);
+                if(dashboard.getSpeed() != 0) {
+                    speedThread.interrupt();
+                    speedThread = new SpeedThread(this, 0);
+                }
+                else
+                    speedThread = new SpeedThread(this, 1800);
                 speedThread.setEngineRunning(true);
                 //speedThread.setDaemon(true); //Wątek uruchamiamy w trybie Deamon by zakończył się razem z aplikacją i jej glownym wątkiem
                 speedThread.start();
@@ -579,8 +618,7 @@ public class DashboardController extends UIController {
         else {
             if(interrupted)
                 Platform.runLater(() -> {
-                    openDialog(AlertType.ERROR, "Error dialog",
-                            "EngineException", "The engine went out!");
+                    openDialog("EngineException", "The engine went out!");
                 });
             MIstartEngine.setDisable(false);
             MIstopEngine.setDisable(true);
@@ -590,6 +628,7 @@ public class DashboardController extends UIController {
             // Tworzymy wątek dla przypadku gdy zgasło auto podczas jazdy, by prędkość nadal spadała
             // aż do zera lub ponownego właczenia silnika
             speedThread = new SpeedThread(this,0);
+            speedThread.setAnimationToZero(true);
             //speedThread.setDaemon(true);
             speedThread.start();
         }
