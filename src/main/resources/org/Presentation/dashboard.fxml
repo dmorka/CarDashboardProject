@@ -137,7 +137,7 @@
                                 <items>
                                   <MenuItem fx:id="MIspeedUp" mnemonicParsing="false" onAction="#changeSpeedCruiseControl" text="+5 km/h">
                                      <accelerator>
-                                        <KeyCodeCombination alt="UP" code="BRACERIGHT" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                                        <KeyCodeCombination alt="UP" code="CLOSE_BRACKET" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                                      </accelerator>
                                   </MenuItem>
                                     <CheckMenuItem fx:id="cruiseControl" mnemonicParsing="false" onAction="#menuLightSwitch" text="Active">
@@ -147,7 +147,7 @@
                                     </CheckMenuItem>
                                     <MenuItem fx:id="MIspeedDown" mnemonicParsing="false" onAction="#changeSpeedCruiseControl" text="-5 km/h">
                                        <accelerator>
-                                          <KeyCodeCombination alt="UP" code="BRACELEFT" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                                          <KeyCodeCombination alt="UP" code="OPEN_BRACKET" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                                        </accelerator>
                                     </MenuItem>
                                 </items>
