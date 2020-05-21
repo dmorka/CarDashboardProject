@@ -2,30 +2,38 @@ package org.Presentation;
 
 
 import org.Logic.Dashboard;
-import com.googlecode.lanterna.*;
-import com.googlecode.lanterna.graphics.TextGraphics;
-import com.googlecode.lanterna.input.KeyStroke;
-import com.googlecode.lanterna.input.KeyType;
-import com.googlecode.lanterna.screen.Screen;
-import com.googlecode.lanterna.screen.TerminalScreen;
-import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
-import com.googlecode.lanterna.terminal.Terminal;
 import org.Logic.GearException;
 import org.Logic.SpeedThread;
 
+import java.io.Console;
 import java.io.IOException;
-import java.util.Random;
 import java.util.Scanner;
 
 public class TUI extends UIController {
     Thread t;
     public static  void main(String[] args) {
-       TUI tui =  new TUI();
-       tui.processing();
+//        Runtime rt = Runtime.getRuntime();
+//        try {
+//            //rt.exec(new String[]{"cmd.exe","/c","start"});
+//            rt.exec(new String[]{"cmd.exe","/c","start","java TUI"});
+////            Process p = Runtime.getRuntime().exec("java TUI");
+//
+//        } catch (IOException e) {
+//            // TODO Auto-generated catch block
+//            e.printStackTrace();
+//        }
+        Console console = System.console();
 
-        SpeedThread speedThread = new SpeedThread(tui,0);
-        speedThread.setEngineRunning(true);
-        speedThread.start();
+        if(console == null)
+            System.out.println("Wrong console! You need to execute me in a system console, please");
+        else {
+            TUI tui = new TUI();
+            tui.processing();
+
+            SpeedThread speedThread = new SpeedThread(tui, 0);
+            speedThread.setEngineRunning(true);
+            speedThread.start();
+        }
     }
 
     public void processing()
@@ -81,7 +89,7 @@ public class TUI extends UIController {
             e.printStackTrace();
         }
         System.out.print("=====================================\n");
-        System.out.print("| " + "16:25" + "   " + "Cruise control: On      "+ dashboard.getCurrentGear() +" |\n");
+        System.out.print("| " + "16:25" + "   " + "Cruise control: Off     "+ dashboard.getCurrentGear() +" |\n");
         System.out.print("-------------------------------------\n");
         System.out.print("| avg. speed:" + dashboard.getOnBoardComputer().getAvgSpeed() + "     avg. fuel"+dashboard.getOnBoardComputer().getAvgCombustion()+" |\n");
         System.out.print("-------------------------------------\n");

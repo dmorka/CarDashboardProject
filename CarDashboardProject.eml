@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component LANGUAGE_LEVEL="JDK_11" inheritJdk="true">
+	<output-test url="file://$MODULE_DIR$/target/test-classes"/>
+	<contentEntry url="file://$MODULE_DIR$">
+		<excludeFolder url="file://$MODULE_DIR$/target"/>
+	</contentEntry>
+	<lib name="Maven: com.fasterxml.woodstox:woodstox-core:5.1.0" scope="RUNTIME"/>
+	<lib name="Maven: org.codehaus.woodstox:stax2-api:4.1" scope="RUNTIME"/>
+	<levels>
+		<level name="mssql-jdbc-8.2.2.jre11" value="project"/>
+		<level name="org.controlsfx:controlsfx:11.0.1" value="project"/>
+		<level name="lk.vivoxalabs.customstage:CustomStage:1.3.2" value="project"/>
+		<level name="com.jfoenix:jfoenix:9.0.9" value="project"/>
+		<level name="Maven: eu.hansolo:Medusa:11.4" value="project"/>
+		<level name="Maven: org.openjfx:javafx-controls:12.0.1" value="project"/>
+		<level name="Maven: org.openjfx:javafx-controls:win:12.0.1" value="project"/>
+		<level name="Maven: org.openjfx:javafx-base:12.0.1" value="project"/>
+		<level name="Maven: org.openjfx:javafx-base:win:12.0.1" value="project"/>
+		<level name="Maven: org.openjfx:javafx-graphics:12.0.1" value="project"/>
+		<level name="Maven: org.openjfx:javafx-graphics:win:12.0.1" value="project"/>
+		<level name="Maven: org.openjfx:javafx-fxml:15-ea+4" value="project"/>
+		<level name="Maven: org.openjfx:javafx-fxml:win:15-ea+4" value="project"/>
+		<level name="Maven: org.openjfx:javafx-media:14.0.1" value="project"/>
+		<level name="Maven: org.openjfx:javafx-media:win:14.0.1" value="project"/>
+		<level name="Maven: com.github.goxr3plus:FX-BorderlessScene:4.4.0" value="project"/>
+		<level name="Maven: net.java.dev.jna:jna:5.3.1" value="project"/>
+		<level name="Maven: net.java.dev.jna:jna-platform:5.3.1" value="project"/>
+		<level name="Maven: com.googlecode.lanterna:lanterna:3.0.3" value="project"/>
+		<level name="Maven: com.sun.xml.ws:jaxws-rt:2.3.2" value="project"/>
+		<level name="Maven: jakarta.xml.bind:jakarta.xml.bind-api:2.3.2" value="project"/>
+		<level name="Maven: jakarta.xml.ws:jakarta.xml.ws-api:2.3.2" value="project"/>
+		<level name="Maven: jakarta.xml.soap:jakarta.xml.soap-api:1.4.1" value="project"/>
+		<level name="Maven: jakarta.annotation:jakarta.annotation-api:1.3.4" value="project"/>
+		<level name="Maven: jakarta.jws:jakarta.jws-api:1.1.1" value="project"/>
+		<level name="Maven: org.glassfish.jaxb:jaxb-runtime:2.3.2" value="project"/>
+		<level name="Maven: org.glassfish.jaxb:txw2:2.3.2" value="project"/>
+		<level name="Maven: com.sun.istack:istack-commons-runtime:3.0.8" value="project"/>
+		<level name="Maven: com.sun.xml.ws:policy:2.7.6" value="project"/>
+		<level name="Maven: org.glassfish.gmbal:gmbal:4.0.0" value="project"/>
+		<level name="Maven: org.glassfish.external:management-api:3.2.1" value="project"/>
+		<level name="Maven: org.glassfish.pfl:pfl-basic:4.0.1" value="project"/>
+		<level name="Maven: org.glassfish.pfl:pfl-tf:4.0.1" value="project"/>
+		<level name="Maven: org.glassfish.pfl:pfl-asm:4.0.1" value="project"/>
+		<level name="Maven: org.glassfish.pfl:pfl-dynamic:4.0.1" value="project"/>
+		<level name="Maven: org.glassfish.pfl:pfl-basic-tools:4.0.1" value="project"/>
+		<level name="Maven: org.glassfish.pfl:pfl-tf-tools:4.0.1" value="project"/>
+		<level name="Maven: org.jvnet.staxex:stax-ex:1.8.1" value="project"/>
+		<level name="Maven: com.sun.xml.stream.buffer:streambuffer:1.5.7" value="project"/>
+		<level name="Maven: org.jvnet.mimepull:mimepull:1.9.11" value="project"/>
+		<level name="Maven: com.sun.xml.fastinfoset:FastInfoset:1.2.16" value="project"/>
+		<level name="Maven: org.glassfish.ha:ha-api:3.1.12" value="project"/>
+		<level name="Maven: com.sun.xml.messaging.saaj:saaj-impl:1.5.1" value="project"/>
+		<level name="Maven: com.fasterxml.woodstox:woodstox-core:5.1.0" value="project"/>
+		<level name="Maven: org.codehaus.woodstox:stax2-api:4.1" value="project"/>
+		<level name="Maven: jakarta.activation:jakarta.activation-api:1.2.1" value="project"/>
+	</levels>
+</component>

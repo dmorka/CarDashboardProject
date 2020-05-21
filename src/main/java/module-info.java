@@ -7,9 +7,7 @@ module org.cardashboardproject {
     requires javafx.media;
     requires java.sql;
     requires com.jfoenix;
-    requires CustomStage;
     requires FX.BorderlessScene;
-    requires lanterna;
 
     opens org.Presentation to javafx.fxml;
     opens org.Data to javafx.base;
