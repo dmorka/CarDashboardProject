@@ -74,52 +74,9 @@ public class GUI extends Application {
         // To move the window around by pressing a node:
         scene.setMoveControl((GridPane)fxmlLoader.getNamespace().get("topPanel"));
 
-
-        // To disable resize:
-        //scene.setResizable(false);
-
-        // To switch the content during runtime:
-        //scene.setContent(FXMLLoader.load(getClass().getResource("dashboard.fxml")));
-
-
-        // Check if maximised:
-        //Boolean bool = scene.isMaximised();
-
-        // Get windowed* size and position:
-        //scene.getWindowedSize();
-        //scene.getWindowedPosition();
-
         //Show
         stage.setTitle("Dashboard");
         stage.show();
-//=================================================================================================
-//        CustomStage stage3 = new CustomStageBuilder()
-//                .setIcon(String.valueOf(GUI.class.getResource("images/dashboard-icon.png")))
-//                .setWindowColor("rgb(0,0,0)")
-//                .setTitleColor("white")
-//                .setWindowTitle("DashBoard")
-//                .setActionIcons(new Image(String.valueOf(GUI.class.getResource("images/close.png"))),
-//                        new Image(String.valueOf(GUI.class.getResource("images/minimize1.png"))),
-//                        new Image(String.valueOf(GUI.class.getResource("images/maximize.png"))),
-//                        new Image(String.valueOf(GUI.class.getResource("images/minimize.png"))))
-//                .setButtonHoverColor("rgba(227,227,227)","rgba(227,227,227)","rgba(227,227,227)")
-//                .build();
-//
-//        stage3.show();
-//
-//        stage3.setMaxHeight(500);
-//        stage3.setMaxWidth(900);
-//        stage3.changeScene(FXMLLoader.load(getClass().getResource("dashboard.fxml")));
-//        stage3.getScene().setOnKeyPressed(event -> dashboardController.keyPressed(event));
-//        stage3.getScene().setOnKeyReleased(event -> {
-//            try {
-//                dashboardController.keyReleased(event);
-//            } catch (TurnSignalException e) {
-//                e.printStackTrace();
-//            }
-//        });
-
-//        stage3.getScene().setOnKeyTyped(event -> System.out.println("test"));
     }
 
     @Override
