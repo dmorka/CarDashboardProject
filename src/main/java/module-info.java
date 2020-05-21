@@ -8,6 +8,7 @@ module org.cardashboardproject {
     requires java.sql;
     requires com.jfoenix;
     requires FX.BorderlessScene;
+    requires JCDP;
 
     opens org.Presentation to javafx.fxml;
     opens org.Data to javafx.base;
