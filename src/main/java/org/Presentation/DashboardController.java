@@ -262,7 +262,7 @@ public class DashboardController extends UIController {
             SettingsController settingsController = root.getController();
             settingsController.lockSettings(MIstartEngine.isDisable());
             settingsController.loadSettings(this.dashboard.getSettings(), this);
-            pane = (GridPane) root.getNamespace().get("gridPane");
+            pane = (VBox) root.getNamespace().get("vbox");
         }
         else if(filename.equals("databaseImport.fxml")) {
             dbController = root.getController();
