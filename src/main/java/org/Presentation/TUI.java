@@ -142,7 +142,7 @@ public class TUI extends UIController {
         System.out.println(dashboard.getCurrentGear() + "  |");
         System.out.println("|"+"-".repeat(48)+"|");
         System.out.print("| Avg. speed: "); drawCenterText(dashboard.getOnBoardComputer().getAvgSpeed(),9);
-        System.out.print(" Avg. fuel usg.: ");
+        System.out.print("  Avg. fuel usg.: ");
         drawCenterText(dashboard.getOnBoardComputer().getAvgCombustion(), 9);
         System.out.println("|");
         System.out.print("| Max. speed: "); drawCenterText(dashboard.getOnBoardComputer().getMaxSpeed(),9);
@@ -245,7 +245,8 @@ public class TUI extends UIController {
                     if(maxSpeed < 50 || maxSpeed > 999)
                         System.out.println("Incorrect max speed (Correct value: [50-999])!");
                 }while(maxSpeed < 50 || maxSpeed > 999);
-                dashboard.getOnBoardComputer().setMaxSpeed(maxSpeed);
+                dashboard.getSettings().setMaxSpeed(maxSpeed);
+                dashboard.setGears();
                 System.out.println("Max speed succesfully set to: "+maxSpeed);
                 waitForEnter(false);
                 drawSettingsMenu();
@@ -276,6 +277,7 @@ public class TUI extends UIController {
                         System.out.println("Wrong choice!");
                 }while(gear != '5' && gear != '6');
                 dashboard.getSettings().setNumberOfGears((byte)(gear-'0'));
+                dashboard.setGears();
                 System.out.println("Number of gears succesfully set to: "+gear);
                 waitForEnter(false);
                 drawSettingsMenu();

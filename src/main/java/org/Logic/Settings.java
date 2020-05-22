@@ -68,6 +68,7 @@ public class Settings implements Serializable {
     }
 
     public void setEngineType(char engineType) {
+        maxRevs = (short) ((engineType == 'P' || engineType == 'p') ? 8000 : 6000);
         this.engineType = engineType;
     }
 

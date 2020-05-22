@@ -71,7 +71,7 @@ public class SettingsController {
         settings.setDashboardLightIntesity((short)SLdashboardLightIntensity.getValue());
         settings.setAutoLowBeam(TSautoLowBeam.isSelected());
         settings.setEngineType(RDengineTypePetrol.isSelected() ? 'P' : 'D');
-        settings.setMaxRevs((short) (RDengineTypePetrol.isSelected() ? 8000 : 6000));
+        //settings.setMaxRevs((short) (RDengineTypePetrol.isSelected() ? 8000 : 6000));
         settings.setNumberOfGears((byte)(RDnumberOfGears5.isSelected() ? 5 : 6));
         settings.setShuffleMode(TSshuffleMode.isSelected());
         settings.setPlaylistDirectoryPath(TFplaylistFolderPath.getText());
