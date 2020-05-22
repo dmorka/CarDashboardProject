@@ -669,8 +669,6 @@ public class DashboardController extends UIController {
     }
 
     public void refresh() {
-        speedGauge.setValue(dashboard.getSpeed());
-        revsGauge.setValue(dashboard.getRevs());
         TXTgear.setText(String.valueOf(dashboard.getCurrentGear()));
         TXTavgSpeed.setText(String.valueOf(dashboard.getOnBoardComputer().getAvgSpeed()));
         TXTmaxSpeed.setText(String.valueOf(dashboard.getOnBoardComputer().getMaxSpeed()));
@@ -681,6 +679,8 @@ public class DashboardController extends UIController {
         TXTdayCounter2.setText(String.valueOf(Math.round(dashboard.getDayCounter2()*10.0)/10.0f));
         TXTjourneyDistance.setText(String.valueOf(Math.round(dashboard.getOnBoardComputer().getJourneyDistance()*10.0)/10.0f));
         TXTjourneyTime.setText(dashboard.getOnBoardComputer().getJourneyStartTime());
+        speedGauge.setValue(dashboard.getSpeed());
+        revsGauge.setValue(dashboard.getRevs());
     }
 
 

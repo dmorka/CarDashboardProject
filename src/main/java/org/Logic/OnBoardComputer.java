@@ -96,7 +96,7 @@ public class OnBoardComputer implements Serializable, Comparable<OnBoardComputer
         {
             int min = (int)(Duration.between(journeyStartTime, LocalDateTime.now()).getSeconds() / 60);
             int h = min / 60;
-            return h + "h " + min % 60 + " min ";
+            return h + "h " + min % 60 + " min";
         }
 
         return "0h 0min";
