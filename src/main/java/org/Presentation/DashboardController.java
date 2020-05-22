@@ -7,6 +7,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 
 import com.goxr3plus.fxborderlessscene.borderless.BorderlessPane;
+import com.goxr3plus.fxborderlessscene.borderless.BorderlessScene;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDialog;
 import com.jfoenix.controls.events.JFXDialogEvent;
@@ -17,6 +18,7 @@ import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
@@ -25,7 +27,9 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
@@ -35,11 +39,13 @@ import javafx.stage.Stage;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.event.ActionEvent;
+import javafx.stage.StageStyle;
 import javafx.util.Duration;
 import org.Data.LoadFilesFromDisk;
 import org.Data.Serialization;
 import org.Logic.*;
 import com.jfoenix.controls.JFXDialogLayout;
+import org.controlsfx.control.cell.ImageGridCell;
 
 import javax.xml.stream.XMLStreamException;
 
@@ -228,6 +234,7 @@ public class DashboardController extends UIController {
 
     @FXML
     private void openNewWindow(ActionEvent actionEvent) throws IOException {
+        Stage stage = new Stage();
         MenuItem menuItem = (MenuItem)actionEvent.getSource();
         String filename, title;
         switch (menuItem.getId()) {
@@ -249,20 +256,50 @@ public class DashboardController extends UIController {
         }
         DatabaseImportController dbController = null;
         FXMLLoader root = new FXMLLoader(GUI.class.getResource(filename));
-        Scene scene = new Scene(root.load());
+        root.load();
+        Parent pane = null;
         if(filename.equals("settings.fxml")) {
             SettingsController settingsController = root.getController();
             settingsController.lockSettings(MIstartEngine.isDisable());
             settingsController.loadSettings(this.dashboard.getSettings(), this);
+            pane = (GridPane) root.getNamespace().get("gridPane");
         }
         else if(filename.equals("databaseImport.fxml")) {
             dbController = root.getController();
             dbController.loadDB(dashboard.readFromDB());
+            pane = (VBox) root.getNamespace().get("vbox");
         }
-
-        Stage stage = new Stage();
-        stage.setTitle(title);
+        else if(filename.equals("about.fxml")){
+            pane = (Pane) root.getNamespace().get("vbox");
+        }
+        BorderlessScene scene = new BorderlessScene(stage, StageStyle.UNDECORATED, pane, 250,250);
         stage.setScene(scene);
+        scene.removeDefaultCSS();
+        ImageView minimizeIcon = (ImageView) root.getNamespace().get("minimizeIcon");
+        minimizeIcon.setOnMouseClicked(event -> {
+            scene.minimizeStage();
+        });
+
+        ImageView closeIcon = (ImageView) root.getNamespace().get("closeIcon");
+        closeIcon.setOnMouseClicked(event -> {
+            stage.close();
+        });
+        ImageView maximizeIcon = (ImageView) root.getNamespace().get("maximizeIcon");
+        Image maxi = new Image(GUI.class.getResourceAsStream("images/maximize.png"));
+        Image mini = new Image(GUI.class.getResourceAsStream("images/minimize.png"));
+        maximizeIcon.setOnMouseClicked(event -> {
+            scene.maximizeStage();
+            if(scene.isMaximized())
+                ((ImageView)root.getNamespace().get("maximizeIcon")).setImage(mini);
+            else
+                ((ImageView)root.getNamespace().get("maximizeIcon")).setImage(maxi);
+
+        });
+
+        scene.setMoveControl((Parent)root.getNamespace().get("topPanel"));
+
+
+        stage.setTitle(title);
         stage.show();
         DatabaseImportController finalDbController = dbController;
         stage.setOnCloseRequest(e->{
