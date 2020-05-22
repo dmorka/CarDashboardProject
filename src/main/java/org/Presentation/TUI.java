@@ -15,9 +15,8 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
-import com.diogonunes.jcdp.*;
 import org.Logic.TurnSignalException;
-import org.w3c.dom.ls.LSOutput;
+
 
 import javax.xml.stream.XMLStreamException;
 
@@ -28,7 +27,27 @@ public class TUI extends UIController {
     private boolean engineRunning = false;
     private final DateTimeFormatter clockFormatter = DateTimeFormatter.ofPattern("HH:mm");
     ColoredPrinter purpleTextColor = new ColoredPrinter.Builder(0, false)
-            .foreground(FColor.MAGENTA)  //setting format
+            .foreground(FColor.MAGENTA)
+            .build();
+
+    ColoredPrinter blueTextColor = new ColoredPrinter.Builder(0, false)
+            .foreground(FColor.BLUE)
+            .build();
+
+    ColoredPrinter yellowTextColor = new ColoredPrinter.Builder(0, false)
+            .foreground(FColor.YELLOW)
+            .build();
+
+    ColoredPrinter cyanTextColor = new ColoredPrinter.Builder(0, false)
+            .foreground(FColor.CYAN)
+            .build();
+
+    ColoredPrinter greenTextColor = new ColoredPrinter.Builder(0, false)
+            .foreground(FColor.GREEN)
+            .build();
+
+    ColoredPrinter redTextColor = new ColoredPrinter.Builder(0, false)
+            .foreground(FColor.RED)
             .build();
 
     public static void main(String[] args) {
@@ -56,7 +75,7 @@ public class TUI extends UIController {
                             try {
                                 dashboard.setCurrentGear((short) (znak-'0'),true);
                             } catch (GearException e) {
-                                e.printStackTrace();
+                                redTextColor.println(e.getMessage());
                             }
                         }
                     }
@@ -89,14 +108,14 @@ public class TUI extends UIController {
                                 try {
                                     dashboard.setLeftTurnSignal(!dashboard.isLeftTurnSignal());
                                 } catch (TurnSignalException e) {
-                                    System.out.println(e.getMessage());
+                                    redTextColor.println(e.getMessage());
                                 }
                                 break;
                             case 'm':
                                 try {
                                     dashboard.setRightTurnSignal(!dashboard.isRightTurnSignal());
                                 } catch (TurnSignalException e) {
-                                    System.out.println(e.getMessage());
+                                    redTextColor.println(e.getMessage());
                                 }
                                 break;
                             //Silnik start/stop
@@ -139,57 +158,50 @@ public class TUI extends UIController {
     @Override
     public void refresh() {
         clearTerminal();
-        purpleTextColor.print("=".repeat(50)+"\n| ");
-        System.out.print(LocalDateTime.now().format(clockFormatter));
-        drawCenterText("DASHBOARD", 40);
-        System.out.print(dashboard.getCurrentGear());
-        purpleTextColor.print("  |\n|"+"-".repeat(48)+"|\n| ");
-        System.out.print("Avg. speed: "); drawCenterText(dashboard.getOnBoardComputer().getAvgSpeed(),9);
-        System.out.print("  Avg. fuel usg.: ");
-        drawCenterText(dashboard.getOnBoardComputer().getAvgCombustion(), 9);
-        purpleTextColor.print("|\n| ");
-        System.out.print("Max. speed: "); drawCenterText(dashboard.getOnBoardComputer().getMaxSpeed(),9);
-        System.out.print(" Max. fuel usg.: ");
-        drawCenterText(dashboard.getOnBoardComputer().getMaxCombustion(), 9);
-        purpleTextColor.print(" |\n|"+"-".repeat(48)+"|\n|");
-        drawCenterText(Math.round(dashboard.getCounter())+"km",48);
-        purpleTextColor.print("|\n|"+"-".repeat(48)+"|\n|");
-        drawCenterText(Math.round(dashboard.getDayCounter1()*100f)/100f+" km", 24);
-        drawCenterText(Math.round(dashboard.getDayCounter2()*100f)/100f+" km", 24);
-        purpleTextColor.print("|\n|"+"-".repeat(48)+"|\n|  ");
-        System.out.print("Distance:");
-        drawCenterText(Math.round(dashboard.getOnBoardComputer().getJourneyDistance()*100f)/100f+"km", 12);
-        System.out.print("Journey time:");
-        drawCenterText(dashboard.getOnBoardComputer().getJourneyStartTime(), 12);
-        purpleTextColor.print(" |\n|"+"-".repeat(48)+"|\n|     ");
-        System.out.print("Speed:");
-        drawCenterText(dashboard.getSpeed(), 15);
-        System.out.print("    Revs:");
-        drawCenterText(dashboard.getRevs(), 15);
-        purpleTextColor.println("|\n"+"=".repeat(50));
+        purpleTextColor.print("\n\t"+"=".repeat(50)+"\n\t| ");
+        cyanTextColor.print(LocalDateTime.now().format(clockFormatter));
+        drawCenterText("DASHBOARD", 40, yellowTextColor);
+        cyanTextColor.print(dashboard.getCurrentGear());
+        purpleTextColor.print("  |\n\t|"+"-".repeat(48)+"|\n\t| ");
+        blueTextColor.print("Avg. speed: "); drawCenterText(dashboard.getOnBoardComputer().getAvgSpeed(),9, cyanTextColor);
+        blueTextColor.print("  Avg. fuel usg.: ");
+        drawCenterText(dashboard.getOnBoardComputer().getAvgCombustion(), 9, cyanTextColor);
+        purpleTextColor.print("|\n\t| ");
+        blueTextColor.print("Max. speed: "); drawCenterText(dashboard.getOnBoardComputer().getMaxSpeed(),9, cyanTextColor);
+        blueTextColor.print(" Max. fuel usg.: ");
+        drawCenterText(dashboard.getOnBoardComputer().getMaxCombustion(), 9, cyanTextColor);
+        purpleTextColor.print(" |\n\t|"+"-".repeat(48)+"|\n\t|");
+        drawCenterText(Math.round(dashboard.getCounter())+"km",48, cyanTextColor);
+        purpleTextColor.print("|\n\t|"+"-".repeat(48)+"|\n\t|");
+        drawCenterText(Math.round(dashboard.getDayCounter1()*100f)/100f+" km", 24, cyanTextColor);
+        drawCenterText(Math.round(dashboard.getDayCounter2()*100f)/100f+" km", 24, cyanTextColor);
+        purpleTextColor.print("|\n\t|"+"-".repeat(48)+"|\n\t|  ");
+        blueTextColor.print("Distance:");
+        drawCenterText(Math.round(dashboard.getOnBoardComputer().getJourneyDistance()*100f)/100f+"km", 12, cyanTextColor);
+        blueTextColor.print("Journey time:");
+        drawCenterText(dashboard.getOnBoardComputer().getJourneyStartTime(), 12, cyanTextColor);
+        purpleTextColor.print(" |\n\t|"+"-".repeat(48)+"|\n\t|     ");
+        blueTextColor.print("Speed:");
+        drawCenterText(dashboard.getSpeed(), 15, cyanTextColor);
+        blueTextColor.print("    Revs:");
+        drawCenterText(dashboard.getRevs(), 15, cyanTextColor);
+        purpleTextColor.println("|\n\t"+"=".repeat(50));
 
     }
 
-    private void drawCenterText(Object object, int width) {
+    private void drawCenterText(Object object, int width, ColoredPrinter coloredPrinter) {
         StringBuilder result = new StringBuilder();
         String repeat = " ".repeat(Math.max(0, (width - object.toString().length())/2));
         result.append(repeat);
         result.append(object.toString());
         result.append(repeat);
 
-        System.out.print(result);
+        coloredPrinter.print(result);
     }
 
     private void drawMainMenu() {
         clearTerminal();
-        System.out.println("============= Main Menu =============");
-        System.out.println("|  1) Drive the car                 |");
-        System.out.println("|  2) Import                        |");
-        System.out.println("|  3) Export                        |");
-        System.out.println("|  4) Settings                      |");
-        System.out.println("|  5) Exit                          |");
-        System.out.println("=====================================");
-        System.out.print("Enter choice: ");
+        drawMenu("Main Menu", new String[]{"Drive the car", "Import", "Export", "Settings", "About", "Exit"});
         Scanner scanner = new Scanner(System.in);
         char choice = scanner.next().charAt(0);
         switch (choice) {
@@ -207,74 +219,163 @@ public class TUI extends UIController {
                 drawSettingsMenu();
                 break;
             case '5':
+                drawAbout();
+                break;
+            case '6':
                 try {
                     Serialization.write(dashboard);
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    redTextColor.println("\t"+e.getMessage());
                 }
                 System.exit(0);
                 break;
             default:
-                System.out.println("Wrong choice!");
+                redTextColor.println("\n\tWrong choice!");
                 waitForEnter(true);
         }
     }
 
+    private void drawAbout() {
+        clearTerminal();
+        purpleTextColor.print("\n\n\t+----------------------------------------------------------------------------------------------------------+\n" +
+                "\t|                                                                                                          |\n" +
+                "\t|                                                                                                          |\n" +
+                "\t|         ");
+        yellowTextColor.print("/$$$$$$$                      /$$       /$$                                           /$$");
+        purpleTextColor.print("        |\n" +
+                "\t|        ");
+        yellowTextColor.print("| $$__  $$                    | $$      | $$                                          | $$");
+        purpleTextColor.print("        |\n" +
+                "\t|        ");
+        yellowTextColor.print("| $$  \\ $$  /$$$$$$   /$$$$$$$| $$$$$$$ | $$$$$$$   /$$$$$$   /$$$$$$   /$$$$$$   /$$$$$$$");
+        purpleTextColor.print("        |\n" +
+                "\t|        ");
+        yellowTextColor.print("| $$  | $$ |____  $$ /$$_____/| $$__  $$| $$__  $$ /$$__  $$ |____  $$ /$$__  $$ /$$__  $$");
+        purpleTextColor.print("        |\n" +
+                "\t|        ");
+        yellowTextColor.print("| $$  | $$  /$$$$$$$|  $$$$$$ | $$  \\ $$| $$  \\ $$| $$  \\ $$  /$$$$$$$| $$  \\__/| $$  | $$");
+        purpleTextColor.print("        |\n" +
+                "\t|        ");
+        yellowTextColor.print("| $$  | $$ /$$__  $$ \\____  $$| $$  | $$| $$  | $$| $$  | $$ /$$__  $$| $$      | $$  | $$");
+        purpleTextColor.print("        |\n" +
+                "\t|        ");
+        yellowTextColor.print("| $$$$$$$/|  $$$$$$$ /$$$$$$$/| $$  | $$| $$$$$$$/|  $$$$$$/|  $$$$$$$| $$      |  $$$$$$$");
+        purpleTextColor.print("        |\n" +
+                "\t|        ");
+        yellowTextColor.print("|_______/  \\_______/|_______/ |__/  |__/|_______/  \\______/  \\_______/|__/       \\_______/");
+        purpleTextColor.print("        |\n" +
+                "\t|                                                                                                          |\n" +
+                "\t|                                                                                     ");
+        redTextColor.print("Version 1.0.0");
+        purpleTextColor.print("        |\n" +
+                "\t|                                                                                                          |\n" +
+                "\t|                                                                                                          |\n" +
+                "\t|                                                                                                          |\n" +
+                "\t|                                                                                                          |\n" +
+                "\t|                                                                                                          |\n" +
+                "\t|                                                                                      ");
+        blueTextColor.print("+---------------+");
+        purpleTextColor.print("   |\n" +
+                "\t|                                                                                      ");
+        cyanTextColor.print("|A|u|t|o|r|z|y|:|");
+        purpleTextColor.print("   |\n" +
+                "\t|                                                      ");
+        blueTextColor.print("+---------------------------------+ +-----------+");
+        purpleTextColor.print("   |\n" +
+                "\t|                                                      ");
+        cyanTextColor.print("|K|a|c|p|e|r| |W|l|o|d|a|r|c|z|y|k| |2|2|4|4|5|6|");
+        purpleTextColor.print("   |\n" +
+                "\t|                                                      ");
+        blueTextColor.print("+-----------------------------------------------+");
+        purpleTextColor.print("   |\n" +
+                "\t|                                                                  ");
+        cyanTextColor.print("|D|a|w|i|d| |M|o|r|k|a| |2|2|4|3|7|9|");
+        purpleTextColor.print("   |\n" +
+                "\t|                                                                  ");
+        blueTextColor.print("+---------+ +---------+ +-----------+");
+        purpleTextColor.println("   |\n" +
+                "\t|                                                                                                          |\n" +
+                "\t+----------------------------------------------------------------------------------------------------------+");
+        System.out.println("\n");
+        waitForEnter(true);
+    }
+
+    private void drawMenu(String title, String[] options) {
+        int width = 36;
+        int len = title.length();
+        String repeat = "=".repeat((width - len)/2);
+        purpleTextColor.print("\n\t"+repeat);
+        yellowTextColor.print(" "+ title +" ");
+        purpleTextColor.println(repeat);
+        width = 2 * repeat.length() + len + 2;
+        purpleTextColor.println("\t|"+" ".repeat(width-2)+"|");
+        for(int i = 0;  i < options.length; i++)
+        {
+            purpleTextColor.print("\t|  ");
+            blueTextColor.print((i+1)+") ");
+            cyanTextColor.print(options[i]);
+            purpleTextColor.println(" ".repeat(width-7-options[i].length())+"|");
+        }
+        purpleTextColor.println("\t|"+" ".repeat(width-2)+"|");
+        purpleTextColor.println("\t"+"=".repeat(width));
+        yellowTextColor.print("\n\tEnter choice: ");
+    }
+
     private void drawSettingsMenu() {
         clearTerminal();
-        System.out.println("============= Settings ==============");
-        System.out.println("|  1) Max speed                     |");
-        System.out.println("|  2) Engine type                   |");
-        System.out.println("|  3) Number of gears               |");
-        System.out.println("|  4) Go Back                       |");
-        System.out.println("=====================================");
-        System.out.println("Enter choice: ");
+        drawMenu("Settings", new String[]{"Max speed", "Engine type", "Number of gears", "Go back"});
         Scanner scanner = new Scanner(System.in);
         char choice = scanner.next().charAt(0);
 
         switch (choice) {
             case '1':
-                short maxSpeed;
+                short maxSpeed=0;
+                String pom;
                 do {
-                    System.out.print("Set max speed:");
-                    maxSpeed = Short.parseShort(scanner.next());
+                    yellowTextColor.print("\n\tSet max speed: ");
+                    try {
+                        maxSpeed = Short.parseShort(scanner.next());
+                    }catch (NumberFormatException e){ maxSpeed = 0;}
                     if(maxSpeed < 50 || maxSpeed > 999)
-                        System.out.println("Incorrect max speed (Correct value: [50-999])!");
+                        redTextColor.println("\tIncorrect max speed (Correct value: [50-999])!");
                 }while(maxSpeed < 50 || maxSpeed > 999);
                 dashboard.getSettings().setMaxSpeed(maxSpeed);
                 dashboard.setGears();
-                System.out.println("Max speed succesfully set to: "+maxSpeed);
+                greenTextColor.println("\n\tMax speed succesfully set to: "+maxSpeed);
                 waitForEnter(false);
                 drawSettingsMenu();
                 break;
             case '2':
                 char engineType;
                 do {
-                    System.out.println("Choose engine type: ");
-                    System.out.println("\t P) Petrol");
-                    System.out.println("\t D) Diesel");
+                    drawMenu("Choose engine type:", new String[]{"Petrol", "Diesel"});
                     engineType = scanner.next().charAt(0);
-                    if(engineType != 'P' && engineType != 'D')
-                        System.out.println("Wrong choice!");
-                }while(engineType != 'P' && engineType != 'D');
-                dashboard.getSettings().setEngineType(engineType);
-                System.out.println("Engine type succesfully set to: "+((engineType == 'P') ? "Petrol" : "Diesel"));
+                    if(engineType != '1' && engineType != '2')
+                        redTextColor.println("\n\tWrong choice!");
+                }while(engineType != '1' && engineType != '2');
+                dashboard.getSettings().setEngineType((engineType == '1') ? 'P' : 'D');
+                greenTextColor.println("\n\tEngine type succesfully set to: "+((engineType == '1') ? "Petrol" : "Diesel"));
                 waitForEnter(false);
                 drawSettingsMenu();
                 break;
             case '3':
                 char gear;
                 do {
-                    System.out.println("Choose number of gears:");
-                    System.out.println("\t 5) 5 Gears");
-                    System.out.println("\t 6) 6 Gears");
+                    drawMenu("Choose number of gears:", new String[]{"5 Gears", "6 Gears"});
                     gear = scanner.next().charAt(0);
-                    if(gear != '5' && gear != '6')
-                        System.out.println("Wrong choice!");
-                }while(gear != '5' && gear != '6');
-                dashboard.getSettings().setNumberOfGears((byte)(gear-'0'));
+                    if((gear != '1' && gear != '2') && (gear != '5' && gear != '6'))
+                        redTextColor.println("\n\tWrong choice!");
+                }while((gear != '1' && gear != '2') && (gear != '5' && gear != '6'));
+                if(gear=='5' || gear == '6') {
+                    dashboard.getSettings().setNumberOfGears((byte) (gear - '0'));
+                    greenTextColor.println("\n\tNumber of gears succesfully set to: "+gear);
+                }
+                else {
+                    dashboard.getSettings().setNumberOfGears((byte) ((gear == '1') ? 5 : 6));
+                    greenTextColor.println("\n\tNumber of gears succesfully set to: "+((gear == '1') ? 5 : 6));
+                }
                 dashboard.setGears();
-                System.out.println("Number of gears succesfully set to: "+gear);
+
                 waitForEnter(false);
                 drawSettingsMenu();
                 break;
@@ -282,7 +383,7 @@ public class TUI extends UIController {
                 drawMainMenu();
                 break;
             default:
-                System.out.println("Wrong choice!");
+                redTextColor.println("\n\tWrong choice!");
                 waitForEnter(false);
                 drawSettingsMenu();
         }
@@ -290,23 +391,19 @@ public class TUI extends UIController {
 
     private void drawExportMenu() {
         clearTerminal();
-        System.out.println("============ Export Menu ============");
-        System.out.println("|  1) XML                           |");
-        System.out.println("|  2) SQL                           |");
-        System.out.println("|  3) Go Back                       |");
-        System.out.println("=====================================");
-        System.out.println("Enter choice: ");
+        drawMenu("Export Menu", new String[]{"XML", "SQL", "Go back"});
         Scanner scanner = new Scanner(System.in);
         char choice = scanner.next().charAt(0);
         switch (choice) {
             case '1':
-                    System.out.println("Enter file path: ");
+                    yellowTextColor.println("\n\tEnter file path: ");
                     try {
+                        System.out.print("\t");
                         dashboard.writeToXml(scanner.next());
-                        System.out.println("Succesfully exported to XML file!");
+                        greenTextColor.println("\n\tSuccesfully exported to XML file!");
                         waitForEnter(true);
                     } catch (IOException | XMLStreamException e) {
-                        System.out.println("Export failed!\n" + e.getMessage());
+                        redTextColor.println("\n\tExport failed!\n\t" + e.getMessage());
                         waitForEnter(false);
                         drawExportMenu();
                     }
@@ -314,10 +411,10 @@ public class TUI extends UIController {
             case '2':
                     try {
                         dashboard.writeToDB();
-                        System.out.println("Succesfully exported to database!");
+                        greenTextColor.println("\n\tSuccesfully exported to database!");
                         waitForEnter(true);
                     } catch (Exception e) {
-                        System.out.println("Export failed!\n" + e.getMessage());
+                        redTextColor.println("\n\tExport failed!\n\t" + e.getMessage());
                         waitForEnter(false);
                         drawExportMenu();
                     }
@@ -326,7 +423,7 @@ public class TUI extends UIController {
                     drawMainMenu();
                 break;
             default:
-                System.out.println("Wrong choice!");
+                redTextColor.println("\n\tWrong choice!");
                 waitForEnter(false);
                 drawExportMenu();
         }
@@ -334,48 +431,44 @@ public class TUI extends UIController {
 
     private void drawImportMenu() {
         clearTerminal();
-        System.out.println("============ Import Menu ============");
-        System.out.println("|  1) XML                           |");
-        System.out.println("|  2) SQL                           |");
-        System.out.println("|  3) Go Back                       |");
-        System.out.println("=====================================");
-        System.out.print("Enter choice: ");
+        drawMenu("Import Menu", new String[]{"XML", "SQL", "Go back"});
         Scanner scanner = new Scanner(System.in);
         char choice = scanner.next().charAt(0);
         switch (choice) {
             case '1':
-                    System.out.println("Enter file path: ");
+                    yellowTextColor.println("\n\tEnter file path: ");
                     try {
+                        System.out.print("\t");
                         dashboard.readFromXml(scanner.next());
-                        System.out.println("Succesfully imported dashboard data from XML file!");
+                        greenTextColor.println("\n\tSuccesfully imported dashboard data from XML file!");
                         waitForEnter(true);
                     } catch (IOException | XMLStreamException e) {
-                        System.out.println("Import failed!\n" + e.getMessage());
+                        redTextColor.println("\n\tImport failed!\n\t" + e.getMessage());
                         waitForEnter(false);
                         drawImportMenu();
                     }
                 break;
             case '2':
                     dashboard.updateDashboard(chooseDBRecord());
-                    System.out.println("Succesfully imported dashboard data from database!");
+                    greenTextColor.println("\n\tSuccesfully imported dashboard data from database!");
                     waitForEnter(true);
                 break;
             case '3':
                     drawMainMenu();
                 break;
             default:
-                System.out.println("Wrong choice!");
+                redTextColor.println("\n\tWrong choice!");
                 waitForEnter(false);
                 drawImportMenu();
         }
     }
 
     private void waitForEnter(boolean goToMainMenu) {
-        System.out.println("\nPress enter to continue...");
+        yellowTextColor.println("\n\tPress enter to continue...");
         try {
             System.in.read();
         } catch (IOException e) {
-            System.out.println(e.getMessage());
+            redTextColor.println("\t"+e.getMessage());
         }
         if(goToMainMenu)
             drawMainMenu();
@@ -384,11 +477,12 @@ public class TUI extends UIController {
     private RecordModel chooseDBRecord() {
         clearTerminal();
         ObservableList<RecordModel> records = dashboard.readFromDB();
-        System.out.println("================================================================================================================================================");
-        System.out.println("|   ID   Avg. speed   Max speed   Avg. fuel   Max fuel   Journey dist.   Journey time   Counter   Day counter 1   Day counter 2  Create date   |");
+        purpleTextColor.print("\n\t"+"=".repeat(62)+" Dashboard History "+"=".repeat(63)+"\n\t|"+" ".repeat(142)+"|"+"\n\t|");
+        blueTextColor.print("   ID   Avg. speed   Max speed   Avg. fuel   Max fuel   Journey dist.   Journey time   Counter   Day counter 1   Day counter 2  Create date   ");
 
+        purpleTextColor.println("|");
         for(int i = 0; i < records.size(); i++) {
-            System.out.print("| ");
+            purpleTextColor.print("\t| ");
             drawTableCell(records.get(i).getId(),4);
             drawTableCell(records.get(i).getAvgSpeed(),13);
             drawTableCell(records.get(i).getMaxSpeed(),12);
@@ -400,17 +494,20 @@ public class TUI extends UIController {
             drawTableCell(records.get(i).getDayCounter1(), 16);
             drawTableCell(records.get(i).getDayCounter2(), 16);
             drawTableCell(records.get(i).getCreateDate(), 13);
-            System.out.print("   |\n");
+            purpleTextColor.print("   |\n");
         }
-        System.out.println("================================================================================================================================================");
-        System.out.println("\t0) Cancel \n");
-        System.out.print("Choice record: ");
+        purpleTextColor.println("\t|"+" ".repeat(142)+"|");
+        purpleTextColor.println("\t"+"=".repeat(144));
+        yellowTextColor.println("\n\tOptions:");
+        blueTextColor.print("\t  0) ");
+        cyanTextColor.println("Cancel \n");
+        yellowTextColor.print("\tChoose record: ");
         Scanner scanner = new Scanner(System.in);
         int choice = scanner.nextInt();
         if(choice == 0)
             drawImportMenu();
         else if(choice < 0 || choice >= records.size()) {
-            System.out.println();
+            System.out.println(" ");
             waitForEnter(false);
             chooseDBRecord();
         }
