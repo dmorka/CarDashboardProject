@@ -27,6 +27,9 @@ public class TUI extends UIController {
     private boolean listenKeys = false;
     private boolean engineRunning = false;
     private final DateTimeFormatter clockFormatter = DateTimeFormatter.ofPattern("HH:mm");
+    ColoredPrinter purpleTextColor = new ColoredPrinter.Builder(0, false)
+            .foreground(FColor.MAGENTA)  //setting format
+            .build();
 
     public static void main(String[] args) {
         Console console = System.console();
@@ -136,41 +139,34 @@ public class TUI extends UIController {
     @Override
     public void refresh() {
         clearTerminal();
-        System.out.println("=".repeat(50));
-        System.out.print("| " + LocalDateTime.now().format(clockFormatter));
+        purpleTextColor.print("=".repeat(50)+"\n| ");
+        System.out.print(LocalDateTime.now().format(clockFormatter));
         drawCenterText("DASHBOARD", 40);
-        System.out.println(dashboard.getCurrentGear() + "  |");
-        System.out.println("|"+"-".repeat(48)+"|");
-        System.out.print("| Avg. speed: "); drawCenterText(dashboard.getOnBoardComputer().getAvgSpeed(),9);
+        System.out.print(dashboard.getCurrentGear());
+        purpleTextColor.print("  |\n|"+"-".repeat(48)+"|\n| ");
+        System.out.print("Avg. speed: "); drawCenterText(dashboard.getOnBoardComputer().getAvgSpeed(),9);
         System.out.print("  Avg. fuel usg.: ");
         drawCenterText(dashboard.getOnBoardComputer().getAvgCombustion(), 9);
-        System.out.println("|");
-        System.out.print("| Max. speed: "); drawCenterText(dashboard.getOnBoardComputer().getMaxSpeed(),9);
+        purpleTextColor.print("|\n| ");
+        System.out.print("Max. speed: "); drawCenterText(dashboard.getOnBoardComputer().getMaxSpeed(),9);
         System.out.print(" Max. fuel usg.: ");
         drawCenterText(dashboard.getOnBoardComputer().getMaxCombustion(), 9);
-        System.out.println(" |");
-        System.out.println("|"+"-".repeat(48)+"|");
-        System.out.print("|");
+        purpleTextColor.print(" |\n|"+"-".repeat(48)+"|\n|");
         drawCenterText(Math.round(dashboard.getCounter())+"km",48);
-        System.out.println("|");
-        System.out.println("|"+"-".repeat(48)+"|");
-        System.out.print("|");
+        purpleTextColor.print("|\n|"+"-".repeat(48)+"|\n|");
         drawCenterText(Math.round(dashboard.getDayCounter1()*100f)/100f+" km", 24);
         drawCenterText(Math.round(dashboard.getDayCounter2()*100f)/100f+" km", 24);
-        System.out.println("|");
-        System.out.println("|"+"-".repeat(48)+"|");
-        System.out.print("|  Distance:");
+        purpleTextColor.print("|\n|"+"-".repeat(48)+"|\n|  ");
+        System.out.print("Distance:");
         drawCenterText(Math.round(dashboard.getOnBoardComputer().getJourneyDistance()*100f)/100f+"km", 12);
         System.out.print("Journey time:");
         drawCenterText(dashboard.getOnBoardComputer().getJourneyStartTime(), 12);
-        System.out.println(" |");
-        System.out.println("|"+"-".repeat(48)+"|");
-        System.out.print("|     Speed:");
+        purpleTextColor.print(" |\n|"+"-".repeat(48)+"|\n|     ");
+        System.out.print("Speed:");
         drawCenterText(dashboard.getSpeed(), 15);
         System.out.print("    Revs:");
         drawCenterText(dashboard.getRevs(), 15);
-        System.out.println("|");
-        System.out.println("=".repeat(50));
+        purpleTextColor.println("|\n"+"=".repeat(50));
 
     }
 
