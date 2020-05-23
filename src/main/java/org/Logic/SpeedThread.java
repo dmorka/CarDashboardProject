@@ -15,7 +15,7 @@ public class SpeedThread extends Thread {
 
 
     /**
-     * Is animation to zero boolean.
+     * Is dashboard engine off animation activated boolean.
      *
      * @return the boolean
      */

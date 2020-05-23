@@ -8,29 +8,29 @@ import java.nio.file.Path;
 import java.sql.*;
 
 /**
- * The type Sql.
+ * The type Sql to read and write record to database.
  */
 public class SQL implements DataHandling{
     /**
-     * The Connection string.
+     * The jdbc SQL-server connection string.
      */
     static final String connectionString = "jdbc:sqlserver://localhost:1433;databaseName=dashboard";
     /**
-     * The Driver.
+     * The jdbc SQL-server driver string.
      */
     static final String driver = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
 
     /**
-     * The Con.
+     * The jdbc connection driver manager .
      */
     Connection con = null;
     /**
-     * The Stsm.
+     * The object for sending SQL statements to the database.
      */
     Statement stsm = null;
 
     /**
-     * Connect.
+     * Connect with the database.
      */
     public void connect() {
         try {
@@ -43,7 +43,7 @@ public class SQL implements DataHandling{
     }
 
     /**
-     * Disconnect.
+     * Disconnect with the database.
      *
      * @throws SQLException the sql exception
      */

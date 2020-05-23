@@ -48,18 +48,18 @@ public class Settings implements Serializable {
     }
 
     /**
-     * Gets max speed.
+     * Gets max speed in km/h.
      *
-     * @return the max speed
+     * @return the max speed in km/h
      */
     public short getMaxSpeed() {
         return maxSpeed;
     }
 
     /**
-     * Sets max speed.
+     * Sets max speed in km/h.
      *
-     * @param maxSpeed the max speed
+     * @param maxSpeed the max speed in km/h
      */
     public void setMaxSpeed(short maxSpeed) {
         this.maxSpeed = maxSpeed;
@@ -120,7 +120,7 @@ public class Settings implements Serializable {
     }
 
     /**
-     * Gets engine type.
+     * Gets engine type (petrol or diesel).
      *
      * @return the engine type
      */
@@ -129,7 +129,7 @@ public class Settings implements Serializable {
     }
 
     /**
-     * Sets engine type.
+     * Sets engine type (petrol or diesel).
      *
      * @param engineType the engine type
      */

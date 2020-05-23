@@ -41,7 +41,7 @@ public class Dashboard implements Serializable {
     private short currentGear;
 
     /**
-     * Is cruise control boolean.
+     * Is cruise control activated boolean.
      *
      * @return the boolean
      */
@@ -89,16 +89,16 @@ public class Dashboard implements Serializable {
     }
 
     /**
-     * Gets cruise speed.
+     * Gets cruise speed in km/h.
      *
-     * @return the cruise speed
+     * @return the cruise speed in km/h
      */
     public short getCruiseSpeed() {
         return cruiseSpeed;
     }
 
     /**
-     * Sets cruise speed.
+     * Sets cruise speed in km/h.
      *
      * @param cruiseSpeed the cruise speed
      * @throws CruiseControlException the cruise control exception
@@ -111,7 +111,7 @@ public class Dashboard implements Serializable {
     }
 
     /**
-     * Init.
+     * Initialize dashboard.
      */
     public void init() {
         this.onBoardComputer = new OnBoardComputer();
@@ -136,7 +136,7 @@ public class Dashboard implements Serializable {
     }
 
     /**
-     * Read from database observable list.
+     * Read from database to observable list.
      *
      * @return the observable list
      */
@@ -159,7 +159,7 @@ public class Dashboard implements Serializable {
     }
 
     /**
-     * Write to database.
+     * Write record to database.
      *
      * @throws Exception the exception
      */
@@ -169,7 +169,7 @@ public class Dashboard implements Serializable {
     }
 
     /**
-     * Write to xml file.
+     * Write record to xml file.
      *
      * @param path the path
      * @throws IOException        the io exception
@@ -181,7 +181,7 @@ public class Dashboard implements Serializable {
     }
 
     /**
-     * Read from xml file.
+     * Read record from xml file.
      *
      * @param path the path
      * @throws IOException        the io exception
@@ -202,25 +202,25 @@ public class Dashboard implements Serializable {
     }
 
     /**
-     * Sets day counter 1.
+     * Sets day counter 1 in km.
      *
-     * @param dayCounter1 the day counter 1
+     * @param dayCounter1 the day counter 1 in km
      */
     public void setDayCounter1(float dayCounter1) {
         this.dayCounter1 = dayCounter1;
     }
 
     /**
-     * Sets day counter 2.
+     * Sets day counter 2 in km.
      *
-     * @param dayCounter2 the day counter 2
+     * @param dayCounter2 the day counter 2 in km
      */
     public void setDayCounter2(float dayCounter2) {
         this.dayCounter2 = dayCounter2;
     }
 
     /**
-     * Sets key up.
+     * Sets keyboard key up.
      *
      * @param keyUp the key up
      */
@@ -229,7 +229,7 @@ public class Dashboard implements Serializable {
     }
 
     /**
-     * Is key down boolean.
+     * Is keyboard key down boolean.
      *
      * @return the boolean
      */
@@ -238,7 +238,7 @@ public class Dashboard implements Serializable {
     }
 
     /**
-     * Sets key down.
+     * Sets keyboard key down.
      *
      * @param keyDown the key down
      */
@@ -258,7 +258,7 @@ public class Dashboard implements Serializable {
     /**
      * Gets speed in km/h.
      *
-     * @return the speed
+     * @return the speed in km/h
      */
     public short getSpeed() {
         return speed;
@@ -330,7 +330,7 @@ public class Dashboard implements Serializable {
     /**
      * Gets counter in km.
      *
-     * @return the counter
+     * @return the counter in km
      */
     public float getCounter() {
         return counter;
@@ -339,7 +339,7 @@ public class Dashboard implements Serializable {
     /**
      * Gets day counter 1 in km.
      *
-     * @return the day counter 1
+     * @return the day counter 1 in km
      */
     public float getDayCounter1() {
         return dayCounter1;
@@ -348,7 +348,7 @@ public class Dashboard implements Serializable {
     /**
      * Gets day counter 2 in km.
      *
-     * @return the day counter 2
+     * @return the day counter 2 in km
      */
     public float getDayCounter2() {
         return dayCounter2;
@@ -391,8 +391,8 @@ public class Dashboard implements Serializable {
     /**
      * Sets speed in km/h.
      *
-     * @param speed the speed
-     * @throws NegativeValueException the negative value exception
+     * @param speed the speed in km
+     * @throws NegativeValueException the negative value of speed exception
      */
     public void setSpeed(short speed) throws NegativeValueException {
         if(speed < 0)
@@ -472,19 +472,19 @@ public class Dashboard implements Serializable {
     }
 
     /**
-     * Sets counter.
+     * Sets counter in km.
      *
-     * @param counter the counter
+     * @param counter the counter in km
      */
     public void setCounter(float counter) {
         this.counter = counter;
     }
 
     /**
-     * Sets day counter 1.
+     * Sets day counter 1 in km.
      *
-     * @param dayCounter1 the day counter 1
-     * @throws NegativeValueException the negative value exception
+     * @param dayCounter1 the day counter 1 in km
+     * @throws NegativeValueException the negative value of counter exception
      */
     public void setDayCounter1(int dayCounter1) throws NegativeValueException{
         if(dayCounter1 < 0)
@@ -494,10 +494,10 @@ public class Dashboard implements Serializable {
     }
 
     /**
-     * Sets day counter 2.
+     * Sets day counter 2 in km.
      *
-     * @param dayCounter2 the day counter 2
-     * @throws NegativeValueException the negative value exception
+     * @param dayCounter2 the day counter 2 in km
+     * @throws NegativeValueException the negative value of counter exception
      */
     public void setDayCounter2(int dayCounter2) throws NegativeValueException {
         if(dayCounter2 < 0)
@@ -547,9 +547,9 @@ public class Dashboard implements Serializable {
     }
 
     /**
-     * Cruise control speed change.
+     * Cruise control speed change in km/h.
      *
-     * @param speedChange the speed change
+     * @param speedChange the speed change in km/h
      */
     public void cruiseControlSpeedChange(boolean speedChange) {
         if(speedChange) {
@@ -568,7 +568,7 @@ public class Dashboard implements Serializable {
     /**
      * Add speed.
      *
-     * @param value the value
+     * @param value the value in km/h
      */
     public void addSpeed(int value) {
         speed += value;
@@ -579,7 +579,7 @@ public class Dashboard implements Serializable {
     /**
      * Sub speed.
      *
-     * @param value the value
+     * @param value the value in km/h
      */
     public void subSpeed(int value) {
         speed -= value;
@@ -607,18 +607,18 @@ public class Dashboard implements Serializable {
     }
 
     /**
-     * Gets current gear max speed.
+     * Gets current gear max speed in km/h.
      *
-     * @return the current gear max speed
+     * @return the current gear max speed in km/h
      */
     public short getCurrentGearMaxSpeed() {
         return gears.get(currentGear);
     }
 
     /**
-     * Gets lower gear max speed.
+     * Gets lower gear max speed in km/h.
      *
-     * @return the lower gear max speed
+     * @return the lower gear max speed in km/h
      */
     public short getLowerGearMaxSpeed() {
         if(currentGear != 0)

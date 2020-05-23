@@ -8,12 +8,12 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 /**
- * The type Xml.
+ * The type Xml to read and write record to XML file.
  */
 public class XML {
 
     /**
-     * Read record model.
+     * Read record model from XML file.
      *
      * @param path the path
      * @return the record model
@@ -153,10 +153,10 @@ public class XML {
     }
 
     /**
-     * Write.
+     * Write to xml file.
      *
-     * @param path   the path
-     * @param record the record
+     * @param path   the path to xml file
+     * @param record the record to write to xml file
      * @throws IOException        the io exception
      * @throws XMLStreamException the xml stream exception
      */

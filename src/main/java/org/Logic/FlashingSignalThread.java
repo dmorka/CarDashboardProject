@@ -30,9 +30,9 @@ public class FlashingSignalThread extends Thread {
     }
 
     /**
-     * Sets running.
+     * Sets lights running.
      *
-     * @param running the running
+     * @param running the running lights
      */
     public void setRunning(boolean running) {
         this.running = running;

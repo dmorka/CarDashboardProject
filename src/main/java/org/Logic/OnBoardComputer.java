@@ -28,27 +28,27 @@ public class OnBoardComputer implements Serializable, Comparable<OnBoardComputer
     private float maxCombustion;
 
     /**
-     * Gets max combustion.
+     * Gets max combustion in l.
      *
-     * @return the max combustion
+     * @return the max combustion in l
      */
     public float getMaxCombustion() {
         return Math.round(maxCombustion * 100f) / 100f;
     }
 
     /**
-     * Sets max combustion.
+     * Sets max combustion in l.
      *
-     * @param maxCombustion the max combustion
+     * @param maxCombustion the max combustion in l
      */
     public void setMaxCombustion(float maxCombustion) {
         this.maxCombustion = maxCombustion;
     }
 
     /**
-     * Gets avg speed.
+     * Gets avg speed in km/h.
      *
-     * @return the avg speed
+     * @return the avg speed in km/h
      */
     public int getAvgSpeed() {
         return Math.round(avgSpeed);
@@ -94,27 +94,27 @@ public class OnBoardComputer implements Serializable, Comparable<OnBoardComputer
     }
 
     /**
-     * Sets avg speed.
+     * Sets avg speed in km/h.
      *
-     * @param avgSpeed the avg speed
+     * @param avgSpeed the avg speed in km/h
      */
     public void setAvgSpeed(float avgSpeed) {
         this.avgSpeed = avgSpeed;
     }
 
     /**
-     * Gets max speed.
+     * Gets max speed in km/h.
      *
-     * @return the max speed
+     * @return the max speed in km/h
      */
     public int getMaxSpeed() {
         return Math.round(maxSpeed);
     }
 
     /**
-     * Get journey time int.
+     * Get journey time in minutes.
      *
-     * @return the int
+     * @return the in minutes
      */
     public int getJourneyTime(){
         if(journeyStartTime == null)
@@ -123,9 +123,9 @@ public class OnBoardComputer implements Serializable, Comparable<OnBoardComputer
     }
 
     /**
-     * Sets max speed.
+     * Sets max speed in km/h.
      *
-     * @param maxSpeed the max speed
+     * @param maxSpeed the max speed in km/h
      */
     public void setMaxSpeed(float maxSpeed) {
         this.maxSpeed = maxSpeed;
@@ -170,36 +170,36 @@ public class OnBoardComputer implements Serializable, Comparable<OnBoardComputer
     }
 
     /**
-     * Gets journey distance.
+     * Gets journey distance in km.
      *
-     * @return the journey distance
+     * @return the journey distance in km
      */
     public float getJourneyDistance() {
         return journeyDistance;
     }
 
     /**
-     * Sets journey distance.
+     * Sets journey distance in km.
      *
-     * @param journeyDistance the journey distance
+     * @param journeyDistance the journey distance in km
      */
     public void setJourneyDistance(float journeyDistance) {
         this.journeyDistance = journeyDistance;
     }
 
     /**
-     * Gets avg combustion.
+     * Gets avg combustion in l.
      *
-     * @return the avg combustion
+     * @return the avg combustion in l
      */
     public float getAvgCombustion() {
         return Math.round(avgCombustion * 100f) / 100f;
     }
 
     /**
-     * Sets avg combustion.
+     * Sets avg combustion in l.
      *
-     * @param avgCombustion the avg combustion
+     * @param avgCombustion the avg combustion in l
      */
     public void setAvgCombustion(float avgCombustion) {
         this.avgCombustion = avgCombustion;

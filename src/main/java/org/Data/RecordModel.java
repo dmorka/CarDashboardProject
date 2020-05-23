@@ -6,7 +6,7 @@ import java.sql.Date;
 
 
 /**
- * The type Record model.
+ * The type Record model including parameters wrote to file/database.
  */
 public class RecordModel {
     private int id;
@@ -22,7 +22,7 @@ public class RecordModel {
     private Date createDate;
 
     /**
-     * Instantiates a new Record model.
+     * Instantiates a new, empty Record model.
      */
     public RecordModel() {}
 
@@ -67,81 +67,81 @@ public class RecordModel {
     }
 
     /**
-     * Sets counter.
+     * Sets counter in km.
      *
-     * @param counter the counter
+     * @param counter the counter in km
      */
     public void setCounter(int counter) {
         this.counter = counter;
     }
 
     /**
-     * Sets journey time.
+     * Sets journey time in minutes.
      *
-     * @param journeyTime the journey time
+     * @param journeyTime the journey time in minutes
      */
     public void setJourneyTime(int journeyTime) {
         this.journeyTime = journeyTime;
     }
 
     /**
-     * Sets avg speed.
+     * Sets avg speed in km/h.
      *
-     * @param avgSpeed the avg speed
+     * @param avgSpeed the avg speed in km/h
      */
     public void setAvgSpeed(float avgSpeed) {
         this.avgSpeed = avgSpeed;
     }
 
     /**
-     * Sets max speed.
+     * Sets max speed in km/h.
      *
-     * @param maxSpeed the max speed
+     * @param maxSpeed the max speed in km/h
      */
     public void setMaxSpeed(float maxSpeed) {
         this.maxSpeed = maxSpeed;
     }
 
     /**
-     * Sets avg fuel.
+     * Sets avg fuel consumption.
      *
-     * @param avgFuel the avg fuel
+     * @param avgFuel the avg fuel consumption
      */
     public void setAvgFuel(float avgFuel) {
         this.avgFuel = avgFuel;
     }
 
     /**
-     * Sets max fuel.
+     * Sets max fuel consumption.
      *
-     * @param maxFuel the max fuel
+     * @param maxFuel the max fuel consumption
      */
     public void setMaxFuel(float maxFuel) {
         this.maxFuel = maxFuel;
     }
 
     /**
-     * Sets journey distance.
+     * Sets journey distance in km.
      *
-     * @param journeyDistance the journey distance
+     * @param journeyDistance the journey distance in km
      */
     public void setJourneyDistance(float journeyDistance) {
         this.journeyDistance = journeyDistance;
     }
 
     /**
-     * Sets day counter 1.
+     * Sets day counter 1 in km.
      *
-     * @param dayCounter1 the day counter 1
+     * @param dayCounter1 the day counter 1 in km
      */
     public void setDayCounter1(float dayCounter1) {
         this.dayCounter1 = dayCounter1;
     }
 
     /**
-     * Sets day counter 2.
+     * Sets day counter 2 in km.
      *
-     * @param dayCounter2 the day counter 2
+     * @param dayCounter2 the day counter 2 in km
      */
     public void setDayCounter2(float dayCounter2) {
         this.dayCounter2 = dayCounter2;
@@ -157,7 +157,7 @@ public class RecordModel {
     }
 
     /**
-     * Sets create date.
+     * Sets create date from string.
      *
      * @param createDate the create date
      */
@@ -175,81 +175,81 @@ public class RecordModel {
     }
 
     /**
-     * Gets counter.
+     * Gets counter in km.
      *
-     * @return the counter
+     * @return the counter in km
      */
     public int getCounter() {
         return counter;
     }
 
     /**
-     * Gets journey time.
+     * Gets journey time in minutes.
      *
-     * @return the journey time
+     * @return the journey time in minutes
      */
     public int getJourneyTime() {
         return journeyTime;
     }
 
     /**
-     * Gets avg speed.
+     * Gets avg speed in km/h.
      *
-     * @return the avg speed
+     * @return the avg speed in km/h
      */
     public float getAvgSpeed() {
         return avgSpeed;
     }
 
     /**
-     * Gets max speed.
+     * Gets max speed in km/h.
      *
-     * @return the max speed
+     * @return the max speed in km/h
      */
     public float getMaxSpeed() {
         return maxSpeed;
     }
 
     /**
-     * Gets avg fuel.
+     * Gets avg fuel consumption.
      *
-     * @return the avg fuel
+     * @return the avg fuel consumption
      */
     public float getAvgFuel() {
         return avgFuel;
     }
 
     /**
-     * Gets max fuel.
+     * Gets max fuel consumption.
      *
-     * @return the max fuel
+     * @return the max fuel consumption
      */
     public float getMaxFuel() {
         return maxFuel;
     }
 
     /**
-     * Gets journey distance.
+     * Gets journey distance in km.
      *
-     * @return the journey distance
+     * @return the journey distance in km
      */
     public float getJourneyDistance() {
         return journeyDistance;
     }
 
     /**
-     * Gets day counter 1.
+     * Gets day counter 1 in km.
      *
-     * @return the day counter 1
+     * @return the day counter 1 in km
      */
     public float getDayCounter1() {
         return dayCounter1;
     }
 
     /**
-     * Gets day counter 2.
+     * Gets day counter 2 in km.
      *
-     * @return the day counter 2
+     * @return the day counter 2 in km
      */
     public float getDayCounter2() {
         return dayCounter2;
@@ -265,9 +265,9 @@ public class RecordModel {
     }
 
     /**
-     * Sets on board computer.
+     * Sets on board computer type.
      *
-     * @param onBoardComputer the on board computer
+     * @param onBoardComputer the on board computer type
      */
     public void setOnBoardComputer(OnBoardComputer onBoardComputer) {
         avgSpeed = onBoardComputer.getAvgSpeed();

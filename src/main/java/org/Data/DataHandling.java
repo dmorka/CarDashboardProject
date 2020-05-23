@@ -4,11 +4,11 @@ import javafx.collections.ObservableList;
 import java.nio.file.Path;
 
 /**
- * The interface Data handling.
+ * The interface Data handling. Created to write and read fom databases or files, for example XML.
  */
 public interface DataHandling {
     /**
-     * Write.
+     * Write to file or database.
      *
      * @param path   the path
      * @param record the record
@@ -17,7 +17,7 @@ public interface DataHandling {
     public void write(Path path, RecordModel record) throws Exception;
 
     /**
-     * Read observable list.
+     * Read observable list from file or database.
      *
      * @param path the path
      * @return the observable list
