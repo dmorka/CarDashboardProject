@@ -10,6 +10,9 @@ import javafx.util.Duration;
 import org.Data.LoadFilesFromDisk;
 
 
+/**
+ * The type Music player.
+ */
 public class MusicPlayer  {
     private LoadFilesFromDisk loadFilesFromDisk = new LoadFilesFromDisk();
     private ArrayList<Media> playlist = new ArrayList<>();
@@ -19,6 +22,11 @@ public class MusicPlayer  {
     private String playlistDirectoryPath;
     private Runnable autoPlayNext = null;
 
+    /**
+     * Gets title.
+     *
+     * @return the title
+     */
     public String getTitle() {
         if(playlist.isEmpty())
             return "Playlist is empty";
@@ -33,6 +41,11 @@ public class MusicPlayer  {
 
     }
 
+    /**
+     * Gets artist.
+     *
+     * @return the artist
+     */
     public String getArtist() {
         if(playlist.isEmpty())
             return "Unknown";
@@ -46,6 +59,9 @@ public class MusicPlayer  {
         return artistName;
     }
 
+    /**
+     * Play song.
+     */
     public void playSong() {
         if(playlist.isEmpty())
             return;
@@ -58,16 +74,25 @@ public class MusicPlayer  {
             mediaPlayer.setOnEndOfMedia(autoPlayNext);
     }
 
+    /**
+     * Pause song.
+     */
     public void pauseSong() {
         if(mediaPlayer != null)
             mediaPlayer.pause();
     }
 
+    /**
+     * Stop song.
+     */
     public void stopSong() {
         if(mediaPlayer != null)
             mediaPlayer.stop();
     }
 
+    /**
+     * Dispose.
+     */
     public void dispose() {
         if(mediaPlayer != null) {
             mediaPlayer.dispose();
@@ -76,15 +101,26 @@ public class MusicPlayer  {
         }
     }
 
+    /**
+     * Sets auto play next.
+     *
+     * @param autoPlayNext the auto play next
+     */
     public void setAutoPlayNext(Runnable autoPlayNext) {
         this.autoPlayNext = autoPlayNext;
     }
 
+    /**
+     * Shuffle playlist.
+     */
     public void shufflePlaylist() {
         if(!playlist.isEmpty())
             Collections.shuffle(playlist);
     }
 
+    /**
+     * Next song.
+     */
     public void nextSong() {
         if(playlist.isEmpty())
             return;
@@ -98,6 +134,9 @@ public class MusicPlayer  {
             playSong();
     }
 
+    /**
+     * Previous song.
+     */
     public void previousSong() {
         if(playlist.isEmpty())
             return;
@@ -111,6 +150,11 @@ public class MusicPlayer  {
             playSong();
     }
 
+    /**
+     * Is playing boolean.
+     *
+     * @return the boolean
+     */
     public boolean isPlaying() {
         if(mediaPlayer == null)
             return false;
@@ -118,6 +162,12 @@ public class MusicPlayer  {
         return mediaPlayer.getStatus() == MediaPlayer.Status.PLAYING;
     }
 
+    /**
+     * Load songs.
+     *
+     * @param directoryPath the directory path
+     * @throws IOException the io exception
+     */
     public void loadSongs(String directoryPath) throws IOException {
         playlistDirectoryPath = directoryPath;
         List<String> result = loadFilesFromDisk.loadMp3Files(directoryPath);
@@ -132,6 +182,11 @@ public class MusicPlayer  {
 
     }
 
+    /**
+     * Change volume.
+     *
+     * @param volume the volume
+     */
     public void changeVolume(double volume) {
         if(mediaPlayer != null)
             mediaPlayer.setVolume(volume);
@@ -139,6 +194,11 @@ public class MusicPlayer  {
         this.volume = volume;
     }
 
+    /**
+     * Gets total duration.
+     *
+     * @return the total duration
+     */
     public Duration getTotalDuration() {
         if(mediaPlayer == null)
             return Duration.UNKNOWN;
@@ -146,6 +206,11 @@ public class MusicPlayer  {
         return mediaPlayer.getStopTime();
     }
 
+    /**
+     * Gets current time.
+     *
+     * @return the current time
+     */
     public double getCurrentTime() {
         if(mediaPlayer == null)
             return 0;
@@ -153,10 +218,20 @@ public class MusicPlayer  {
         return mediaPlayer.getCurrentTime().toSeconds();
     }
 
+    /**
+     * Is empty boolean.
+     *
+     * @return the boolean
+     */
     public boolean isEmpty() {
         return playlist.isEmpty();
     }
 
+    /**
+     * Gets playlist directory path.
+     *
+     * @return the playlist directory path
+     */
     public String getPlaylistDirectoryPath() {
         return playlistDirectoryPath;
     }

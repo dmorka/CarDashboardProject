@@ -15,6 +15,9 @@ import org.controlsfx.control.ToggleSwitch;
 import java.io.File;
 
 
+/**
+ * The type Settings controller.
+ */
 public class SettingsController {
     private Settings settings;
     private DashboardController dashboardController;
@@ -39,6 +42,12 @@ public class SettingsController {
     @FXML
     private TextFieldLimited TFLmaxSpeed;
 
+    /**
+     * Load settings.
+     *
+     * @param settings            the settings
+     * @param dashboardController the dashboard controller
+     */
     public void loadSettings(Settings settings, DashboardController dashboardController) {
         this.settings = settings;
         this.dashboardController = dashboardController;
@@ -82,6 +91,11 @@ public class SettingsController {
         stage.close();
     }
 
+    /**
+     * Lock settings.
+     *
+     * @param lock the lock
+     */
     public void lockSettings(boolean lock) {
         TFLmaxSpeed.setDisable(lock);
         RDengineTypePetrol.setDisable(lock);

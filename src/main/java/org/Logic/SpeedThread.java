@@ -2,6 +2,9 @@ package org.Logic;
 
 import org.Presentation.UIController;
 
+/**
+ * The type Speed thread.
+ */
 public class SpeedThread extends Thread {
     private final UIController uiController;
     private boolean engineRunning;
@@ -11,16 +14,32 @@ public class SpeedThread extends Thread {
     private boolean animationToZero;
 
 
+    /**
+     * Is animation to zero boolean.
+     *
+     * @return the boolean
+     */
     public boolean isAnimationToZero() {
         return animationToZero;
     }
 
+    /**
+     * Sets animation to zero.
+     *
+     * @param animationToZero the animation to zero
+     */
     public void setAnimationToZero(boolean animationToZero) {
         this.animationToZero = animationToZero;
     }
 
 
-    //Konstruktor klasy
+    /**
+     * Instantiates a new Speed thread.
+     *
+     * @param uiController the ui controller
+     * @param startAfter   the start after
+     */
+//Konstruktor klasy
     public SpeedThread(UIController uiController, int startAfter) {
         this.uiController = uiController;
         this.startAfter = startAfter;
@@ -28,6 +47,11 @@ public class SpeedThread extends Thread {
         this.onBoardComputer = this.dashboard.getOnBoardComputer();
     }
 
+    /**
+     * Sets engine running.
+     *
+     * @param running the running
+     */
     public void setEngineRunning(boolean running) {
         this.engineRunning = running;
     }

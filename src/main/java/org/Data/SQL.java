@@ -7,13 +7,31 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.sql.*;
 
+/**
+ * The type Sql.
+ */
 public class SQL implements DataHandling{
+    /**
+     * The Connection string.
+     */
     static final String connectionString = "jdbc:sqlserver://localhost:1433;databaseName=dashboard";
+    /**
+     * The Driver.
+     */
     static final String driver = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
 
+    /**
+     * The Con.
+     */
     Connection con = null;
+    /**
+     * The Stsm.
+     */
     Statement stsm = null;
 
+    /**
+     * Connect.
+     */
     public void connect() {
         try {
             Class.forName(driver);
@@ -24,6 +42,11 @@ public class SQL implements DataHandling{
         }
     }
 
+    /**
+     * Disconnect.
+     *
+     * @throws SQLException the sql exception
+     */
     public void disconnect() throws SQLException {
         if(con != null){
             con.close();
