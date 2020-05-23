@@ -5,18 +5,9 @@ import org.Logic.Dashboard;
 
 import java.io.IOException;
 
-/**
- * The type Ui controller.
- */
 public class UIController {
-    /**
-     * The Dashboard.
-     */
     protected Dashboard dashboard;
 
-    /**
-     * Instantiates a new Ui controller.
-     */
     public UIController() {
 //        this.dashboard = new Dashboard();
         try {
@@ -29,40 +20,17 @@ public class UIController {
         }
     }
 
-    /**
-     * Gets dashboard.
-     *
-     * @return the dashboard
-     */
     public Dashboard getDashboard() {
         return dashboard;
     }
 
-    /**
-     * Refresh.
-     */
     public void refresh() {}
 
-    /**
-     * Start stop engine.
-     */
     public void startStopEngine() {}
 
-    /**
-     * Reload after settings.
-     */
     public void reloadAfterSettings() {}
 
-    /**
-     * Switch engine.
-     *
-     * @param enable      the enable
-     * @param interrupted the interrupted
-     */
     public void switchEngine(boolean enable, boolean interrupted) {}
 
-    /**
-     * Switch off cruise control.
-     */
     public void switchOffCruiseControl() {}
 }

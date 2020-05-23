@@ -49,9 +49,6 @@ import org.controlsfx.control.cell.ImageGridCell;
 
 import javax.xml.stream.XMLStreamException;
 
-/**
- * The type Dashboard controller.
- */
 public class DashboardController extends UIController {
     private FlashingSignalThread flashingSignalThread;
     private SpeedThread speedThread;
@@ -528,11 +525,6 @@ public class DashboardController extends UIController {
         Platform.exit();
     }
 
-    /**
-     * Key pressed.
-     *
-     * @param event the event
-     */
     @FXML
    void keyPressed(KeyEvent event) {
         if (event.getCode() == KeyCode.UP && !dashboard.isKeyUp()) {
@@ -567,12 +559,6 @@ public class DashboardController extends UIController {
         }
     }
 
-    /**
-     * Key released.
-     *
-     * @param event the event
-     * @throws TurnSignalException the turn signal exception
-     */
     @FXML
    void keyReleased(KeyEvent event) throws TurnSignalException {
         if (event.getCode() == KeyCode.UP) {
@@ -772,9 +758,6 @@ public class DashboardController extends UIController {
         this.lightSwitch("cruiseControl", false);
     }
 
-    /**
-     * On stage destruction.
-     */
     public void onStageDestruction() {
         if(speedThread != null) {
             speedThread.setEngineRunning(false);

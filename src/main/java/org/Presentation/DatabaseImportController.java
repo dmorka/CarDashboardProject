@@ -17,9 +17,6 @@ import java.sql.Date;
 import java.sql.SQLException;
 
 
-/**
- * The type Database import controller.
- */
 public class DatabaseImportController {
     private RecordModel selectedRecord = null;
     @FXML
@@ -47,11 +44,6 @@ public class DatabaseImportController {
     @FXML
     private TableColumn<RecordModel, Date> col_create_date;
 
-    /**
-     * Load db.
-     *
-     * @param set the set
-     */
     public void loadDB(ObservableList<RecordModel> set){
         col_id.setCellValueFactory(new PropertyValueFactory<RecordModel, Integer>("id"));
         col_avg_speed.setCellValueFactory(new PropertyValueFactory<RecordModel, Float>("avgSpeed"));
@@ -76,11 +68,6 @@ public class DatabaseImportController {
         }
     }
 
-    /**
-     * Get selected record record model.
-     *
-     * @return the record model
-     */
     public RecordModel getSelectedRecord(){
         return selectedRecord;
     }

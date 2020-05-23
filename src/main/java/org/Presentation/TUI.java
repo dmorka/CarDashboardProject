@@ -20,9 +20,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.xml.stream.XMLStreamException;
 
-/**
- * The type Tui.
- */
 public class TUI extends UIController {
     private SpeedThread speedThread = null;
     private Thread keyThread = null;
@@ -67,12 +64,7 @@ public class TUI extends UIController {
                 fogBackColor = blackTextColor;
 
 
-    /**
-     * The entry point of application.
-     *
-     * @param args the input arguments
-     */
-    public static void main(String[] args) {
+   public static void main(String[] args) {
 
 //        Console console = System.console();
 //        if(console == null) {
@@ -83,12 +75,7 @@ public class TUI extends UIController {
         tui.drawMainMenu();
     }
 
-    /**
-     * Key listener.
-     *
-     * @param listen the listen
-     */
-    public void KeyListener(boolean listen)
+ public void KeyListener(boolean listen)
     {
 //        Scanner scanner = new Scanner(System.in);
         if(listen) {
@@ -174,13 +161,6 @@ public class TUI extends UIController {
     }
 
     private static class CLS {
-        /**
-         * The entry point of application.
-         *
-         * @param arg the input arguments
-         * @throws IOException          the io exception
-         * @throws InterruptedException the interrupted exception
-         */
         public static void main(String... arg) throws IOException, InterruptedException {
             new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
         }

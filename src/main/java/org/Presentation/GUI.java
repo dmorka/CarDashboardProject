@@ -14,9 +14,6 @@ import org.controlsfx.control.cell.ImageGridCell;
 import java.io.IOException;
 
 
-/**
- * JavaFX GUI
- */
 public class GUI extends Application {
     private static Scene scene;
     private DashboardController dashboardController;
@@ -67,12 +64,6 @@ public class GUI extends Application {
         dashboardController.onStageDestruction();
     }
 
-    /**
-     * Sets root.
-     *
-     * @param fxml the fxml
-     * @throws IOException the io exception
-     */
     static void setRoot(String fxml) throws IOException {
         scene.setRoot(loadFXML(fxml).load());
     }
@@ -83,11 +74,6 @@ public class GUI extends Application {
         return fxmlLoader;
     }
 
-    /**
-     * The entry point of application.
-     *
-     * @param args the input arguments
-     */
     public static void main(String[] args) {
         launch();
     }
