@@ -1,6 +1,7 @@
 package org.Data;
 
 import javafx.scene.image.Image;
+import org.Presentation.GUI;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -46,17 +47,16 @@ public class LoadFilesFromDisk {
      * Load lights hash map.
      *
      * @return the hash map
-     * @throws IOException the io exception
      */
-    public HashMap<String, Image[]> loadLights() throws IOException {
+    public HashMap<String, Image[]> loadLights() {
         String[] lightList = {"parkingLights", "indicatorsTurnLeft", "indicatorsTurnRight", "headlightsLowBeam",
                 "headlightsHighBeam", "fogLightsFront", "fogLightsBack", "cruiseControl"};
         HashMap<String, Image[]> result = new HashMap<>();
-        String absolutePath = (new File("src\\main\\resources\\org\\Presentation\\images\\lights").getAbsolutePath()) + "\\";
+
         for (String name : lightList) {
             Image[] lights = {
-                    new Image(new FileInputStream(absolutePath + name + "Off.png")),
-                    new Image(new FileInputStream(absolutePath + name + "On.png"))
+                    new Image(GUI.class.getResourceAsStream("images/lights/"+ name + "Off.png")),
+                    new Image(GUI.class.getResourceAsStream("images/lights/"+ name + "On.png"))
             };
             result.put(name, lights);
         }

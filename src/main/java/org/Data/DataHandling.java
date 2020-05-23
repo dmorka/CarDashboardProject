@@ -15,7 +15,7 @@ public interface DataHandling {
      * @param record the record
      * @throws Exception the exception
      */
-    public void write(Path path, RecordModel record) throws Exception;
+    void write(Path path, RecordModel record) throws Exception;
 
     /**
      * Read observable list from file or database.
@@ -24,7 +24,7 @@ public interface DataHandling {
      * @return the observable list
      * @throws Exception the exception
      */
-    public ObservableList<RecordModel> read(Path path) throws Exception;
+    ObservableList<RecordModel> read(Path path) throws Exception;
 
     /**
      * Print all data string.
@@ -32,5 +32,5 @@ public interface DataHandling {
      * @param path the path
      * @return the string
      */
-    public String printAllData(Path path);
+    String printAllData(Path path);
 }

@@ -13,8 +13,7 @@ public class MainController {
     private void onMouseClicked(MouseEvent mouseEvent) {
         Button button = (Button) mouseEvent.getSource();
         if (button.getId().equals("BTNtui")) {
-            TUI tui = new TUI();
-            tui.main();
+            TUI.main(new String[]{});
         } else {
             GUI gui = new GUI();
             try {

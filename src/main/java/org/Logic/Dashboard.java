@@ -5,11 +5,16 @@ import javafx.scene.media.AudioClip;
 import org.Data.RecordModel;
 import org.Data.SQL;
 import org.Data.XML;
+import org.Presentation.GUI;
 
 import javax.xml.stream.XMLStreamException;
+import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
 import java.math.RoundingMode;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.Date;
 import java.text.DecimalFormat;
@@ -625,7 +630,18 @@ public class Dashboard implements Serializable {
      * Play start engine sound.
      */
     public void playStartEngineSound() {
-        AudioClip audioClip = new AudioClip(Paths.get("src/main/resources/org/Presentation/sounds/engineStartSound.mp3").toUri().toString());
+//        AudioClip audioClip = new AudioClip(Paths.get("src/main/resources/org/Presentation/sounds/engineStartSound.mp3").toUri().toString());
+//        String test = GUI.class.getResourceAsStream("sounds/engineStartSound.mp3").toString();
+//        String test = null;
+
+//        File test = test = new File("sounds/engineStartSound.mp3");
+//
+//        String test2 = Paths.get("src/main/resources/org/Presentation/sounds/engineStartSound.mp3").toUri().toString();
+//
+//        String test3 = Paths.get(test.getPath()).toUri().toString();
+//        String test4 = test.toURI().toString();
+        AudioClip audioClip = new AudioClip(new File("sounds/engineStartSound.mp3").toURI().toString());
+
         audioClip.play();
     }
 

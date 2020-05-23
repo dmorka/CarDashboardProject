@@ -1,0 +1,11 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="BuildJar" type="Application" factoryName="Application">
+    <option name="MAIN_CLASS_NAME" value="org.Presentation.Main" />
+    <module name="CarDashboardProject" />
+    <option name="VM_PARAMETERS" value="--add-modules javafx.base,javafx.graphics --add-reads javafx.base=ALL-UNNAMED --add-reads javafx.graphics=ALL-UNNAMED" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+      <option name="Maven.BeforeRunTask" enabled="true" file="$PROJECT_DIR$/pom.xml" goal="assembly:single" />
+    </method>
+  </configuration>
+</component>

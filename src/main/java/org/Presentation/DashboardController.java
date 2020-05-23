@@ -142,12 +142,7 @@ public class DashboardController extends UIController {
     @FXML
     private void initialize() {
         LoadFilesFromDisk loadFilesFromDisk = new LoadFilesFromDisk();
-        try {
-            lights = loadFilesFromDisk.loadLights();
-        } catch (IOException e) {
-            //e.getStackTrace();
-            openDialog(e.getClass().getSimpleName(), e.getMessage());
-        }
+        lights = loadFilesFromDisk.loadLights();
         this.dashboard.getMusicPlayer().setAutoPlayNext(this::nextSongMP);
         initClock();
         reloadAfterSettings();
