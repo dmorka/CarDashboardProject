@@ -65,12 +65,11 @@ public class TUI extends UIController {
 
 
     public static void main(String[] args) {
-
-//        Console console = System.console();
-//        if(console == null) {
-//            System.out.println("Wrong console! You need to execute me in a system console, please");
-//            System.exit(0);
-//        }
+        Console console = System.console();
+        if(console == null) {
+            System.out.println("Wrong console! You need to execute me in a system console, please");
+            System.exit(0);
+        }
         TUI tui = new TUI();
         tui.drawMainMenu();
     }
