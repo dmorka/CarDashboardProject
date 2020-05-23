@@ -14,6 +14,9 @@ import org.controlsfx.control.cell.ImageGridCell;
 import java.io.IOException;
 
 
+/**
+ * The type Gui.
+ */
 public class GUI extends Application {
     private DashboardController dashboardController;
 
@@ -23,6 +26,9 @@ public class GUI extends Application {
         return fxmlLoader;
     }
 
+    /**
+     * Main.
+     */
     public static void main() {
         launch();
     }
