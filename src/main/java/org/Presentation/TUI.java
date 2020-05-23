@@ -64,7 +64,7 @@ public class TUI extends UIController {
                 fogBackColor = blackTextColor;
 
 
-   public static void main(String[] args) {
+   public static void main() {
 
 //        Console console = System.console();
 //        if(console == null) {
