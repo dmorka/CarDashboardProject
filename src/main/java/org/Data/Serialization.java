@@ -10,7 +10,7 @@ import java.nio.file.Paths;
 /**
  * The type Serialization.
  */
-public class  Serialization {
+public class Serialization {
 
     /**
      * Write.
@@ -21,7 +21,7 @@ public class  Serialization {
     public static void write(Dashboard dashboard) throws IOException {
         Path path = Files.createDirectories(Paths.get(System.getenv("LOCALAPPDATA") + "\\Dashboard"));
         Files.createDirectories(path);
-        FileOutputStream fos = new FileOutputStream(path.toString()+"\\startupData");
+        FileOutputStream fos = new FileOutputStream(path.toString() + "\\startupData");
         ObjectOutputStream oos = new ObjectOutputStream(fos);
         oos.writeObject(dashboard);
         oos.close();

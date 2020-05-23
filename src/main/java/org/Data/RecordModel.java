@@ -24,7 +24,8 @@ public class RecordModel {
     /**
      * Instantiates a new, empty Record model.
      */
-    public RecordModel() {}
+    public RecordModel() {
+    }
 
     /**
      * Instantiates a new Record model.
@@ -58,12 +59,30 @@ public class RecordModel {
     }
 
     /**
+     * Gets id.
+     *
+     * @return the id
+     */
+    public int getId() {
+        return id;
+    }
+
+    /**
      * Sets id.
      *
      * @param id the id
      */
     public void setId(int id) {
         this.id = id;
+    }
+
+    /**
+     * Gets counter in km.
+     *
+     * @return the counter in km
+     */
+    public int getCounter() {
+        return counter;
     }
 
     /**
@@ -76,12 +95,30 @@ public class RecordModel {
     }
 
     /**
+     * Gets journey time in minutes.
+     *
+     * @return the journey time in minutes
+     */
+    public int getJourneyTime() {
+        return journeyTime;
+    }
+
+    /**
      * Sets journey time in minutes.
      *
      * @param journeyTime the journey time in minutes
      */
     public void setJourneyTime(int journeyTime) {
         this.journeyTime = journeyTime;
+    }
+
+    /**
+     * Gets avg speed in km/h.
+     *
+     * @return the avg speed in km/h
+     */
+    public float getAvgSpeed() {
+        return avgSpeed;
     }
 
     /**
@@ -94,12 +131,30 @@ public class RecordModel {
     }
 
     /**
+     * Gets max speed in km/h.
+     *
+     * @return the max speed in km/h
+     */
+    public float getMaxSpeed() {
+        return maxSpeed;
+    }
+
+    /**
      * Sets max speed in km/h.
      *
      * @param maxSpeed the max speed in km/h
      */
     public void setMaxSpeed(float maxSpeed) {
         this.maxSpeed = maxSpeed;
+    }
+
+    /**
+     * Gets avg fuel consumption.
+     *
+     * @return the avg fuel consumption
+     */
+    public float getAvgFuel() {
+        return avgFuel;
     }
 
     /**
@@ -112,12 +167,30 @@ public class RecordModel {
     }
 
     /**
+     * Gets max fuel consumption.
+     *
+     * @return the max fuel consumption
+     */
+    public float getMaxFuel() {
+        return maxFuel;
+    }
+
+    /**
      * Sets max fuel consumption.
      *
      * @param maxFuel the max fuel consumption
      */
     public void setMaxFuel(float maxFuel) {
         this.maxFuel = maxFuel;
+    }
+
+    /**
+     * Gets journey distance in km.
+     *
+     * @return the journey distance in km
+     */
+    public float getJourneyDistance() {
+        return journeyDistance;
     }
 
     /**
@@ -130,6 +203,15 @@ public class RecordModel {
     }
 
     /**
+     * Gets day counter 1 in km.
+     *
+     * @return the day counter 1 in km
+     */
+    public float getDayCounter1() {
+        return dayCounter1;
+    }
+
+    /**
      * Sets day counter 1 in km.
      *
      * @param dayCounter1 the day counter 1 in km
@@ -139,12 +221,30 @@ public class RecordModel {
     }
 
     /**
+     * Gets day counter 2 in km.
+     *
+     * @return the day counter 2 in km
+     */
+    public float getDayCounter2() {
+        return dayCounter2;
+    }
+
+    /**
      * Sets day counter 2 in km.
      *
      * @param dayCounter2 the day counter 2 in km
      */
     public void setDayCounter2(float dayCounter2) {
         this.dayCounter2 = dayCounter2;
+    }
+
+    /**
+     * Gets create date.
+     *
+     * @return the create date
+     */
+    public Date getCreateDate() {
+        return createDate;
     }
 
     /**
@@ -163,105 +263,6 @@ public class RecordModel {
      */
     public void setCreateDate(String createDate) {
         this.createDate = Date.valueOf(createDate);
-    }
-
-    /**
-     * Gets id.
-     *
-     * @return the id
-     */
-    public int getId() {
-        return id;
-    }
-
-    /**
-     * Gets counter in km.
-     *
-     * @return the counter in km
-     */
-    public int getCounter() {
-        return counter;
-    }
-
-    /**
-     * Gets journey time in minutes.
-     *
-     * @return the journey time in minutes
-     */
-    public int getJourneyTime() {
-        return journeyTime;
-    }
-
-    /**
-     * Gets avg speed in km/h.
-     *
-     * @return the avg speed in km/h
-     */
-    public float getAvgSpeed() {
-        return avgSpeed;
-    }
-
-    /**
-     * Gets max speed in km/h.
-     *
-     * @return the max speed in km/h
-     */
-    public float getMaxSpeed() {
-        return maxSpeed;
-    }
-
-    /**
-     * Gets avg fuel consumption.
-     *
-     * @return the avg fuel consumption
-     */
-    public float getAvgFuel() {
-        return avgFuel;
-    }
-
-    /**
-     * Gets max fuel consumption.
-     *
-     * @return the max fuel consumption
-     */
-    public float getMaxFuel() {
-        return maxFuel;
-    }
-
-    /**
-     * Gets journey distance in km.
-     *
-     * @return the journey distance in km
-     */
-    public float getJourneyDistance() {
-        return journeyDistance;
-    }
-
-    /**
-     * Gets day counter 1 in km.
-     *
-     * @return the day counter 1 in km
-     */
-    public float getDayCounter1() {
-        return dayCounter1;
-    }
-
-    /**
-     * Gets day counter 2 in km.
-     *
-     * @return the day counter 2 in km
-     */
-    public float getDayCounter2() {
-        return dayCounter2;
-    }
-
-    /**
-     * Gets create date.
-     *
-     * @return the create date
-     */
-    public Date getCreateDate() {
-        return createDate;
     }
 
     /**

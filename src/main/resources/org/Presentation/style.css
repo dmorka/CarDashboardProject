@@ -1,11 +1,11 @@
 .progress-bar > .bar {
-	-fx-accent: purple;
+    -fx-accent: purple;
     -fx-background-insets: 1 1 2 1;
     -fx-padding: 0.20em;
 }
 
 .gaugeSize {
-	-fx-pref-width:400px; 
+    -fx-pref-width: 400px;
 }
 
 .table-view {
@@ -25,11 +25,7 @@
     -fx-size: 35;
     -fx-border-width: 0 0 1 0;
     -fx-background-color: transparent;
-    -fx-border-color: 
-        transparent
-        transparent
-        derive(rgb(63, 0, 146), 80%) 
-        transparent;
+    -fx-border-color: transparent transparent derive(rgb(63, 0, 146), 80%) transparent;
     -fx-border-insets: 0 10 1 0;
 }
 
@@ -57,10 +53,10 @@
 
 .menu-bar .label {
     -fx-text-fill: rgb(77, 77, 77);
-    -fx-font-size:14;
+    -fx-font-size: 14;
 }
 
-.menu:hover {   
+.menu:hover {
     -fx-background-color: rgb(123, 0, 180);
 }
 
@@ -69,30 +65,30 @@
 }
 
 .menu-item:focused {
-     -fx-background-color: rgb(123, 0, 180);
+    -fx-background-color: rgb(123, 0, 180);
 }
 
 .menu-item .label {
-    -fx-font-size:13;
+    -fx-font-size: 13;
 }
 
 .context-menu {
     -fx-background-color: black;
     -fx-background-insets: 0, 1, 2;
     -fx-background-radius: 0 6 6 6, 0 5 5 5, 0 4 4 4;
-/*    -fx-padding: 0.666667em 0.083333em 0.666667em 0.083333em;  8 1 8 1 */
+    /*    -fx-padding: 0.666667em 0.083333em 0.666667em 0.083333em;  8 1 8 1 */
     -fx-padding: 0.333333em 0.083333em 0.666667em 0.083333em; /* 4 1 8 1 */
-    -fx-effect: dropshadow(two-pass-box, rgb(213, 123, 255),5,0.0,0.1,2);
+    -fx-effect: dropshadow(two-pass-box, rgb(213, 123, 255), 5, 0.0, 0.1, 2);
 }
 
 .button {
-    -fx-background-color:black;
-    -fx-border-width:3;
-    -fx-border-radius:10;
-    -fx-border-color:grey;
+    -fx-background-color: black;
+    -fx-border-width: 3;
+    -fx-border-radius: 10;
+    -fx-border-color: grey;
 }
 
 .buttonHover:hover {
-    -fx-border-color:purple;
+    -fx-border-color: purple;
 }
 

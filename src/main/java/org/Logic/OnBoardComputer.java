@@ -11,16 +11,6 @@ import java.util.Objects;
 public class OnBoardComputer implements Serializable, Comparable<OnBoardComputer> {
     private float avgSpeed;
     private float maxSpeed;
-
-    /**
-     * Sets journey start time.
-     *
-     * @param journeyStartTime the journey start time
-     */
-    public void setJourneyStartTime(LocalDateTime journeyStartTime) {
-        this.journeyStartTime = journeyStartTime;
-    }
-
     private LocalDateTime journeyStartTime = null;
     private LocalDateTime journeyPauseTime = null;
     private float journeyDistance;
@@ -54,6 +44,15 @@ public class OnBoardComputer implements Serializable, Comparable<OnBoardComputer
         return Math.round(avgSpeed);
     }
 
+    /**
+     * Sets avg speed in km/h.
+     *
+     * @param avgSpeed the avg speed in km/h
+     */
+    public void setAvgSpeed(float avgSpeed) {
+        this.avgSpeed = avgSpeed;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -68,19 +67,19 @@ public class OnBoardComputer implements Serializable, Comparable<OnBoardComputer
 
     @Override
     public int compareTo(OnBoardComputer o) {
-        if(equals(o)) {
+        if (equals(o)) {
             return 0;
         }
         int journeyDistanceCmp = Float.compare(journeyDistance, o.journeyDistance);
-        if(journeyDistanceCmp == 0) {
+        if (journeyDistanceCmp == 0) {
             int journeyTimeCmp = journeyStartTime.compareTo(o.journeyStartTime);
-            if(journeyTimeCmp == 0) {
+            if (journeyTimeCmp == 0) {
                 int avgSpeedCmp = Float.compare(avgSpeed, o.avgSpeed);
 
-                if(avgSpeedCmp==0) {
+                if (avgSpeedCmp == 0) {
                     int avgCombustionCmp = Float.compare(avgCombustion, o.avgCombustion);
 
-                    if(avgCombustionCmp == 0)
+                    if (avgCombustionCmp == 0)
                         return Float.compare(maxSpeed, o.maxSpeed);
 
                     return avgCombustionCmp;
@@ -94,32 +93,12 @@ public class OnBoardComputer implements Serializable, Comparable<OnBoardComputer
     }
 
     /**
-     * Sets avg speed in km/h.
-     *
-     * @param avgSpeed the avg speed in km/h
-     */
-    public void setAvgSpeed(float avgSpeed) {
-        this.avgSpeed = avgSpeed;
-    }
-
-    /**
      * Gets max speed in km/h.
      *
      * @return the max speed in km/h
      */
     public int getMaxSpeed() {
         return Math.round(maxSpeed);
-    }
-
-    /**
-     * Get journey time in minutes.
-     *
-     * @return the in minutes
-     */
-    public int getJourneyTime(){
-        if(journeyStartTime == null)
-            return 0;
-        return (int)(Duration.between(journeyStartTime, LocalDateTime.now()).getSeconds() / 60);
     }
 
     /**
@@ -132,14 +111,34 @@ public class OnBoardComputer implements Serializable, Comparable<OnBoardComputer
     }
 
     /**
+     * Get journey time in minutes.
+     *
+     * @return the in minutes
+     */
+    public int getJourneyTime() {
+        if (journeyStartTime == null)
+            return 0;
+        return (int) (Duration.between(journeyStartTime, LocalDateTime.now()).getSeconds() / 60);
+    }
+
+    /**
+     * Sets journey time.
+     *
+     * @param minutes the minutes
+     */
+    public void setJourneyTime(int minutes) {
+        LocalDateTime localDateTime = LocalDateTime.now();
+        setJourneyStartTime(localDateTime.minusMinutes(minutes));
+    }
+
+    /**
      * Gets journey start time.
      *
      * @return the journey start time
      */
     public String getJourneyStartTime() {
-        if(journeyStartTime != null)
-        {
-            int min = (int)(Duration.between(journeyStartTime, LocalDateTime.now()).getSeconds() / 60);
+        if (journeyStartTime != null) {
+            int min = (int) (Duration.between(journeyStartTime, LocalDateTime.now()).getSeconds() / 60);
             int h = min / 60;
             return h + "h " + min % 60 + " min";
         }
@@ -148,16 +147,25 @@ public class OnBoardComputer implements Serializable, Comparable<OnBoardComputer
     }
 
     /**
+     * Sets journey start time.
+     *
+     * @param journeyStartTime the journey start time
+     */
+    public void setJourneyStartTime(LocalDateTime journeyStartTime) {
+        this.journeyStartTime = journeyStartTime;
+    }
+
+    /**
      * Start journey time.
      */
     public void startJourneyTime() {
         //Pierwsze uruchomienie silnika
-        if(journeyStartTime == null)
+        if (journeyStartTime == null)
             this.journeyStartTime = LocalDateTime.now();
 
         //Gdy wyłączymy silnika i po pewnym czasie ponownie uruchamiamy silnik to czas podróży jest aktualizowany by
         // tej przerwy nie wliczać w czas podróży
-        if(journeyPauseTime != null) {
+        if (journeyPauseTime != null) {
             journeyStartTime = journeyStartTime.plusSeconds(Duration.between(journeyPauseTime, LocalDateTime.now()).toSeconds());
         }
     }
@@ -203,16 +211,6 @@ public class OnBoardComputer implements Serializable, Comparable<OnBoardComputer
      */
     public void setAvgCombustion(float avgCombustion) {
         this.avgCombustion = avgCombustion;
-    }
-
-    /**
-     * Sets journey time.
-     *
-     * @param minutes the minutes
-     */
-    public void setJourneyTime(int minutes) {
-        LocalDateTime localDateTime = LocalDateTime.now();
-        setJourneyStartTime(localDateTime.minusMinutes(minutes));
     }
 
 }

@@ -9,5 +9,7 @@ public class GearException extends Exception {
      *
      * @param message the message
      */
-    public GearException(String message) { super(message);}
+    public GearException(String message) {
+        super(message);
+    }
 }

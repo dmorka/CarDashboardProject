@@ -9,5 +9,7 @@ public class TurnSignalException extends Exception {
      *
      * @param message the message
      */
-    public TurnSignalException(String message) { super(message);}
+    public TurnSignalException(String message) {
+        super(message);
+    }
 }

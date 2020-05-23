@@ -1,20 +1,16 @@
 package org.Presentation;
 
-import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
-import org.Data.*;
-import org.Logic.Dashboard;
+import org.Data.RecordModel;
 
 import java.sql.Date;
-import java.sql.SQLException;
 
 
 public class DatabaseImportController {
@@ -44,7 +40,7 @@ public class DatabaseImportController {
     @FXML
     private TableColumn<RecordModel, Date> col_create_date;
 
-    public void loadDB(ObservableList<RecordModel> set){
+    public void loadDB(ObservableList<RecordModel> set) {
         col_id.setCellValueFactory(new PropertyValueFactory<RecordModel, Integer>("id"));
         col_avg_speed.setCellValueFactory(new PropertyValueFactory<RecordModel, Float>("avgSpeed"));
         col_max_speed.setCellValueFactory(new PropertyValueFactory<RecordModel, Float>("maxSpeed"));
@@ -68,7 +64,7 @@ public class DatabaseImportController {
         }
     }
 
-    public RecordModel getSelectedRecord(){
+    public RecordModel getSelectedRecord() {
         return selectedRecord;
     }
 }

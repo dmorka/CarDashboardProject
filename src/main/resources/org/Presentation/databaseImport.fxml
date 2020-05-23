@@ -1,57 +1,65 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-
-<VBox fx:id="vbox" alignment="TOP_CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="546.0" prefWidth="996.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.Presentation.DatabaseImportController">
-   <children>
-      <HBox fx:id="topPanel" alignment="TOP_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="10.0" style="-fx-background-color: #1d1d1d;">
-         <children>
-            <ImageView fx:id="minimizeIcon" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@images/minimize1.png" />
-               </image>
-            </ImageView>
-            <ImageView fx:id="maximizeIcon" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@images/maximize.png" />
-               </image>
-            </ImageView>
-            <ImageView fx:id="closeIcon" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@images/close.png" />
-               </image>
-            </ImageView>
-         </children>
-         <VBox.margin>
-            <Insets />
-         </VBox.margin>
-         <padding>
-            <Insets right="5.0" top="5.0" />
-         </padding>
-      </HBox>
-      <TableView fx:id="table" maxHeight="-Infinity" maxWidth="-Infinity" onMousePressed="#onMousePressed" prefHeight="10000.0" prefWidth="10000.0" stylesheets="@style.css">
-         <columns>
-            <TableColumn fx:id="col_id" editable="false" minWidth="30.0" prefWidth="-1.0" text="ID" />
-            <TableColumn fx:id="col_avg_speed" editable="false" minWidth="100.0" prefWidth="-1.0" text="AVG Speed" />
-            <TableColumn fx:id="col_max_speed" editable="false" minWidth="100.0" prefWidth="-1.0" text="MAX Speed" />
-            <TableColumn fx:id="col_avg_fuel" editable="false" minWidth="85.0" prefWidth="-1.0" text="AVG Fuel" />
-            <TableColumn fx:id="col_max_fuel" editable="false" minWidth="79.0" prefWidth="-1.0" text="MAX Fuel" />
-            <TableColumn fx:id="col_journey_dist" editable="false" minWidth="98.0" prefWidth="-1.0" text="Journey dist" />
-            <TableColumn fx:id="col_journey_time" editable="false" minWidth="104.0" prefWidth="-1.0" text="Journey time" />
-            <TableColumn fx:id="col_counter" editable="false" minWidth="80.0" prefWidth="-1.0" text="Counter" />
-            <TableColumn fx:id="col_day_counter_1" editable="false" minWidth="110.0" prefWidth="-1.0" text="Day counter 1" />
-            <TableColumn fx:id="col_day_counter_2" editable="false" minWidth="110.0" prefWidth="-1.0" text="Day counter 2" />
-            <TableColumn fx:id="col_create_date" editable="false" minWidth="95.0" prefWidth="-1.0" text="Create date" />
-         </columns>
-         <columnResizePolicy>
-            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-         </columnResizePolicy>
-      </TableView>
-   </children>
+<VBox xmlns:fx="http://javafx.com/fxml/1" fx:id="vbox" alignment="TOP_CENTER" minHeight="-Infinity" minWidth="-Infinity"
+      prefHeight="546.0" prefWidth="996.0" xmlns="http://javafx.com/javafx/11.0.1"
+      fx:controller="org.Presentation.DatabaseImportController">
+    <children>
+        <HBox fx:id="topPanel" alignment="TOP_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="10.0"
+              style="-fx-background-color: #1d1d1d;">
+            <children>
+                <ImageView fx:id="minimizeIcon" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true"
+                           preserveRatio="true">
+                    <image>
+                        <Image url="@images/minimize1.png"/>
+                    </image>
+                </ImageView>
+                <ImageView fx:id="maximizeIcon" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true"
+                           preserveRatio="true">
+                    <image>
+                        <Image url="@images/maximize.png"/>
+                    </image>
+                </ImageView>
+                <ImageView fx:id="closeIcon" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@images/close.png"/>
+                    </image>
+                </ImageView>
+            </children>
+            <VBox.margin>
+                <Insets/>
+            </VBox.margin>
+            <padding>
+                <Insets right="5.0" top="5.0"/>
+            </padding>
+        </HBox>
+        <TableView fx:id="table" maxHeight="-Infinity" maxWidth="-Infinity" onMousePressed="#onMousePressed"
+                   prefHeight="10000.0" prefWidth="10000.0" stylesheets="@style.css">
+            <columns>
+                <TableColumn fx:id="col_id" editable="false" minWidth="30.0" prefWidth="-1.0" text="ID"/>
+                <TableColumn fx:id="col_avg_speed" editable="false" minWidth="100.0" prefWidth="-1.0" text="AVG Speed"/>
+                <TableColumn fx:id="col_max_speed" editable="false" minWidth="100.0" prefWidth="-1.0" text="MAX Speed"/>
+                <TableColumn fx:id="col_avg_fuel" editable="false" minWidth="85.0" prefWidth="-1.0" text="AVG Fuel"/>
+                <TableColumn fx:id="col_max_fuel" editable="false" minWidth="79.0" prefWidth="-1.0" text="MAX Fuel"/>
+                <TableColumn fx:id="col_journey_dist" editable="false" minWidth="98.0" prefWidth="-1.0"
+                             text="Journey dist"/>
+                <TableColumn fx:id="col_journey_time" editable="false" minWidth="104.0" prefWidth="-1.0"
+                             text="Journey time"/>
+                <TableColumn fx:id="col_counter" editable="false" minWidth="80.0" prefWidth="-1.0" text="Counter"/>
+                <TableColumn fx:id="col_day_counter_1" editable="false" minWidth="110.0" prefWidth="-1.0"
+                             text="Day counter 1"/>
+                <TableColumn fx:id="col_day_counter_2" editable="false" minWidth="110.0" prefWidth="-1.0"
+                             text="Day counter 2"/>
+                <TableColumn fx:id="col_create_date" editable="false" minWidth="95.0" prefWidth="-1.0"
+                             text="Create date"/>
+            </columns>
+            <columnResizePolicy>
+                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+            </columnResizePolicy>
+        </TableView>
+    </children>
 </VBox>

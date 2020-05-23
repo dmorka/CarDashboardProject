@@ -40,7 +40,7 @@ public class FlashingSignalThread extends Thread {
 
     public void run() {
         this.light.setImage(lightEnable);
-        while(running) {
+        while (running) {
             this.light.setOpacity(0.88);
             try {
                 Thread.sleep(500);
@@ -51,7 +51,7 @@ public class FlashingSignalThread extends Thread {
             try {
                 Thread.sleep(500);
             } catch (InterruptedException e) {
-               // e.printStackTrace();
+                // e.printStackTrace();
             }
         }
     }

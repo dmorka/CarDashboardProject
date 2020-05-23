@@ -10,13 +10,12 @@ import java.io.IOException;
 
 public class MainController {
     @FXML
-    private void onMouseClicked(MouseEvent mouseEvent){
+    private void onMouseClicked(MouseEvent mouseEvent) {
         Button button = (Button) mouseEvent.getSource();
-        if(button.getId().equals("BTNtui")){
+        if (button.getId().equals("BTNtui")) {
             TUI tui = new TUI();
             tui.main();
-        }
-        else {
+        } else {
             GUI gui = new GUI();
             try {
                 gui.start(new Stage());
