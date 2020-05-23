@@ -7,13 +7,31 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.sql.*;
 
+/**
+ * The type Sql to read and write record to database.
+ */
 public class SQL implements DataHandling{
+    /**
+     * The jdbc SQL-server connection string.
+     */
     static final String connectionString = "jdbc:sqlserver://localhost:1433;databaseName=dashboard";
+    /**
+     * The jdbc SQL-server driver string.
+     */
     static final String driver = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
 
+    /**
+     * The jdbc connection driver manager .
+     */
     Connection con = null;
+    /**
+     * The object for sending SQL statements to the database.
+     */
     Statement stsm = null;
 
+    /**
+     * Connect with the database.
+     */
     public void connect() {
         try {
             Class.forName(driver);
@@ -24,6 +42,11 @@ public class SQL implements DataHandling{
         }
     }
 
+    /**
+     * Disconnect with the database.
+     *
+     * @throws SQLException the sql exception
+     */
     public void disconnect() throws SQLException {
         if(con != null){
             con.close();

@@ -25,8 +25,12 @@ public class UIController {
     }
 
     public void refresh() {}
+
     public void startStopEngine() {}
+
     public void reloadAfterSettings() {}
+
     public void switchEngine(boolean enable, boolean interrupted) {}
+
     public void switchOffCruiseControl() {}
 }

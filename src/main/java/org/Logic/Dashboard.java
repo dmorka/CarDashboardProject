@@ -15,6 +15,9 @@ import java.sql.Date;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
+/**
+ * The type Dashboard.
+ */
 public class Dashboard implements Serializable {
     private transient OnBoardComputer onBoardComputer;
     private Settings settings;
@@ -37,10 +40,20 @@ public class Dashboard implements Serializable {
     private transient int revs;
     private short currentGear;
 
+    /**
+     * Is cruise control activated boolean.
+     *
+     * @return the boolean
+     */
     public boolean isCruiseControl() {
         return cruiseControl;
     }
 
+    /**
+     * Sets cruise control.
+     *
+     * @param cruiseControl the cruise control
+     */
     public void setCruiseControl(boolean cruiseControl) {
         this.cruiseControl = cruiseControl;
     }
@@ -48,6 +61,9 @@ public class Dashboard implements Serializable {
     private ArrayList<Short> gears;
 
 
+    /**
+     * Instantiates a new Dashboard.
+     */
     public Dashboard() {
         this.onBoardComputer = new OnBoardComputer();
         this.settings = new Settings();
@@ -72,10 +88,21 @@ public class Dashboard implements Serializable {
         decimalFormat.setRoundingMode(RoundingMode.HALF_UP);
     }
 
+    /**
+     * Gets cruise speed in km/h.
+     *
+     * @return the cruise speed in km/h
+     */
     public short getCruiseSpeed() {
         return cruiseSpeed;
     }
 
+    /**
+     * Sets cruise speed in km/h.
+     *
+     * @param cruiseSpeed the cruise speed
+     * @throws CruiseControlException the cruise control exception
+     */
     public void setCruiseSpeed(short cruiseSpeed) throws CruiseControlException {
         if(cruiseSpeed >= 80)
             this.cruiseSpeed = cruiseSpeed;
@@ -83,6 +110,9 @@ public class Dashboard implements Serializable {
             throw new CruiseControlException("Too low speed to enable Cruise Control!");
     }
 
+    /**
+     * Initialize dashboard.
+     */
     public void init() {
         this.onBoardComputer = new OnBoardComputer();
         this.musicPlayer = new MusicPlayer();
@@ -96,10 +126,20 @@ public class Dashboard implements Serializable {
         this.rightTurnSignal = false;
     }
 
+    /**
+     * Is keyboard key up boolean.
+     *
+     * @return the boolean
+     */
     public boolean isKeyUp() {
         return keyUp;
     }
 
+    /**
+     * Read from database to observable list.
+     *
+     * @return the observable list
+     */
     public ObservableList<RecordModel> readFromDB(){
         SQL loadFromDatabase = new SQL();
         ObservableList<RecordModel> set = null;
@@ -118,101 +158,225 @@ public class Dashboard implements Serializable {
                 onBoardComputer.getJourneyTime(), (int)counter, dayCounter1, dayCounter2, new Date(System.currentTimeMillis()));
     }
 
+    /**
+     * Write record to database.
+     *
+     * @throws Exception the exception
+     */
     public void writeToDB() throws Exception {
         SQL db = new SQL();
         db.write(null, getRecordModel());
     }
 
+    /**
+     * Write record to xml file.
+     *
+     * @param path the path
+     * @throws IOException        the io exception
+     * @throws XMLStreamException the xml stream exception
+     */
     public void writeToXml(String path) throws IOException, XMLStreamException {
         XML xml =  new XML();
         xml.write(path, getRecordModel());
     }
 
+    /**
+     * Read record from xml file.
+     *
+     * @param path the path
+     * @throws IOException        the io exception
+     * @throws XMLStreamException the xml stream exception
+     */
     public void readFromXml(String path) throws IOException, XMLStreamException {
         XML xml =  new XML();
         updateDashboard(xml.read(path));
     }
 
+    /**
+     * Gets on board computer.
+     *
+     * @return the on board computer
+     */
     public OnBoardComputer getOnBoardComputer() {
         return onBoardComputer;
     }
 
+    /**
+     * Sets day counter 1 in km.
+     *
+     * @param dayCounter1 the day counter 1 in km
+     */
     public void setDayCounter1(float dayCounter1) {
         this.dayCounter1 = dayCounter1;
     }
 
+    /**
+     * Sets day counter 2 in km.
+     *
+     * @param dayCounter2 the day counter 2 in km
+     */
     public void setDayCounter2(float dayCounter2) {
         this.dayCounter2 = dayCounter2;
     }
 
+    /**
+     * Sets keyboard key up.
+     *
+     * @param keyUp the key up
+     */
     public void setKeyUp(boolean keyUp) {
         this.keyUp = keyUp;
     }
 
+    /**
+     * Is keyboard key down boolean.
+     *
+     * @return the boolean
+     */
     public boolean isKeyDown() {
         return keyDown;
     }
 
+    /**
+     * Sets keyboard key down.
+     *
+     * @param keyDown the key down
+     */
     public void setKeyDown(boolean keyDown) {
         this.keyDown = keyDown;
     }
 
+    /**
+     * Gets settings.
+     *
+     * @return the settings
+     */
     public Settings getSettings() {
         return settings;
     }
 
+    /**
+     * Gets speed in km/h.
+     *
+     * @return the speed in km/h
+     */
     public short getSpeed() {
         return speed;
     }
 
+    /**
+     * Is left turn signal boolean.
+     *
+     * @return the boolean
+     */
     public boolean isLeftTurnSignal() {
         return leftTurnSignal;
     }
 
+    /**
+     * Is right turn signal boolean.
+     *
+     * @return the boolean
+     */
     public boolean isRightTurnSignal() {
         return rightTurnSignal;
     }
 
+    /**
+     * Is position lights boolean.
+     *
+     * @return the boolean
+     */
     public boolean isPositionLights() {
         return positionLights;
     }
 
+    /**
+     * Is low beam boolean.
+     *
+     * @return the boolean
+     */
     public boolean isLowBeam() {
         return lowBeam;
     }
 
+    /**
+     * Is high beam boolean.
+     *
+     * @return the boolean
+     */
     public boolean isHighBeam() {
         return highBeam;
     }
 
+    /**
+     * Is front fog lights boolean.
+     *
+     * @return the boolean
+     */
     public boolean isFrontFogLights() {
         return frontFogLights;
     }
 
+    /**
+     * Is back fog lights boolean.
+     *
+     * @return the boolean
+     */
     public boolean isBackFogLights() {
         return rearFogLights;
     }
 
+    /**
+     * Gets counter in km.
+     *
+     * @return the counter in km
+     */
     public float getCounter() {
         return counter;
     }
 
+    /**
+     * Gets day counter 1 in km.
+     *
+     * @return the day counter 1 in km
+     */
     public float getDayCounter1() {
         return dayCounter1;
     }
 
+    /**
+     * Gets day counter 2 in km.
+     *
+     * @return the day counter 2 in km
+     */
     public float getDayCounter2() {
         return dayCounter2;
     }
 
+    /**
+     * Gets revs.
+     *
+     * @return the revs
+     */
     public int getRevs() {
         return revs;
     }
 
+    /**
+     * Gets current gear.
+     *
+     * @return the current gear
+     */
     public short getCurrentGear() {
         return currentGear;
     }
 
+    /**
+     * Update dashboard.
+     *
+     * @param selectedRecord the selected record
+     */
     public void updateDashboard(RecordModel selectedRecord){
         this.onBoardComputer.setAvgSpeed(selectedRecord.getAvgSpeed());
         this.onBoardComputer.setMaxSpeed(selectedRecord.getMaxSpeed());
@@ -224,12 +388,24 @@ public class Dashboard implements Serializable {
         this.onBoardComputer.setJourneyTime(selectedRecord.getJourneyTime());
     }
 
+    /**
+     * Sets speed in km/h.
+     *
+     * @param speed the speed in km
+     * @throws NegativeValueException the negative value of speed exception
+     */
     public void setSpeed(short speed) throws NegativeValueException {
         if(speed < 0)
             throw new NegativeValueException("The speed  can't be negative!");
         this.speed = speed;
     }
 
+    /**
+     * Sets left turn signal.
+     *
+     * @param leftTurnSignal the left turn signal
+     * @throws TurnSignalException the turn signal exception
+     */
     public void setLeftTurnSignal(boolean leftTurnSignal) throws TurnSignalException {
         if(isRightTurnSignal())
             throw new TurnSignalException("The right turn signal is already on, you can't turn on both at the same time!");
@@ -237,6 +413,12 @@ public class Dashboard implements Serializable {
         this.leftTurnSignal = leftTurnSignal;
     }
 
+    /**
+     * Sets right turn signal.
+     *
+     * @param rightTurnSignal the right turn signal
+     * @throws TurnSignalException the turn signal exception
+     */
     public void setRightTurnSignal(boolean rightTurnSignal) throws TurnSignalException {
         if(isLeftTurnSignal())
             throw new TurnSignalException("The left turn signal is already on, you can't turn on both at the same time!");
@@ -244,30 +426,66 @@ public class Dashboard implements Serializable {
         this.rightTurnSignal = rightTurnSignal;
     }
 
+    /**
+     * Sets position lights.
+     *
+     * @param positionLights the position lights
+     */
     public void setPositionLights(boolean positionLights) {
         this.positionLights = positionLights;
     }
 
+    /**
+     * Sets low beam.
+     *
+     * @param lowBeam the low beam
+     */
     public void setLowBeam(boolean lowBeam) {
         this.lowBeam = lowBeam;
     }
 
+    /**
+     * Sets high beam.
+     *
+     * @param highBeam the high beam
+     */
     public void setHighBeam(boolean highBeam) {
         this.highBeam = highBeam;
     }
 
+    /**
+     * Sets front fog lights.
+     *
+     * @param frontFogLights the front fog lights
+     */
     public void setFrontFogLights(boolean frontFogLights) {
         this.frontFogLights = frontFogLights;
     }
 
+    /**
+     * Sets rear fog lights.
+     *
+     * @param rearFogLights the rear fog lights
+     */
     public void setRearFogLights(boolean rearFogLights) {
         this.rearFogLights = rearFogLights;
     }
 
+    /**
+     * Sets counter in km.
+     *
+     * @param counter the counter in km
+     */
     public void setCounter(float counter) {
         this.counter = counter;
     }
 
+    /**
+     * Sets day counter 1 in km.
+     *
+     * @param dayCounter1 the day counter 1 in km
+     * @throws NegativeValueException the negative value of counter exception
+     */
     public void setDayCounter1(int dayCounter1) throws NegativeValueException{
         if(dayCounter1 < 0)
             throw new NegativeValueException("The day counter 1 can't be negative!");
@@ -275,12 +493,24 @@ public class Dashboard implements Serializable {
         this.dayCounter1 = dayCounter1;
     }
 
+    /**
+     * Sets day counter 2 in km.
+     *
+     * @param dayCounter2 the day counter 2 in km
+     * @throws NegativeValueException the negative value of counter exception
+     */
     public void setDayCounter2(int dayCounter2) throws NegativeValueException {
         if(dayCounter2 < 0)
             throw new NegativeValueException("The day counter 2 can't be negative!");
         this.dayCounter2 = dayCounter2;
     }
 
+    /**
+     * Sets revs.
+     *
+     * @param revs the revs
+     * @throws NegativeValueException the negative value exception
+     */
     public void setRevs(int revs) throws NegativeValueException {
         if(revs < 0)
             throw new NegativeValueException("The revs can't be negative!");
@@ -288,6 +518,13 @@ public class Dashboard implements Serializable {
         this.revs = revs;
     }
 
+    /**
+     * Sets current gear.
+     *
+     * @param currentGear   the current gear
+     * @param engineRunning the engine running
+     * @throws GearException the gear exception
+     */
     public void setCurrentGear(short currentGear, boolean engineRunning) throws GearException {
         if(currentGear < gears.size()){
             if(currentGear == 0)
@@ -309,6 +546,11 @@ public class Dashboard implements Serializable {
         }
     }
 
+    /**
+     * Cruise control speed change in km/h.
+     *
+     * @param speedChange the speed change in km/h
+     */
     public void cruiseControlSpeedChange(boolean speedChange) {
         if(speedChange) {
             this.cruiseSpeed += 5;
@@ -323,18 +565,31 @@ public class Dashboard implements Serializable {
         }
     }
 
+    /**
+     * Add speed.
+     *
+     * @param value the value in km/h
+     */
     public void addSpeed(int value) {
         speed += value;
         if(speed > settings.getMaxSpeed())
             speed = settings.getMaxSpeed();
     }
 
+    /**
+     * Sub speed.
+     *
+     * @param value the value in km/h
+     */
     public void subSpeed(int value) {
         speed -= value;
         if(speed < 0)
             speed = 0;
     }
 
+    /**
+     * Set gears.
+     */
     public void setGears(){
         this.gears.clear();
         this.gears.add((short)0);
@@ -351,21 +606,39 @@ public class Dashboard implements Serializable {
         this.gears.add(this.settings.getMaxSpeed());
     }
 
+    /**
+     * Gets current gear max speed in km/h.
+     *
+     * @return the current gear max speed in km/h
+     */
     public short getCurrentGearMaxSpeed() {
         return gears.get(currentGear);
     }
 
+    /**
+     * Gets lower gear max speed in km/h.
+     *
+     * @return the lower gear max speed in km/h
+     */
     public short getLowerGearMaxSpeed() {
         if(currentGear != 0)
             return gears.get(currentGear-1);
         return 0;
     }
 
+    /**
+     * Play start engine sound.
+     */
     public void playStartEngineSound() {
         AudioClip audioClip = new AudioClip(Paths.get("src/main/resources/org/Presentation/sounds/engineStartSound.mp3").toUri().toString());
         audioClip.play();
     }
 
+    /**
+     * Gets music player.
+     *
+     * @return the music player
+     */
     public MusicPlayer getMusicPlayer() {
         return musicPlayer;
     }

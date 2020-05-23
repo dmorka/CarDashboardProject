@@ -5,10 +5,18 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
+/**
+ * The type On board computer.
+ */
 public class OnBoardComputer implements Serializable, Comparable<OnBoardComputer> {
     private float avgSpeed;
     private float maxSpeed;
 
+    /**
+     * Sets journey start time.
+     *
+     * @param journeyStartTime the journey start time
+     */
     public void setJourneyStartTime(LocalDateTime journeyStartTime) {
         this.journeyStartTime = journeyStartTime;
     }
@@ -19,14 +27,29 @@ public class OnBoardComputer implements Serializable, Comparable<OnBoardComputer
     private float avgCombustion;
     private float maxCombustion;
 
+    /**
+     * Gets max combustion in l.
+     *
+     * @return the max combustion in l
+     */
     public float getMaxCombustion() {
         return Math.round(maxCombustion * 100f) / 100f;
     }
 
+    /**
+     * Sets max combustion in l.
+     *
+     * @param maxCombustion the max combustion in l
+     */
     public void setMaxCombustion(float maxCombustion) {
         this.maxCombustion = maxCombustion;
     }
 
+    /**
+     * Gets avg speed in km/h.
+     *
+     * @return the avg speed in km/h
+     */
     public int getAvgSpeed() {
         return Math.round(avgSpeed);
     }
@@ -70,24 +93,49 @@ public class OnBoardComputer implements Serializable, Comparable<OnBoardComputer
         return journeyDistanceCmp;
     }
 
+    /**
+     * Sets avg speed in km/h.
+     *
+     * @param avgSpeed the avg speed in km/h
+     */
     public void setAvgSpeed(float avgSpeed) {
         this.avgSpeed = avgSpeed;
     }
 
+    /**
+     * Gets max speed in km/h.
+     *
+     * @return the max speed in km/h
+     */
     public int getMaxSpeed() {
         return Math.round(maxSpeed);
     }
 
+    /**
+     * Get journey time in minutes.
+     *
+     * @return the in minutes
+     */
     public int getJourneyTime(){
         if(journeyStartTime == null)
             return 0;
         return (int)(Duration.between(journeyStartTime, LocalDateTime.now()).getSeconds() / 60);
     }
 
+    /**
+     * Sets max speed in km/h.
+     *
+     * @param maxSpeed the max speed in km/h
+     */
     public void setMaxSpeed(float maxSpeed) {
         this.maxSpeed = maxSpeed;
     }
 
+    /**
+     * Gets journey start time.
+     *
+     * @return the journey start time
+     */
     public String getJourneyStartTime() {
         if(journeyStartTime != null)
         {
@@ -99,6 +147,9 @@ public class OnBoardComputer implements Serializable, Comparable<OnBoardComputer
         return "0h 0min";
     }
 
+    /**
+     * Start journey time.
+     */
     public void startJourneyTime() {
         //Pierwsze uruchomienie silnika
         if(journeyStartTime == null)
@@ -111,26 +162,54 @@ public class OnBoardComputer implements Serializable, Comparable<OnBoardComputer
         }
     }
 
+    /**
+     * Pause journey time.
+     */
     public void pauseJourneyTime() {
         this.journeyPauseTime = LocalDateTime.now();
     }
 
+    /**
+     * Gets journey distance in km.
+     *
+     * @return the journey distance in km
+     */
     public float getJourneyDistance() {
         return journeyDistance;
     }
 
+    /**
+     * Sets journey distance in km.
+     *
+     * @param journeyDistance the journey distance in km
+     */
     public void setJourneyDistance(float journeyDistance) {
         this.journeyDistance = journeyDistance;
     }
 
+    /**
+     * Gets avg combustion in l.
+     *
+     * @return the avg combustion in l
+     */
     public float getAvgCombustion() {
         return Math.round(avgCombustion * 100f) / 100f;
     }
 
+    /**
+     * Sets avg combustion in l.
+     *
+     * @param avgCombustion the avg combustion in l
+     */
     public void setAvgCombustion(float avgCombustion) {
         this.avgCombustion = avgCombustion;
     }
 
+    /**
+     * Sets journey time.
+     *
+     * @param minutes the minutes
+     */
     public void setJourneyTime(int minutes) {
         LocalDateTime localDateTime = LocalDateTime.now();
         setJourneyStartTime(localDateTime.minusMinutes(minutes));

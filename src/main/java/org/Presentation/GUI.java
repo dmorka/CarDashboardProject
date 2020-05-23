@@ -14,9 +14,6 @@ import org.controlsfx.control.cell.ImageGridCell;
 import java.io.IOException;
 
 
-/**
- * JavaFX GUI
- */
 public class GUI extends Application {
     private static Scene scene;
     private DashboardController dashboardController;

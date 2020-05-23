@@ -7,8 +7,19 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
+/**
+ * The type Xml to read and write record to XML file.
+ */
 public class XML {
 
+    /**
+     * Read record model from XML file.
+     *
+     * @param path the path
+     * @return the record model
+     * @throws XMLStreamException    the xml stream exception
+     * @throws FileNotFoundException the file not found exception
+     */
     public RecordModel read(String path) throws XMLStreamException, FileNotFoundException {
         InputStream is = new FileInputStream(path);
         XMLInputFactory inputFactory = XMLInputFactory.newInstance();
@@ -141,6 +152,14 @@ public class XML {
         }
     }
 
+    /**
+     * Write to xml file.
+     *
+     * @param path   the path to xml file
+     * @param record the record to write to xml file
+     * @throws IOException        the io exception
+     * @throws XMLStreamException the xml stream exception
+     */
     public void write(String path, RecordModel record) throws IOException, XMLStreamException {
         try (OutputStream os = Files.newOutputStream(Paths.get(path))) {
             XMLOutputFactory outputFactory = XMLOutputFactory.newFactory();
