@@ -17,6 +17,12 @@ import java.io.IOException;
 public class GUI extends Application {
     private DashboardController dashboardController;
 
+    private static FXMLLoader loadFXML(String fxml) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(GUI.class.getResource(fxml + ".fxml"));
+
+        return fxmlLoader;
+    }
+
     public static void main() {
         launch();
     }

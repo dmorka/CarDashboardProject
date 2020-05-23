@@ -8,6 +8,9 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 
+/**
+ * The type Main controller.
+ */
 public class MainController {
     @FXML
     private void onMouseClicked(MouseEvent mouseEvent) {

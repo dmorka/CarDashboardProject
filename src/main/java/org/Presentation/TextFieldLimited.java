@@ -2,13 +2,24 @@ package org.Presentation;
 
 import javafx.scene.control.TextField;
 
+/**
+ * The type Text field limited.
+ */
 public class TextFieldLimited extends TextField {
     private int maxlength;
 
+    /**
+     * Instantiates a new Text field limited.
+     */
     public TextFieldLimited() {
         this.maxlength = 3;
     }
 
+    /**
+     * Sets maxlength.
+     *
+     * @param maxlength the maxlength
+     */
     public void setMaxlength(int maxlength) {
         this.maxlength = maxlength;
     }

@@ -12,7 +12,6 @@ import org.Logic.SpeedThread;
 import org.Logic.TurnSignalException;
 
 import javax.xml.stream.XMLStreamException;
-import java.io.Console;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -57,12 +56,13 @@ public class TUI extends UIController {
             fogBackColor = blackTextColor;
 
 
-    public static void main(String[] args) {
-        Console console = System.console();
-        if(console == null) {
-            System.out.println("Wrong console! You need to execute me in a system console, please");
-            System.exit(0);
-        }
+    public static void main() {
+
+//        Console console = System.console();
+//        if(console == null) {
+//            System.out.println("Wrong console! You need to execute me in a system console, please");
+//            System.exit(0);
+//        }
         TUI tui = new TUI();
         tui.drawMainMenu();
     }
