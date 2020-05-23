@@ -1,138 +1,162 @@
 package org.Presentation;
 
 
+import com.diogonunes.jcdp.bw.Printer;
 import com.diogonunes.jcdp.color.ColoredPrinter;
 import com.diogonunes.jcdp.color.api.Ansi.*;
 import javafx.collections.ObservableList;
 import org.Data.RecordModel;
 import org.Data.Serialization;
-import org.Logic.Dashboard;
-import org.Logic.GearException;
-import org.Logic.SpeedThread;
+import org.Logic.*;
 
 import java.io.Console;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
-import org.Logic.TurnSignalException;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 
 import javax.xml.stream.XMLStreamException;
 
 public class TUI extends UIController {
     private SpeedThread speedThread = null;
-    private Thread keyThread;
-    private boolean listenKeys = false;
+    private Thread keyThread = null;
+//    private boolean keyListen = false;
+    private AtomicBoolean keyListen = new AtomicBoolean(false);
     private boolean engineRunning = false;
     private final DateTimeFormatter clockFormatter = DateTimeFormatter.ofPattern("HH:mm");
-    ColoredPrinter purpleTextColor = new ColoredPrinter.Builder(0, false)
-            .foreground(FColor.MAGENTA)
-            .build();
+    private long turnSignalTime = System.currentTimeMillis();
+    private final ColoredPrinter purpleTextColor = new ColoredPrinter.Builder(0, false)
+                .foreground(FColor.MAGENTA)
+                .build();
 
-    ColoredPrinter blueTextColor = new ColoredPrinter.Builder(0, false)
-            .foreground(FColor.BLUE)
-            .build();
+    private final ColoredPrinter blueTextColor = new ColoredPrinter.Builder(0, false)
+                .foreground(FColor.BLUE)
+                .build();
 
-    ColoredPrinter yellowTextColor = new ColoredPrinter.Builder(0, false)
-            .foreground(FColor.YELLOW)
-            .build();
+    private final ColoredPrinter yellowTextColor = new ColoredPrinter.Builder(0, false)
+                .foreground(FColor.YELLOW)
+                .build();
 
-    ColoredPrinter cyanTextColor = new ColoredPrinter.Builder(0, false)
-            .foreground(FColor.CYAN)
-            .build();
+    private final ColoredPrinter cyanTextColor = new ColoredPrinter.Builder(0, false)
+                .foreground(FColor.CYAN)
+                .build();
 
-    ColoredPrinter greenTextColor = new ColoredPrinter.Builder(0, false)
-            .foreground(FColor.GREEN)
-            .build();
+    private final ColoredPrinter greenTextColor = new ColoredPrinter.Builder(0, false)
+                .foreground(FColor.GREEN)
+                .build();
 
-    ColoredPrinter redTextColor = new ColoredPrinter.Builder(0, false)
-            .foreground(FColor.RED)
-            .build();
+    private final ColoredPrinter redTextColor = new ColoredPrinter.Builder(0, false)
+                .foreground(FColor.RED)
+                .build();
+
+    private final ColoredPrinter blackTextColor = new ColoredPrinter.Builder(0, false)
+                .foreground(FColor.BLACK)
+                .build();
+    private ColoredPrinter rightTurnSignalColor = blackTextColor,
+                leftTurnSignalColor = blackTextColor,
+                parkingLightColor = blackTextColor,
+                lowBeamColor = blackTextColor,
+                highBeamColor = blackTextColor,
+                fogFrontColor = blackTextColor,
+                fogBackColor = blackTextColor;
+
 
     public static void main(String[] args) {
-        Console console = System.console();
-        if(console == null) {
-            System.out.println("Wrong console! You need to execute me in a system console, please");
-            System.exit(0);
-        }
+
+//        Console console = System.console();
+//        if(console == null) {
+//            System.out.println("Wrong console! You need to execute me in a system console, please");
+//            System.exit(0);
+//        }
         TUI tui = new TUI();
         tui.drawMainMenu();
     }
-
-    public void KeyListener()
+    public void KeyListener(boolean listen)
     {
-        keyThread = new Thread(){
-            public void run()
-            {
-                char znak;
-                Scanner scanner = new Scanner(System.in);
-                while(listenKeys)
-                {
-                    znak = scanner.next().charAt(0);
-                    if(Character.isDigit(znak)) {
-                        if(znak>= '0' && znak <= '6') {
-                            try {
-                                dashboard.setCurrentGear((short) (znak-'0'),true);
-                            } catch (GearException e) {
-                                redTextColor.println(e.getMessage());
+//        Scanner scanner = new Scanner(System.in);
+        if(listen) {
+            keyThread = new Thread() {
+                public void run() {
+                    char znak;
+                    Scanner scanner = new Scanner(System.in);
+                    while (keyListen.get()) {
+                        znak = scanner.next().charAt(0);
+                        if (Character.isDigit(znak)) {
+                            if (znak >= '0' && znak <= '6') {
+                                try {
+                                    dashboard.setCurrentGear((short) (znak - '0'), true);
+                                } catch (GearException ignore) {
+                                }
+                            }
+                        } else {
+                            switch (znak) {
+                                //Przyspieszanie/zwalnianie
+                                case 'w':
+                                    dashboard.setKeyUp(true);
+                                    break;
+                                case 's':
+                                    dashboard.setKeyUp(false);
+                                    break;
+                                //Światła
+                                case 'z':
+                                    dashboard.setPositionLights(!dashboard.isPositionLights());
+                                    parkingLightColor = (dashboard.isPositionLights()) ? greenTextColor : blackTextColor;
+                                    break;
+                                case 'x':
+                                    dashboard.setLowBeam(!dashboard.isLowBeam());
+                                    lowBeamColor = (dashboard.isLowBeam()) ? greenTextColor : blackTextColor;
+                                    break;
+                                case 'c':
+                                    dashboard.setHighBeam(!dashboard.isHighBeam());
+                                    highBeamColor = (dashboard.isHighBeam()) ? blueTextColor : blackTextColor;
+                                    break;
+                                case 'v':
+                                    dashboard.setRearFogLights(!dashboard.isBackFogLights());
+                                    fogBackColor = (dashboard.isBackFogLights()) ? yellowTextColor : blackTextColor;
+                                    break;
+                                case 'b':
+                                    dashboard.setFrontFogLights(!dashboard.isFrontFogLights());
+                                    fogFrontColor = (dashboard.isFrontFogLights()) ? yellowTextColor : blackTextColor;
+                                    break;
+                                case 'n':
+                                    try {
+                                        dashboard.setLeftTurnSignal(!dashboard.isLeftTurnSignal());
+                                    } catch (TurnSignalException ignore) {
+                                    }
+                                    break;
+                                case 'm':
+                                    try {
+                                        dashboard.setRightTurnSignal(!dashboard.isRightTurnSignal());
+                                    } catch (TurnSignalException ignore) {
+                                    }
+                                    break;
+                                //Silnik start/stop
+                                case 'q':
+                                    engineRunning = false;
+                                    startStopEngine();
+                                    break;
                             }
                         }
-                    }
-                    else {
-                        switch (znak) {
-                            //Przyspieszanie/zwalnianie
-                            case 'w':
-                                dashboard.setKeyUp(true);
-                                break;
-                            case 's':
-                                dashboard.setKeyUp(false);
-                                break;
-                            //Światła
-                            case 'z':
-                                    dashboard.setPositionLights(!dashboard.isPositionLights());
-                                break;
-                            case 'x':
-                                    dashboard.setLowBeam(!dashboard.isLowBeam());
-                                break;
-                            case 'c':
-                                dashboard.setHighBeam(!dashboard.isHighBeam());
-                                break;
-                            case 'v':
-                                dashboard.setRearFogLights(!dashboard.isBackFogLights());
-                                break;
-                            case 'b':
-                                dashboard.setFrontFogLights(!dashboard.isFrontFogLights());
-                                break;
-                            case 'n':
-                                try {
-                                    dashboard.setLeftTurnSignal(!dashboard.isLeftTurnSignal());
-                                } catch (TurnSignalException e) {
-                                    redTextColor.println(e.getMessage());
-                                }
-                                break;
-                            case 'm':
-                                try {
-                                    dashboard.setRightTurnSignal(!dashboard.isRightTurnSignal());
-                                } catch (TurnSignalException e) {
-                                    redTextColor.println(e.getMessage());
-                                }
-                                break;
-                            //Silnik start/stop
-                            case 'q':
-                                engineRunning = false;
-                                startStopEngine();
-                                break;
+
+                        try {
+                            sleep(100);
+                        } catch (Exception ignored) {
                         }
                     }
-
-                    try{
-                        sleep(100);
-                    } catch(Exception ignored){}
                 }
-            }
-        };
-        keyThread.start();
+            };
+//            keyListen = true;
+            keyListen.set(true);
+            keyThread.start();
+        } else if(keyThread != null) {
+//            keyListen = false;
+            keyListen.set(false);
+            //scanner.reset();
+            keyThread = null;
+        }
     }
 
     private static class CLS {
@@ -144,8 +168,8 @@ public class TUI extends UIController {
     private void clearTerminal() {
         try {
             CLS.main();
-        } catch (IOException | InterruptedException e) {
-            e.printStackTrace();
+        } catch (IOException | InterruptedException ignore) {
+            //drawMainMenu();
         }
     }
 
@@ -158,35 +182,75 @@ public class TUI extends UIController {
     @Override
     public void refresh() {
         clearTerminal();
-        purpleTextColor.print("\n\t"+"=".repeat(50)+"\n\t| ");
+        purpleTextColor.println("\n\t"+"=".repeat(50)+"");
+        purpleTextColor.print("\t|"+" ".repeat(48)+"|\n\t| ");
         cyanTextColor.print(LocalDateTime.now().format(clockFormatter));
-        drawCenterText("DASHBOARD", 40, yellowTextColor);
+        drawCenterText("DASHBOARD  ", 39, yellowTextColor);
         cyanTextColor.print(dashboard.getCurrentGear());
-        purpleTextColor.print("  |\n\t|"+"-".repeat(48)+"|\n\t| ");
+        purpleTextColor.println("  |\n\t|"+" ".repeat(48)+"|");
+        purpleTextColor.println("\t|"+"-".repeat(48)+"|");
+        purpleTextColor.print("\t|"+" ".repeat(48)+"|\n\t| ");
         blueTextColor.print("Avg. speed: "); drawCenterText(dashboard.getOnBoardComputer().getAvgSpeed(),9, cyanTextColor);
         blueTextColor.print("  Avg. fuel usg.: ");
-        drawCenterText(dashboard.getOnBoardComputer().getAvgCombustion(), 9, cyanTextColor);
+        drawCenterText(Math.round(dashboard.getOnBoardComputer().getAvgCombustion()*10f)/10f, 9, cyanTextColor);
         purpleTextColor.print("|\n\t| ");
         blueTextColor.print("Max. speed: "); drawCenterText(dashboard.getOnBoardComputer().getMaxSpeed(),9, cyanTextColor);
         blueTextColor.print(" Max. fuel usg.: ");
-        drawCenterText(dashboard.getOnBoardComputer().getMaxCombustion(), 9, cyanTextColor);
-        purpleTextColor.print(" |\n\t|"+"-".repeat(48)+"|\n\t|");
+        drawCenterText(Math.round(dashboard.getOnBoardComputer().getMaxCombustion()*10f)/10f, 9, cyanTextColor);
+        purpleTextColor.println(" |\n\t|"+" ".repeat(48)+"|");
+        purpleTextColor.println("\t|"+"-".repeat(48)+"|");
+        purpleTextColor.print("\t|"+" ".repeat(48)+"|\n\t|");
         drawCenterText(Math.round(dashboard.getCounter())+"km",48, cyanTextColor);
-        purpleTextColor.print("|\n\t|"+"-".repeat(48)+"|\n\t|");
-        drawCenterText(Math.round(dashboard.getDayCounter1()*100f)/100f+" km", 24, cyanTextColor);
-        drawCenterText(Math.round(dashboard.getDayCounter2()*100f)/100f+" km", 24, cyanTextColor);
-        purpleTextColor.print("|\n\t|"+"-".repeat(48)+"|\n\t|  ");
+        purpleTextColor.println("|\n\t|"+" ".repeat(48)+"|");
+        purpleTextColor.println("\t|"+"-".repeat(48)+"|");
+        purpleTextColor.print("\t|"+" ".repeat(48)+"|\n\t|");
+        drawCenterText(Math.round(dashboard.getDayCounter1()*10f)/10f+" km ", 24, cyanTextColor);
+        drawCenterText(Math.round(dashboard.getDayCounter2()*10f)/10f+" km ", 24, cyanTextColor);
+        purpleTextColor.println("|\n\t|"+" ".repeat(48)+"|");
+        purpleTextColor.println("\t|"+"-".repeat(48)+"|");
+        purpleTextColor.print("\t|"+" ".repeat(48)+"|\n\t|  ");
         blueTextColor.print("Distance:");
-        drawCenterText(Math.round(dashboard.getOnBoardComputer().getJourneyDistance()*100f)/100f+"km", 12, cyanTextColor);
+        drawCenterText(Math.round(dashboard.getOnBoardComputer().getJourneyDistance()*10f)/10f+"km", 12, cyanTextColor);
         blueTextColor.print("Journey time:");
         drawCenterText(dashboard.getOnBoardComputer().getJourneyStartTime(), 12, cyanTextColor);
-        purpleTextColor.print(" |\n\t|"+"-".repeat(48)+"|\n\t|     ");
+        purpleTextColor.println(" |\n\t|"+" ".repeat(48)+"|");
+        purpleTextColor.println("\t|"+"-".repeat(48)+"|");
+        purpleTextColor.print("\t|"+" ".repeat(48)+"|\n\t|     ");
+        if (dashboard.isLeftTurnSignal()) {
+            if (System.currentTimeMillis() - turnSignalTime > 500) {
+                leftTurnSignalColor = (leftTurnSignalColor.equals(blackTextColor)) ? greenTextColor : blackTextColor;
+                turnSignalTime = System.currentTimeMillis();
+            }
+        }
+        else
+            leftTurnSignalColor = blackTextColor;
+
+        leftTurnSignalColor.print("LT    ");
+
+        parkingLightColor.print("PT    ");
+        lowBeamColor.print("LB    ");
+        highBeamColor.print("HB    ");
+        fogBackColor.print("FB    ");
+        fogFrontColor.print("FF    ");
+        if (dashboard.isRightTurnSignal()) {
+            if (System.currentTimeMillis() - turnSignalTime > 500) {
+                rightTurnSignalColor = (rightTurnSignalColor.equals(blackTextColor)) ? greenTextColor : blackTextColor;
+                turnSignalTime = System.currentTimeMillis();
+            }
+        }
+        else
+            rightTurnSignalColor = blackTextColor;
+
+        rightTurnSignalColor.print("RT");
+        purpleTextColor.println("     |\n\t|"+" ".repeat(48)+"|");
+        purpleTextColor.println("\t|"+"-".repeat(48)+"|");
+        purpleTextColor.print("\t|"+" ".repeat(48)+"|\n\t|     ");
         blueTextColor.print("Speed:");
         drawCenterText(dashboard.getSpeed(), 15, cyanTextColor);
         blueTextColor.print("    Revs:");
         drawCenterText(dashboard.getRevs(), 15, cyanTextColor);
-        purpleTextColor.println("|\n\t"+"=".repeat(50));
-
+        purpleTextColor.println("|\n\t|"+" ".repeat(48)+"|");
+        purpleTextColor.println("\t"+"=".repeat(50));
     }
 
     private void drawCenterText(Object object, int width, ColoredPrinter coloredPrinter) {
@@ -242,29 +306,21 @@ public class TUI extends UIController {
                 "\t|                                                                                                          |\n" +
                 "\t|         ");
         yellowTextColor.print("/$$$$$$$                      /$$       /$$                                           /$$");
-        purpleTextColor.print("        |\n" +
-                "\t|        ");
+        purpleTextColor.print("        |\n\t|        ");
         yellowTextColor.print("| $$__  $$                    | $$      | $$                                          | $$");
-        purpleTextColor.print("        |\n" +
-                "\t|        ");
+        purpleTextColor.print("        |\n\t|        ");
         yellowTextColor.print("| $$  \\ $$  /$$$$$$   /$$$$$$$| $$$$$$$ | $$$$$$$   /$$$$$$   /$$$$$$   /$$$$$$   /$$$$$$$");
-        purpleTextColor.print("        |\n" +
-                "\t|        ");
+        purpleTextColor.print("        |\n\t|        ");
         yellowTextColor.print("| $$  | $$ |____  $$ /$$_____/| $$__  $$| $$__  $$ /$$__  $$ |____  $$ /$$__  $$ /$$__  $$");
-        purpleTextColor.print("        |\n" +
-                "\t|        ");
+        purpleTextColor.print("        |\n\t|        ");
         yellowTextColor.print("| $$  | $$  /$$$$$$$|  $$$$$$ | $$  \\ $$| $$  \\ $$| $$  \\ $$  /$$$$$$$| $$  \\__/| $$  | $$");
-        purpleTextColor.print("        |\n" +
-                "\t|        ");
+        purpleTextColor.print("        |\n\t|        ");
         yellowTextColor.print("| $$  | $$ /$$__  $$ \\____  $$| $$  | $$| $$  | $$| $$  | $$ /$$__  $$| $$      | $$  | $$");
-        purpleTextColor.print("        |\n" +
-                "\t|        ");
+        purpleTextColor.print("        |\n\t|        ");
         yellowTextColor.print("| $$$$$$$/|  $$$$$$$ /$$$$$$$/| $$  | $$| $$$$$$$/|  $$$$$$/|  $$$$$$$| $$      |  $$$$$$$");
-        purpleTextColor.print("        |\n" +
-                "\t|        ");
+        purpleTextColor.print("        |\n\t|        ");
         yellowTextColor.print("|_______/  \\_______/|_______/ |__/  |__/|_______/  \\______/  \\_______/|__/       \\_______/");
-        purpleTextColor.print("        |\n" +
-                "\t|                                                                                                          |\n" +
+        purpleTextColor.print("        |\n\t|                                                                                                          |\n" +
                 "\t|                                                                                     ");
         redTextColor.print("Version 1.0.0");
         purpleTextColor.print("        |\n" +
@@ -275,23 +331,17 @@ public class TUI extends UIController {
                 "\t|                                                                                                          |\n" +
                 "\t|                                                                                      ");
         blueTextColor.print("+---------------+");
-        purpleTextColor.print("   |\n" +
-                "\t|                                                                                      ");
+        purpleTextColor.print("   |\n\t|                                                                                      ");
         cyanTextColor.print("|A|u|t|o|r|z|y|:|");
-        purpleTextColor.print("   |\n" +
-                "\t|                                                      ");
+        purpleTextColor.print("   |\n\t|                                                      ");
         blueTextColor.print("+---------------------------------+ +-----------+");
-        purpleTextColor.print("   |\n" +
-                "\t|                                                      ");
+        purpleTextColor.print("   |\n\t|                                                      ");
         cyanTextColor.print("|K|a|c|p|e|r| |W|l|o|d|a|r|c|z|y|k| |2|2|4|4|5|6|");
-        purpleTextColor.print("   |\n" +
-                "\t|                                                      ");
+        purpleTextColor.print("   |\n\t|                                                      ");
         blueTextColor.print("+-----------------------------------------------+");
-        purpleTextColor.print("   |\n" +
-                "\t|                                                                  ");
+        purpleTextColor.print("   |\n\t|                                                                  ");
         cyanTextColor.print("|D|a|w|i|d| |M|o|r|k|a| |2|2|4|3|7|9|");
-        purpleTextColor.print("   |\n" +
-                "\t|                                                                  ");
+        purpleTextColor.print("   |\n\t|                                                                  ");
         blueTextColor.print("+---------+ +---------+ +-----------+");
         purpleTextColor.println("   |\n" +
                 "\t|                                                                                                          |\n" +
@@ -477,13 +527,15 @@ public class TUI extends UIController {
     private RecordModel chooseDBRecord() {
         clearTerminal();
         ObservableList<RecordModel> records = dashboard.readFromDB();
-        purpleTextColor.print("\n\t"+"=".repeat(62)+" Dashboard History "+"=".repeat(63)+"\n\t|"+" ".repeat(142)+"|"+"\n\t|");
+        purpleTextColor.print("\n\t"+"=".repeat(62));
+        yellowTextColor.print(" Dashboard History ");
+        purpleTextColor.print("=".repeat(63)+"\n\t|"+" ".repeat(142)+"|"+"\n\t|");
         blueTextColor.print("   ID   Avg. speed   Max speed   Avg. fuel   Max fuel   Journey dist.   Journey time   Counter   Day counter 1   Day counter 2  Create date   ");
 
         purpleTextColor.println("|");
         for(int i = 0; i < records.size(); i++) {
             purpleTextColor.print("\t| ");
-            drawTableCell(records.get(i).getId(),4);
+            drawTableCell(i+1,4);
             drawTableCell(records.get(i).getAvgSpeed(),13);
             drawTableCell(records.get(i).getMaxSpeed(),12);
             drawTableCell(records.get(i).getAvgFuel(),12);
@@ -503,11 +555,14 @@ public class TUI extends UIController {
         cyanTextColor.println("Cancel \n");
         yellowTextColor.print("\tChoose record: ");
         Scanner scanner = new Scanner(System.in);
-        int choice = scanner.nextInt();
+        int choice;
+        try {
+            choice = Short.parseShort(scanner.next());
+        }catch (NumberFormatException e){ choice = -1;}
         if(choice == 0)
             drawImportMenu();
-        else if(choice < 0 || choice >= records.size()) {
-            System.out.println(" ");
+        else if(choice < 0 || choice > records.size()) {
+            redTextColor.println("\n\tWrong choice!");
             waitForEnter(false);
             chooseDBRecord();
         }
@@ -520,7 +575,7 @@ public class TUI extends UIController {
         result.append(repeat);
         result.append(cell.toString());
 
-        System.out.print(result);
+        cyanTextColor.print(result);
     }
 
     @Override
@@ -531,14 +586,15 @@ public class TUI extends UIController {
     @Override
     public void startStopEngine() {
         if(engineRunning) {
-            listenKeys = true;
-            KeyListener();
+            KeyListener(true);
             speedThread = new SpeedThread(this, 0);
             speedThread.setEngineRunning(true);
             speedThread.start();
         }
         else {
-            listenKeys = false;
+//            keyListen = false;
+            keyListen.set(false);
+            KeyListener(false);
             speedThread.setEngineRunning(false);
             speedThread.interrupt();
             speedThread = null;
