@@ -9,5 +9,7 @@ public class CruiseControlException extends Exception {
      *
      * @param message the message
      */
-    public CruiseControlException(String message) {super(message);}
+    public CruiseControlException(String message) {
+        super(message);
+    }
 }

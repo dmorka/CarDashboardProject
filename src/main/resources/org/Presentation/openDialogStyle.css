@@ -1,22 +1,22 @@
 .dialog-button {
-    -fx-background-color:white;
+    -fx-background-color: white;
     -fx-font-weight: bold;
     -fx-text-fill: black;
-    -fx-font-size:13;
-    -fx-border-width:3;
-    -fx-border-radius:10;
+    -fx-font-size: 13;
+    -fx-border-width: 3;
+    -fx-border-radius: 10;
     -fx-background-radius: 15, 15, 15, 15;
-    -fx-border-color:grey;
+    -fx-border-color: grey;
 }
 
 .dialog-button:hover {
-    -fx-border-color:purple;
+    -fx-border-color: purple;
 }
 
 .dialog-layout {
-    -fx-background-color:white;
+    -fx-background-color: white;
     -fx-background-insets: 0, 1, 2;
     -fx-background-radius: 5, 5, 5, 5;
     -fx-padding: 0.333333em 0.083333em 0.666667em 0.083333em; /* 4 1 8 1 */
-    -fx-effect: dropshadow(two-pass-box, rgb(213, 123, 255),5,0.0,0.1,2);
+    -fx-effect: dropshadow(two-pass-box, rgb(213, 123, 255), 5, 0.0, 0.1, 2);
 }

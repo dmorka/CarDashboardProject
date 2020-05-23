@@ -7,12 +7,26 @@ import org.Presentation.UIController;
  */
 public class SpeedThread extends Thread {
     private final UIController uiController;
-    private boolean engineRunning;
     private final Dashboard dashboard;
+    private boolean engineRunning;
     private OnBoardComputer onBoardComputer;
     private int startAfter;
     private boolean animationToZero;
 
+
+    /**
+     * Instantiates a new Speed thread.
+     *
+     * @param uiController the ui controller
+     * @param startAfter   the start after
+     */
+//Konstruktor klasy
+    public SpeedThread(UIController uiController, int startAfter) {
+        this.uiController = uiController;
+        this.startAfter = startAfter;
+        this.dashboard = uiController.getDashboard();
+        this.onBoardComputer = this.dashboard.getOnBoardComputer();
+    }
 
     /**
      * Is dashboard engine off animation activated boolean.
@@ -30,21 +44,6 @@ public class SpeedThread extends Thread {
      */
     public void setAnimationToZero(boolean animationToZero) {
         this.animationToZero = animationToZero;
-    }
-
-
-    /**
-     * Instantiates a new Speed thread.
-     *
-     * @param uiController the ui controller
-     * @param startAfter   the start after
-     */
-//Konstruktor klasy
-    public SpeedThread(UIController uiController, int startAfter) {
-        this.uiController = uiController;
-        this.startAfter = startAfter;
-        this.dashboard = uiController.getDashboard();
-        this.onBoardComputer = this.dashboard.getOnBoardComputer();
     }
 
     /**
@@ -73,17 +72,16 @@ public class SpeedThread extends Thread {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        if(!engineRunning) {
+        if (!engineRunning) {
             revs = dashboard.getRevs();
-            while((dashboard.getSpeed() > 0 || dashboard.getRevs() > 0) && animationToZero) {
-                if(dashboard.getSpeed() > 0) {
+            while ((dashboard.getSpeed() > 0 || dashboard.getRevs() > 0) && animationToZero) {
+                if (dashboard.getSpeed() > 0) {
                     dashboard.subSpeed(1);
-                    if(dashboard.getCurrentGear() != 0)
-                        revs = (dashboard.getSettings().getMaxRevs()-1000) * (dashboard.getSpeed() /  (float)dashboard.getCurrentGearMaxSpeed());
+                    if (dashboard.getCurrentGear() != 0)
+                        revs = (dashboard.getSettings().getMaxRevs() - 1000) * (dashboard.getSpeed() / (float) dashboard.getCurrentGearMaxSpeed());
                     else
                         revs *= 0.99;
-                }
-                else {
+                } else {
                     revs -= 100;
                 }
                 try {
@@ -102,20 +100,20 @@ public class SpeedThread extends Thread {
             }
         }
 
-        while(engineRunning) {
+        while (engineRunning) {
             synchronized (uiController) {
                 if ((dashboard.isKeyUp() && dashboard.getSpeed() < dashboard.getCurrentGearMaxSpeed()) ||
-                    (dashboard.getCruiseSpeed() > dashboard.getSpeed() && dashboard.isCruiseControl())) {
+                        (dashboard.getCruiseSpeed() > dashboard.getSpeed() && dashboard.isCruiseControl())) {
                     dashboard.addSpeed(1);
-                    if(dashboard.getSpeed() > maxSpeed)
+                    if (dashboard.getSpeed() > maxSpeed)
                         onBoardComputer.setMaxSpeed(dashboard.getSpeed());
                 } else if (dashboard.isKeyDown() && dashboard.getSpeed() >= 3) {
                     uiController.switchOffCruiseControl();
                     dashboard.subSpeed(3);
                 } else {
-                    if(!uiController.getDashboard().isCruiseControl())
+                    if (!uiController.getDashboard().isCruiseControl())
                         dashboard.subSpeed(1);
-                    else if(dashboard.getSpeed() > dashboard.getCruiseSpeed())
+                    else if (dashboard.getSpeed() > dashboard.getCruiseSpeed())
                         dashboard.subSpeed(1);
                     else dashboard.addSpeed(1);
 
@@ -124,21 +122,19 @@ public class SpeedThread extends Thread {
                 //if(dashboard.getCurrentGear() > 0 ) {
                 try {
 
-                    if (dashboard.getCurrentGear() == 0){
-                        if(dashboard.getRevs() < 1000)
-                            revs+=100;
+                    if (dashboard.getCurrentGear() == 0) {
+                        if (dashboard.getRevs() < 1000)
+                            revs += 100;
                         else
-                            revs-=100;
-                    }
-                    else {
+                            revs -= 100;
+                    } else {
                         gearMaxSpeed = dashboard.getCurrentGearMaxSpeed();
-                        if(dashboard.getCurrentGear() == 1) {
+                        if (dashboard.getCurrentGear() == 1) {
                             if (dashboard.isKeyUp() && revs < maxRevs)
                                 revs += (dashboard.getSettings().getMaxRevs() - 1000) * (1 / gearMaxSpeed);
                             else if (revs > 1000)
                                 revs -= (dashboard.getSettings().getMaxRevs() - 1000) * (1 / gearMaxSpeed);
-                        }
-                        else
+                        } else
                             revs = (dashboard.getSettings().getMaxRevs()) * (dashboard.getSpeed() / gearMaxSpeed);
                         if (revs < 800) {
                             uiController.switchEngine(false, true);
@@ -147,23 +143,23 @@ public class SpeedThread extends Thread {
                     }
 
 
-                    if(revs > 0)
-                        dashboard.setRevs((int)revs);
+                    if (revs > 0)
+                        dashboard.setRevs((int) revs);
                 } catch (NegativeValueException e) {
                     e.printStackTrace();
                 }
                 //}
 
                 //Czas próbkowania co 1s
-                if(System.currentTimeMillis() - startTime >= 1000) {
+                if (System.currentTimeMillis() - startTime >= 1000) {
                     startTime = System.currentTimeMillis();
-                    distance = dashboard.getSpeed() * (1f/3600f);
+                    distance = dashboard.getSpeed() * (1f / 3600f);
                     sumSpeed += dashboard.getSpeed();
-                    onBoardComputer.setAvgSpeed(sumSpeed/iter);
-                    currFuelComb = (dashboard.getRevs() * fuelcoeff)/1000;
+                    onBoardComputer.setAvgSpeed(sumSpeed / iter);
+                    currFuelComb = (dashboard.getRevs() * fuelcoeff) / 1000;
                     sumAvgFuel += currFuelComb;
-                    onBoardComputer.setAvgCombustion(sumAvgFuel/iter);
-                    if(onBoardComputer.getMaxCombustion() < currFuelComb)
+                    onBoardComputer.setAvgCombustion(sumAvgFuel / iter);
+                    if (onBoardComputer.getMaxCombustion() < currFuelComb)
                         onBoardComputer.setMaxCombustion(currFuelComb);
                     iter += 1;
                     dashboard.setCounter(dashboard.getCounter() + distance);

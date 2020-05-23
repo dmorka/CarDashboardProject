@@ -1,19 +1,21 @@
 package org.Logic;
 
-import java.io.*;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.util.Duration;
+import org.Data.LoadFilesFromDisk;
+
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
-import javafx.scene.media.*;
-import javafx.util.Duration;
-import org.Data.LoadFilesFromDisk;
 
 
 /**
  * The type Music player.
  */
-public class MusicPlayer  {
+public class MusicPlayer {
     private LoadFilesFromDisk loadFilesFromDisk = new LoadFilesFromDisk();
     private ArrayList<Media> playlist = new ArrayList<>();
     private MediaPlayer mediaPlayer = null;
@@ -28,10 +30,10 @@ public class MusicPlayer  {
      * @return the title
      */
     public String getTitle() {
-        if(playlist.isEmpty())
+        if (playlist.isEmpty())
             return "Playlist is empty";
         String title;
-        try{
+        try {
             title = mediaPlayer.getMedia().getMetadata().get("title").toString();
         } catch (NullPointerException e) {
             return new File(playlist.get(currentSong).getSource()).getName().replaceFirst(".mp3", "");
@@ -47,10 +49,10 @@ public class MusicPlayer  {
      * @return the artist
      */
     public String getArtist() {
-        if(playlist.isEmpty())
+        if (playlist.isEmpty())
             return "Unknown";
         String artistName;
-        try{
+        try {
             artistName = mediaPlayer.getMedia().getMetadata().get("artist").toString();
         } catch (NullPointerException e) {
             return "Unknown";
@@ -63,14 +65,14 @@ public class MusicPlayer  {
      * Play song.
      */
     public void playSong() {
-        if(playlist.isEmpty())
+        if (playlist.isEmpty())
             return;
-        else if(mediaPlayer == null)
+        else if (mediaPlayer == null)
             mediaPlayer = new MediaPlayer(playlist.get(currentSong));
 
         mediaPlayer.setVolume(volume);
         mediaPlayer.play();
-        if(autoPlayNext != null)
+        if (autoPlayNext != null)
             mediaPlayer.setOnEndOfMedia(autoPlayNext);
     }
 
@@ -78,7 +80,7 @@ public class MusicPlayer  {
      * Pause song.
      */
     public void pauseSong() {
-        if(mediaPlayer != null)
+        if (mediaPlayer != null)
             mediaPlayer.pause();
     }
 
@@ -86,7 +88,7 @@ public class MusicPlayer  {
      * Stop song.
      */
     public void stopSong() {
-        if(mediaPlayer != null)
+        if (mediaPlayer != null)
             mediaPlayer.stop();
     }
 
@@ -94,7 +96,7 @@ public class MusicPlayer  {
      * Dispose.
      */
     public void dispose() {
-        if(mediaPlayer != null) {
+        if (mediaPlayer != null) {
             mediaPlayer.dispose();
             mediaPlayer = null;
             currentSong = 0;
@@ -114,7 +116,7 @@ public class MusicPlayer  {
      * Shuffle playlist.
      */
     public void shufflePlaylist() {
-        if(!playlist.isEmpty())
+        if (!playlist.isEmpty())
             Collections.shuffle(playlist);
     }
 
@@ -122,15 +124,15 @@ public class MusicPlayer  {
      * Next song.
      */
     public void nextSong() {
-        if(playlist.isEmpty())
+        if (playlist.isEmpty())
             return;
         boolean wasPlaying = isPlaying();
-        if(mediaPlayer != null)
+        if (mediaPlayer != null)
             mediaPlayer.stop();
         currentSong += 1;
-        if(currentSong >= playlist.size()) currentSong = 0;
+        if (currentSong >= playlist.size()) currentSong = 0;
         mediaPlayer = new MediaPlayer(playlist.get(currentSong));
-        if(wasPlaying)
+        if (wasPlaying)
             playSong();
     }
 
@@ -138,15 +140,15 @@ public class MusicPlayer  {
      * Previous song.
      */
     public void previousSong() {
-        if(playlist.isEmpty())
+        if (playlist.isEmpty())
             return;
         boolean wasPlaying = isPlaying();
-        if(mediaPlayer != null)
+        if (mediaPlayer != null)
             mediaPlayer.stop();
         currentSong -= 1;
-        if(currentSong < 0) currentSong = playlist.size()-1;
+        if (currentSong < 0) currentSong = playlist.size() - 1;
         mediaPlayer = new MediaPlayer(playlist.get(currentSong));
-        if(wasPlaying)
+        if (wasPlaying)
             playSong();
     }
 
@@ -156,7 +158,7 @@ public class MusicPlayer  {
      * @return the boolean
      */
     public boolean isPlaying() {
-        if(mediaPlayer == null)
+        if (mediaPlayer == null)
             return false;
 
         return mediaPlayer.getStatus() == MediaPlayer.Status.PLAYING;
@@ -175,7 +177,7 @@ public class MusicPlayer  {
         // Wpisujemy obiekty Media (pliki mp3) do playlisty a nastepnie je inicjalizujemy
         // by przy pierwszym odtworzeniu utworu mieć wczytane wszytskie jego parametry (szczególnie czas trwania utworu)
         MediaPlayer initMedia = null;
-        for(int i = 0; i < result.size(); i++) {
+        for (int i = 0; i < result.size(); i++) {
             playlist.add(new Media(new File(result.get(i)).toURI().toString()));
             initMedia = new MediaPlayer(playlist.get(i));
         }
@@ -188,7 +190,7 @@ public class MusicPlayer  {
      * @param volume the volume
      */
     public void changeVolume(double volume) {
-        if(mediaPlayer != null)
+        if (mediaPlayer != null)
             mediaPlayer.setVolume(volume);
 
         this.volume = volume;
@@ -200,7 +202,7 @@ public class MusicPlayer  {
      * @return the total duration
      */
     public Duration getTotalDuration() {
-        if(mediaPlayer == null)
+        if (mediaPlayer == null)
             return Duration.UNKNOWN;
 
         return mediaPlayer.getStopTime();
@@ -212,7 +214,7 @@ public class MusicPlayer  {
      * @return the current time
      */
     public double getCurrentTime() {
-        if(mediaPlayer == null)
+        if (mediaPlayer == null)
             return 0;
 
         return mediaPlayer.getCurrentTime().toSeconds();

@@ -12,6 +12,7 @@ public class TextFieldLimited extends TextField {
     public void setMaxlength(int maxlength) {
         this.maxlength = maxlength;
     }
+
     @Override
     public void replaceText(int start, int end, String text) {
         // Delete or backspace user input.
@@ -30,7 +31,7 @@ public class TextFieldLimited extends TextField {
         } else if (getText().length() < maxlength) {
             // Add characters, but don't exceed maxlength.
             if (text.length() > maxlength - getText().length()) {
-                text = text.substring(0, maxlength- getText().length());
+                text = text.substring(0, maxlength - getText().length());
             }
             super.replaceSelection(text);
         }

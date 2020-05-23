@@ -1,16 +1,15 @@
 package org.Data;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import org.Logic.Dashboard;
 
-import java.io.IOException;
 import java.nio.file.Path;
 import java.sql.*;
 
 /**
  * The type Sql to read and write record to database.
  */
-public class SQL implements DataHandling{
+public class SQL implements DataHandling {
     /**
      * The jdbc SQL-server connection string.
      */
@@ -48,10 +47,10 @@ public class SQL implements DataHandling{
      * @throws SQLException the sql exception
      */
     public void disconnect() throws SQLException {
-        if(con != null){
+        if (con != null) {
             con.close();
         }
-        if(stsm != null){
+        if (stsm != null) {
             stsm.close();
         }
     }
@@ -60,18 +59,18 @@ public class SQL implements DataHandling{
     public void write(Path path, RecordModel record) throws Exception {
         connect();
         String query = "INSERT INTO DashboardData(avg_speed, max_speed, avg_fuel, max_fuel, " +
-                       "journey_distance, journey_time, total_counter, day_counter1, day_counter2)" +
-                       "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                "journey_distance, journey_time, total_counter, day_counter1, day_counter2)" +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         PreparedStatement preparedStatement = con.prepareStatement(query);
         preparedStatement.setFloat(1, record.getAvgSpeed());
         preparedStatement.setFloat(2, record.getMaxSpeed());
         preparedStatement.setFloat(3, record.getAvgFuel());
         preparedStatement.setFloat(4, record.getMaxFuel());
-        preparedStatement.setFloat(5, Math.round(record.getJourneyDistance()*100.0)/100.0f);
+        preparedStatement.setFloat(5, Math.round(record.getJourneyDistance() * 100.0) / 100.0f);
         preparedStatement.setInt(6, record.getJourneyTime());
         preparedStatement.setInt(7, record.getCounter());
-        preparedStatement.setFloat(8, Math.round(record.getDayCounter1()*100.0)/100.0f);
-        preparedStatement.setFloat(9, Math.round(record.getDayCounter2()*100.0)/100.0f);
+        preparedStatement.setFloat(8, Math.round(record.getDayCounter1() * 100.0) / 100.0f);
+        preparedStatement.setFloat(9, Math.round(record.getDayCounter2() * 100.0) / 100.0f);
         preparedStatement.executeUpdate();
         disconnect();
     }
@@ -83,18 +82,18 @@ public class SQL implements DataHandling{
         ResultSet result = stsm.executeQuery(query);
 
         ObservableList<RecordModel> set = FXCollections.observableArrayList();
-        while(result.next()){
+        while (result.next()) {
             RecordModel record = new RecordModel(result.getInt("id"),
-                                                result.getFloat("avg_speed"),
-                                                result.getFloat("max_speed"),
-                                                result.getFloat("avg_fuel"),
-                                                result.getFloat("max_fuel"),
-                                                result.getFloat("journey_distance"),
-                                                result.getInt("journey_time"),
-                                                result.getInt("total_counter"),
-                                                result.getFloat("day_counter1"),
-                                                result.getFloat("day_counter2"),
-                                                result.getDate("create_data"));
+                    result.getFloat("avg_speed"),
+                    result.getFloat("max_speed"),
+                    result.getFloat("avg_fuel"),
+                    result.getFloat("max_fuel"),
+                    result.getFloat("journey_distance"),
+                    result.getInt("journey_time"),
+                    result.getInt("total_counter"),
+                    result.getFloat("day_counter1"),
+                    result.getFloat("day_counter2"),
+                    result.getDate("create_data"));
             set.add(record);
         }
         disconnect();
