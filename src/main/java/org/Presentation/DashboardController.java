@@ -246,6 +246,10 @@ public class DashboardController extends UIController {
                 filename = "databaseImport.fxml";
                 title = "SQL Import";
                 break;
+            case "MIkeyShortcuts":
+                filename = "keyShortcuts.fxml";
+                title = "Key shortcuts";
+                break;
             default:
                 filename = "";
                 title = "";
@@ -264,6 +268,8 @@ public class DashboardController extends UIController {
             dbController.loadDB(dashboard.readFromDB());
             pane = (VBox) root.getNamespace().get("vbox");
         } else if (filename.equals("about.fxml")) {
+            pane = (Pane) root.getNamespace().get("vbox");
+        }else if (filename.equals("keyShortcuts.fxml")) {
             pane = (Pane) root.getNamespace().get("vbox");
         }
         BorderlessScene scene = new BorderlessScene(stage, StageStyle.UNDECORATED, pane, 250, 250);
@@ -514,7 +520,6 @@ public class DashboardController extends UIController {
         revsGauge.setMaxValue(dashboard.getSettings().getMaxRevs());
         int color = dashboard.getSettings().getDashboardLightIntesity();
         GPmain.setStyle("-fx-background-color: rgb(" + color + ", " + color + ", " + color + ");");
-        MmenuBar.setStyle("-fx-background-color: rgb(" + color + ", " + color + ", " + color + ");");
         dashboard.setGears();
     }
 

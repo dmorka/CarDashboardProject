@@ -44,6 +44,7 @@ public class GUI extends Application {
         closeIcon.setOnMouseClicked(event -> {
             stop();
             stage.close();
+            stop();
         });
 
 

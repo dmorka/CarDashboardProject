@@ -1,33 +1,50 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import eu.hansolo.medusa.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.effect.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.input.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.paint.*?>
-<?import javafx.scene.shape.*?>
-<?import javafx.scene.text.*?>
-<?import org.controlsfx.control.cell.*?>
+<?import eu.hansolo.medusa.Gauge?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.CheckMenuItem?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.effect.Glow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.input.KeyCodeCombination?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.shape.Polygon?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+<?import org.controlsfx.control.cell.ImageGridCell?>
 
-<StackPane fx:id="stackPane" stylesheets="@openDialogStyle.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.Presentation.DashboardController">
+<StackPane fx:id="stackPane" stylesheets="@openDialogStyle.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.Presentation.DashboardController">
     <children>
         <GridPane fx:id="GPmain" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" onKeyPressed="#keyPressed" onKeyReleased="#keyReleased" prefHeight="450.0" prefWidth="900.0" style="-fx-background-color: black;">
             <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
             </columnConstraints>
             <rowConstraints>
-                <RowConstraints maxHeight="125.0" minHeight="0.0" prefHeight="0.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="40.0" vgrow="SOMETIMES" />
                 <RowConstraints maxHeight="359.2" minHeight="10.0" percentHeight="80.0" prefHeight="351.2" vgrow="SOMETIMES" />
                 <RowConstraints maxHeight="63.0" minHeight="10.0" prefHeight="20.0" vgrow="SOMETIMES" />
             </rowConstraints>
             <children>
-                <GridPane fx:id="topPanel" alignment="TOP_RIGHT" maxWidth="-Infinity" prefHeight="0.0" prefWidth="4096.0">
+                <GridPane fx:id="topPanel" alignment="TOP_RIGHT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" prefHeight="40.0" prefWidth="4096.0" style="-fx-background-color: black;">
                     <GridPane.margin>
-                        <Insets top="10.0" />
+                        <Insets />
                     </GridPane.margin>
                     <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="36.0" />
@@ -39,7 +56,7 @@
                     <children>
                         <VBox prefHeight="28.0" prefWidth="727.0">
                             <children>
-                                <MenuBar fx:id="MmenuBar" prefHeight="28.0" prefWidth="783.0" stylesheets="@style.css">
+                                <MenuBar prefHeight="28.0" prefWidth="783.0" stylesheets="@style.css">
                                     <menus>
                                         <Menu mnemonicParsing="false" text="File">
                                             <items>
@@ -116,7 +133,7 @@
                                                 </Menu>
                                             </items>
                                         </Menu>
-                                        <Menu fx:id="McruiseControl" disable="true" mnemonicParsing="false" text="Cruise control">
+                                        <Menu mnemonicParsing="false" text="Cruise control">
                                             <items>
                                                 <MenuItem fx:id="MIspeedUp" mnemonicParsing="false" onAction="#changeSpeedCruiseControl" text="+5 km/h">
                                                     <accelerator>
@@ -146,10 +163,13 @@
                                     </VBox.margin>
                                 </MenuBar>
                             </children>
+                     <GridPane.margin>
+                        <Insets top="10.0" />
+                     </GridPane.margin>
                         </VBox>
                         <HBox alignment="TOP_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="5.0" GridPane.columnIndex="1">
                             <GridPane.margin>
-                                <Insets right="10.0" />
+                                <Insets right="10.0" top="10.0" />
                             </GridPane.margin>
                             <children>
                                 <ImageGridCell fx:id="minimizeIcon">

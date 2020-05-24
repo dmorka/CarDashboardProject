@@ -8,7 +8,7 @@ import java.io.IOException;
 /**
  * The type Ui controller.
  */
-public class UIController {
+public  class UIController {
     /**
      * The Dashboard.
      */
@@ -18,7 +18,6 @@ public class UIController {
      * Instantiates a new Ui controller.
      */
     public UIController() {
-//        this.dashboard = new Dashboard();
         try {
             this.dashboard = Serialization.readDashboard();
             dashboard.init();
