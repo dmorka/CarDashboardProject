@@ -630,16 +630,6 @@ public class Dashboard implements Serializable {
      * Play start engine sound.
      */
     public void playStartEngineSound() {
-//        AudioClip audioClip = new AudioClip(Paths.get("src/main/resources/org/Presentation/sounds/engineStartSound.mp3").toUri().toString());
-//        String test = GUI.class.getResourceAsStream("sounds/engineStartSound.mp3").toString();
-//        String test = null;
-
-//        File test = test = new File("sounds/engineStartSound.mp3");
-//
-//        String test2 = Paths.get("src/main/resources/org/Presentation/sounds/engineStartSound.mp3").toUri().toString();
-//
-//        String test3 = Paths.get(test.getPath()).toUri().toString();
-//        String test4 = test.toURI().toString();
         AudioClip audioClip = new AudioClip(new File("sounds/engineStartSound.mp3").toURI().toString());
 
         audioClip.play();

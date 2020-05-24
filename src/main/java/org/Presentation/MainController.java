@@ -15,7 +15,9 @@ public class MainController {
     @FXML
     private void onMouseClicked(MouseEvent mouseEvent) {
         Button button = (Button) mouseEvent.getSource();
+        Stage stage = (Stage) button.getScene().getWindow();
         if (button.getId().equals("BTNtui")) {
+            stage.close();
             TUI.main(new String[]{});
         } else {
             GUI gui = new GUI();
@@ -24,8 +26,8 @@ public class MainController {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            stage.close();
         }
-        Stage stage = (Stage) button.getScene().getWindow();
-        stage.close();
+
     }
 }
