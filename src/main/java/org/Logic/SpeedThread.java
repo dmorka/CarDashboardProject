@@ -12,6 +12,7 @@ public class SpeedThread extends Thread {
     private OnBoardComputer onBoardComputer;
     private int startAfter;
     private boolean animationToZero;
+    private float distance;
 
 
     /**
@@ -55,8 +56,14 @@ public class SpeedThread extends Thread {
         this.engineRunning = running;
     }
 
+    public void countDistances() {
+        distance = dashboard.getSpeed() * (1f / 3600f);
+        dashboard.setCounter(dashboard.getCounter() + distance);
+        dashboard.setDayCounter1(dashboard.getDayCounter1() + distance);
+        dashboard.setDayCounter2(dashboard.getDayCounter2() + distance);
+    }
+
     public void run() {
-        float distance = 0.0f;
         long startTime = System.currentTimeMillis();
         float revs = 0;
         short maxRevs = dashboard.getSettings().getMaxRevs();
@@ -67,6 +74,7 @@ public class SpeedThread extends Thread {
         float iter = 1;
         float fuelcoeff = (dashboard.getSettings().getEngineType() == 'P') ? 3.33f : 4.2f;
         float currFuelComb = 0f;
+        distance = 0.0f;
         try {
             Thread.sleep(startAfter);
         } catch (InterruptedException e) {
@@ -75,6 +83,10 @@ public class SpeedThread extends Thread {
         if (!engineRunning) {
             revs = dashboard.getRevs();
             while ((dashboard.getSpeed() > 0 || dashboard.getRevs() > 0) && animationToZero) {
+                if (System.currentTimeMillis() - startTime >= 1000) {
+                    startTime = System.currentTimeMillis();
+                    countDistances();
+                }
                 if (dashboard.getSpeed() > 0) {
                     dashboard.subSpeed(1);
                     if (dashboard.getCurrentGear() != 0)
@@ -153,7 +165,6 @@ public class SpeedThread extends Thread {
                 //Czas próbkowania co 1s
                 if (System.currentTimeMillis() - startTime >= 1000) {
                     startTime = System.currentTimeMillis();
-                    distance = dashboard.getSpeed() * (1f / 3600f);
                     sumSpeed += dashboard.getSpeed();
                     onBoardComputer.setAvgSpeed(sumSpeed / iter);
                     currFuelComb = (dashboard.getRevs() * fuelcoeff) / 1000;
@@ -162,9 +173,7 @@ public class SpeedThread extends Thread {
                     if (onBoardComputer.getMaxCombustion() < currFuelComb)
                         onBoardComputer.setMaxCombustion(currFuelComb);
                     iter += 1;
-                    dashboard.setCounter(dashboard.getCounter() + distance);
-                    dashboard.setDayCounter1(dashboard.getDayCounter1() + distance);
-                    dashboard.setDayCounter2(dashboard.getDayCounter2() + distance);
+                    countDistances();
                     onBoardComputer.setJourneyDistance(onBoardComputer.getJourneyDistance() + distance);
                 }
 

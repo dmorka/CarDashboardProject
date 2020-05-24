@@ -36,6 +36,7 @@ public class GUI extends Application {
 
         ImageGridCell closeIcon = (ImageGridCell) fxmlLoader.getNamespace().get("closeIcon");
         closeIcon.setOnMouseClicked(event -> {
+            stop();
             stage.close();
         });
 

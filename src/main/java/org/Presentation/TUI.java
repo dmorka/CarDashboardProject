@@ -510,7 +510,7 @@ public class TUI extends UIController {
     }
 
     private RecordModel chooseDBRecord() {
-        //clearTerminal();
+        clearTerminal();
         ObservableList<RecordModel> records = dashboard.readFromDB();
         purpleTextColor.print("\n\t" + "=".repeat(62));
         yellowTextColor.print(" Dashboard History ");

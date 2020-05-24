@@ -515,6 +515,7 @@ public class DashboardController extends UIController {
 
     @FXML
     private void closeWindow(ActionEvent event) {
+        onStageDestruction();
         Platform.exit();
     }
 
