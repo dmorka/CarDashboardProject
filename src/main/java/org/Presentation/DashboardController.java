@@ -728,6 +728,8 @@ public class DashboardController extends UIController {
         TXTdayCounter2.setText(String.valueOf(Math.round(dashboard.getDayCounter2() * 10.0) / 10.0f));
         TXTjourneyDistance.setText(String.valueOf(Math.round(dashboard.getOnBoardComputer().getJourneyDistance() * 10.0) / 10.0f));
         TXTjourneyTime.setText(dashboard.getOnBoardComputer().getJourneyStartTime());
+        System.out.println("speed:"+dashboard.getSpeed());
+        System.out.println("revs:"+dashboard.getRevs());
         speedGauge.setValue(dashboard.getSpeed());
         revsGauge.setValue(dashboard.getRevs());
     }
