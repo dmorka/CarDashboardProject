@@ -192,7 +192,7 @@
                 </GridPane>
                 <HBox alignment="CENTER" prefHeight="284.0" prefWidth="760.0" GridPane.rowIndex="1">
                     <children>
-                        <Gauge fx:id="revsGauge" backgroundPaint="#ffffff00" borderPaint="#8009ab" borderWidth="3.0" decimals="0" foregroundPaint="WHITE" knobType="METAL" lcdDesign="ORANGE" lcdFont="LCD" majorTickSpace="1000.0" maxValue="8000.0" minorTickMarkLengthFactor="0.15" minorTickMarkWidthFactor="0.1" needleShape="ROUND" needleSize="THIN" prefHeight="230.0" prefWidth="221.0" styleClass="gaugeSize" stylesheets="@style.css" threshold="0.0" value="3200.0">
+                        <Gauge fx:id="revsGauge" backgroundPaint="#ffffff00" borderPaint="#8009ab" borderWidth="3.0" decimals="0" foregroundPaint="WHITE" knobType="METAL" lcdDesign="ORANGE" lcdFont="LCD" majorTickSpace="1000.0" maxValue="8000.0" minMeasuredValue="0.0" minorTickMarkLengthFactor="0.15" minorTickMarkWidthFactor="0.1" needleShape="ROUND" needleSize="THIN" prefHeight="230.0" prefWidth="221.0" styleClass="gaugeSize" stylesheets="@style.css" threshold="0.0" value="3200.0">
                             <effect>
                                 <Glow level="0.21" />
                             </effect>
@@ -242,7 +242,7 @@
                         <Color red="0.6117647290229797" green="0.5843137502670288" blue="0.5843137502670288" />
                      </majorTickMarkColor>
                      <mediumTickMarkColor>
-                        <Color />
+                        <Color red="1.0" green="1.0" blue="1.0" opacity="0.0" />
                      </mediumTickMarkColor>
                      <minorTickMarkColor>
                         <Color red="0.501960813999176" green="0.03529411926865578" blue="0.6705882549285889" />
