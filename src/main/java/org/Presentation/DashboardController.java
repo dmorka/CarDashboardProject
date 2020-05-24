@@ -58,6 +58,10 @@ public class DashboardController extends UIController {
     @FXML
     private CheckMenuItem cruiseControl;
     @FXML
+    private Menu McruiseControl;
+    @FXML
+    private MenuBar MmenuBar;
+    @FXML
     private StackPane stackPane;
     @FXML
     private HashMap<String, Image[]> lights;
@@ -510,6 +514,7 @@ public class DashboardController extends UIController {
         revsGauge.setMaxValue(dashboard.getSettings().getMaxRevs());
         int color = dashboard.getSettings().getDashboardLightIntesity();
         GPmain.setStyle("-fx-background-color: rgb(" + color + ", " + color + ", " + color + ");");
+        MmenuBar.setStyle("-fx-background-color: rgb(" + color + ", " + color + ", " + color + ");");
         dashboard.setGears();
     }
 
@@ -650,12 +655,13 @@ public class DashboardController extends UIController {
     @FXML
     public void startStopEngine() {
         if (!MIstartEngine.isDisable()) {
-            cruiseControl.setDisable(false);
+            McruiseControl.setDisable(false);
             switchEngine(true, false);
             LtitleMP.setOpacity(1);
             LartistMP.setOpacity(1);
         } else {
-            cruiseControl.setDisable(true);
+            dashboard.setCruiseControl(false);
+            McruiseControl.setDisable(true);
             switchEngine(false, false);
             LtitleMP.setOpacity(0);
             LartistMP.setOpacity(0);
@@ -672,6 +678,8 @@ public class DashboardController extends UIController {
             dashboard.playStartEngineSound();
             if (dashboard.getSpeed() == 0)
                 animateEngineStart(true);
+            else
+                startupLightSwitch();
             try {
                 if (dashboard.getSpeed() != 0) {
                     speedThread.interrupt();

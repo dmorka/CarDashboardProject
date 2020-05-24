@@ -39,7 +39,7 @@
                     <children>
                         <VBox prefHeight="28.0" prefWidth="727.0">
                             <children>
-                                <MenuBar prefHeight="28.0" prefWidth="783.0" stylesheets="@style.css">
+                                <MenuBar fx:id="MmenuBar" prefHeight="28.0" prefWidth="783.0" stylesheets="@style.css">
                                     <menus>
                                         <Menu mnemonicParsing="false" text="File">
                                             <items>
@@ -116,14 +116,14 @@
                                                 </Menu>
                                             </items>
                                         </Menu>
-                                        <Menu mnemonicParsing="false" text="Cruise control">
+                                        <Menu fx:id="McruiseControl" disable="true" mnemonicParsing="false" text="Cruise control">
                                             <items>
                                                 <MenuItem fx:id="MIspeedUp" mnemonicParsing="false" onAction="#changeSpeedCruiseControl" text="+5 km/h">
                                                     <accelerator>
                                                         <KeyCodeCombination alt="UP" code="CLOSE_BRACKET" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                                                     </accelerator>
                                                 </MenuItem>
-                                                <CheckMenuItem fx:id="cruiseControl" disable="true" mnemonicParsing="false" onAction="#menuLightSwitch" text="Active">
+                                                <CheckMenuItem fx:id="cruiseControl" mnemonicParsing="false" onAction="#menuLightSwitch" text="Active">
                                                     <accelerator>
                                                         <KeyCodeCombination alt="UP" code="G" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                                                     </accelerator>

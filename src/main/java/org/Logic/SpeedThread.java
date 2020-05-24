@@ -120,7 +120,8 @@ public class SpeedThread extends Thread {
                     if (dashboard.getSpeed() > maxSpeed)
                         onBoardComputer.setMaxSpeed(dashboard.getSpeed());
                 } else if (dashboard.isKeyDown() && dashboard.getSpeed() >= 3) {
-                    uiController.switchOffCruiseControl();
+                    if(dashboard.isCruiseControl())
+                        uiController.switchOffCruiseControl();
                     dashboard.subSpeed(3);
                 } else {
                     if (!uiController.getDashboard().isCruiseControl())

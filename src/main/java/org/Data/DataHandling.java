@@ -1,6 +1,3 @@
-/***
- * Data layer including serialization and read/write to xml file or database.
- */
 package org.Data;
 
 import javafx.collections.ObservableList;
