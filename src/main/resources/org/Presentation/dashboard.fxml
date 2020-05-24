@@ -154,6 +154,7 @@
                                         </Menu>
                                         <Menu mnemonicParsing="false" text="Help">
                                             <items>
+                                    <MenuItem fx:id="MIkeyShortcuts" mnemonicParsing="false" onAction="#openNewWindow" text="Key shortcuts" />
                                                 <MenuItem fx:id="MIabout" mnemonicParsing="false" onAction="#openNewWindow" text="About" />
                                             </items>
                                         </Menu>
