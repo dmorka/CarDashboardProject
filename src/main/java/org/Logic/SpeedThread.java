@@ -2,6 +2,8 @@ package org.Logic;
 
 import org.Presentation.UIController;
 
+import java.util.Random;
+
 /**
  * The type Speed thread.
  */
@@ -9,9 +11,9 @@ public class SpeedThread extends Thread {
     private final UIController uiController;
     private final Dashboard dashboard;
     private boolean engineRunning;
-    private OnBoardComputer onBoardComputer;
-    private int startAfter;
     private boolean animationToZero;
+    private final OnBoardComputer onBoardComputer;
+    private final int startAfter;
     private float distance;
 
 
@@ -67,13 +69,13 @@ public class SpeedThread extends Thread {
         long startTime = System.currentTimeMillis();
         float revs = 0;
         short maxRevs = dashboard.getSettings().getMaxRevs();
-        float gearMaxSpeed = 0;
+        float gearMaxSpeed;
         float maxSpeed = 0;
         long sumSpeed = 0;
         long sumAvgFuel = 0;
         float iter = 1;
-        float fuelcoeff = (dashboard.getSettings().getEngineType() == 'P') ? 3.33f : 4.2f;
-        float currFuelComb = 0f;
+        float fuelCoeff = (dashboard.getSettings().getEngineType() == 'P') ? 3.33f : 4.2f;
+        float currFuelComb;
         distance = 0.0f;
         try {
             Thread.sleep(startAfter);
@@ -92,6 +94,7 @@ public class SpeedThread extends Thread {
                     if (dashboard.getCurrentGear() != 0)
                         revs = (dashboard.getSettings().getMaxRevs() - 1000) * (dashboard.getSpeed() / (float) dashboard.getCurrentGearMaxSpeed());
                     else
+                    if(revs != 0)
                         revs *= 0.99;
                 } else {
                     revs -= 100;
@@ -107,11 +110,11 @@ public class SpeedThread extends Thread {
                 try {
                     Thread.sleep(100);
                 } catch (InterruptedException e) {
-                    //e.printStackTrace();
+                    e.printStackTrace();
                 }
             }
         }
-
+        Random random = new Random();
         while (engineRunning) {
             synchronized (uiController) {
                 if ((dashboard.isKeyUp() && dashboard.getSpeed() < dashboard.getCurrentGearMaxSpeed()) ||
@@ -137,9 +140,15 @@ public class SpeedThread extends Thread {
 
                     if (dashboard.getCurrentGear() == 0) {
                         if (dashboard.getRevs() < 1000)
-                            revs += 100;
+                            if(dashboard.getRevs() < 900)
+                                revs += 100;
+                            else
+                                revs += random.nextInt(20);
                         else
-                            revs -= 100;
+                            if(dashboard.getRevs() < 1070)
+                                revs -= random.nextInt(20);
+                            else
+                                revs -= 100;
                     } else {
                         gearMaxSpeed = dashboard.getCurrentGearMaxSpeed();
                         if (dashboard.getCurrentGear() == 1) {
@@ -168,7 +177,7 @@ public class SpeedThread extends Thread {
                     startTime = System.currentTimeMillis();
                     sumSpeed += dashboard.getSpeed();
                     onBoardComputer.setAvgSpeed(sumSpeed / iter);
-                    currFuelComb = (dashboard.getRevs() * fuelcoeff) / 1000;
+                    currFuelComb = (dashboard.getRevs() * fuelCoeff) / 1000;
                     sumAvgFuel += currFuelComb;
                     onBoardComputer.setAvgCombustion(sumAvgFuel / iter);
                     if (onBoardComputer.getMaxCombustion() < currFuelComb)
@@ -177,8 +186,6 @@ public class SpeedThread extends Thread {
                     countDistances();
                     onBoardComputer.setJourneyDistance(onBoardComputer.getJourneyDistance() + distance);
                 }
-
-
                 uiController.refresh();
             }
             try {

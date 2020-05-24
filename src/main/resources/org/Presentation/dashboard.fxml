@@ -192,13 +192,19 @@
                 </GridPane>
                 <HBox alignment="CENTER" prefHeight="284.0" prefWidth="760.0" GridPane.rowIndex="1">
                     <children>
-                        <Gauge fx:id="revsGauge" borderPaint="#8009ab" borderWidth="3.0" decimals="0" knobType="FLAT" lcdDesign="ORANGE" lcdFont="LCD" majorTickSpace="1000.0" maxValue="8000.0" needleShape="FLAT" prefHeight="230.0" prefWidth="221.0" skinType="DIGITAL" styleClass="gaugeSize" stylesheets="@style.css" value="3200.0">
+                        <Gauge fx:id="revsGauge" backgroundPaint="#ffffff00" borderPaint="#800aab00" borderWidth="3.0" decimals="0" knobType="FLAT" lcdDesign="ORANGE" lcdFont="LCD" majorTickSpace="1000.0" maxValue="8000.0" needleShape="FLAT" prefHeight="230.0" prefWidth="221.0" skinType="SPACE_X" styleClass="gaugeSize" stylesheets="@style.css" threshold="0.0" value="3200.0">
                             <effect>
                                 <Glow level="0.21" />
                             </effect>
                             <HBox.margin>
                                 <Insets left="20.0" />
                             </HBox.margin>
+                     <needleColor>
+                        <Color red="1.0" />
+                     </needleColor>
+                     <thresholdColor>
+                        <Color red="0.4901960790157318" green="0.03921568766236305" blue="0.6705882549285889" />
+                     </thresholdColor>
                         </Gauge>
                         <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="321.0" prefWidth="228.0" style="-fx-border-color: white; -fx-border-width: 3px;">
                             <children>
@@ -680,7 +686,7 @@
                                 <Insets left="30.0" right="30.0" />
                             </HBox.margin>
                         </VBox>
-                        <Gauge fx:id="speedGauge" borderPaint="#8009ab" borderWidth="3.0" decimals="0" knobType="FLAT" lcdDesign="DARKGREEN" lcdFont="STANDARD" majorTickSpace="20.0" maxValue="320.0" needleShape="FLAT" prefHeight="230.0" prefWidth="221.0" skinType="DIGITAL" styleClass="gaugeSize" stylesheets="@style.css" value="32.0">
+                        <Gauge fx:id="speedGauge" backgroundPaint="#ffffff00" borderPaint="#800aab00" borderWidth="3.0" decimals="0" knobType="FLAT" lcdDesign="DARKGREEN" lcdFont="STANDARD" majorTickSpace="20.0" maxValue="320.0" needleShape="ROUND" needleSize="THICK" needleType="AVIONIC" prefHeight="230.0" prefWidth="221.0" skinType="SPACE_X" styleClass="gaugeSize" stylesheets="@style.css" threshold="0.0" value="32.0">
                             <effect>
                                 <Glow level="0.21" />
                             </effect>
@@ -690,6 +696,30 @@
                             <HBox.margin>
                                 <Insets right="20.0" />
                             </HBox.margin>
+                     <thresholdColor>
+                        <Color red="0.4810599982738495" green="0.04019999876618385" blue="0.6700000166893005" />
+                     </thresholdColor>
+                     <ledColor>
+                        <Color red="0.4901960790157318" green="0.03921568766236305" blue="0.6705882549285889" />
+                     </ledColor>
+                     <barColor>
+                        <Color red="0.501960813999176" green="0.03529411926865578" blue="0.6705882549285889" />
+                     </barColor>
+                     <needleColor>
+                        <Color red="0.38999998569488525" green="0.06629999727010727" blue="0.06629999727010727" opacity="0.0" />
+                     </needleColor>
+                     <tickLabelColor>
+                        <Color red="0.6447368264198303" green="0.6447368264198303" blue="0.6447368264198303" opacity="0.0" />
+                     </tickLabelColor>
+                     <needleBorderColor>
+                        <Color red="0.4447368383407593" green="0.04859161749482155" blue="0.04859161749482155" />
+                     </needleBorderColor>
+                     <knobColor>
+                        <Color red="0.4901960790157318" green="0.03921568766236305" blue="0.6705882549285889" />
+                     </knobColor>
+                     <majorTickMarkColor>
+                        <Color red="0.14000000059604645" green="0.14000000059604645" blue="0.14000000059604645" opacity="0.0" />
+                     </majorTickMarkColor>
                         </Gauge>
                     </children>
                 </HBox>
