@@ -650,10 +650,12 @@ public class DashboardController extends UIController {
     @FXML
     public void startStopEngine() {
         if (!MIstartEngine.isDisable()) {
+            cruiseControl.setDisable(false);
             switchEngine(true, false);
             LtitleMP.setOpacity(1);
             LartistMP.setOpacity(1);
         } else {
+            cruiseControl.setDisable(true);
             switchEngine(false, false);
             LtitleMP.setOpacity(0);
             LartistMP.setOpacity(0);

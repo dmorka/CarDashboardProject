@@ -1,3 +1,6 @@
+/***
+ * Presentation layer including text and graphic user interface.
+ */
 package org.Presentation;
 
 import com.goxr3plus.fxborderlessscene.borderless.BorderlessScene;

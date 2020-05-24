@@ -19,6 +19,9 @@ import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+/**
+ * The type Tui.
+ */
 public class TUI extends UIController {
     private final DateTimeFormatter clockFormatter = DateTimeFormatter.ofPattern("HH:mm");
     private final ColoredPrinter purpleTextColor = new ColoredPrinter.Builder(0, false)
@@ -57,6 +60,11 @@ public class TUI extends UIController {
             fogBackColor = blackTextColor;
 
 
+    /**
+     * The entry point of application.
+     *
+     * @param args the input arguments
+     */
     public static void main(String[] args) {
         Console console = System.console();
         if(console == null) {
@@ -67,6 +75,11 @@ public class TUI extends UIController {
         tui.drawMainMenu();
     }
 
+    /**
+     * Key listener.
+     *
+     * @param listen the listen
+     */
     public void KeyListener(boolean listen) {
 //        Scanner scanner = new Scanner(System.in);
         if (listen) {
@@ -600,6 +613,13 @@ public class TUI extends UIController {
     }
 
     private static class CLS {
+        /**
+         * The entry point of application.
+         *
+         * @param arg the input arguments
+         * @throws IOException          the io exception
+         * @throws InterruptedException the interrupted exception
+         */
         public static void main(String... arg) throws IOException, InterruptedException {
             new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
         }

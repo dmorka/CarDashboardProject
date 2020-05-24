@@ -1,3 +1,6 @@
+/***
+ * Logic layer.
+ */
 package org.Logic;
 
 import javafx.collections.ObservableList;

@@ -1,44 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import eu.hansolo.medusa.Gauge?>
+<?import eu.hansolo.medusa.*?>
 <?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
 <?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.effect.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.input.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.*?>
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
-<?import org.controlsfx.control.cell.ImageGridCell?>
-<StackPane xmlns:fx="http://javafx.com/fxml/1" fx:id="stackPane" stylesheets="@openDialogStyle.css"
-           xmlns="http://javafx.com/javafx/10.0.2-internal" fx:controller="org.Presentation.DashboardController">
+<?import org.controlsfx.control.cell.*?>
+
+<StackPane fx:id="stackPane" stylesheets="@openDialogStyle.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.Presentation.DashboardController">
     <children>
-        <GridPane fx:id="GPmain" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
-                  minHeight="-Infinity" minWidth="-Infinity" onKeyPressed="#keyPressed" onKeyReleased="#keyReleased"
-                  prefHeight="450.0" prefWidth="900.0" style="-fx-background-color: black;">
+        <GridPane fx:id="GPmain" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" onKeyPressed="#keyPressed" onKeyReleased="#keyReleased" prefHeight="450.0" prefWidth="900.0" style="-fx-background-color: black;">
             <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
             </columnConstraints>
             <rowConstraints>
-                <RowConstraints maxHeight="125.0" minHeight="0.0" prefHeight="0.0" vgrow="SOMETIMES"/>
-                <RowConstraints maxHeight="359.2" minHeight="10.0" percentHeight="80.0" prefHeight="351.2"
-                                vgrow="SOMETIMES"/>
-                <RowConstraints maxHeight="63.0" minHeight="10.0" prefHeight="20.0" vgrow="SOMETIMES"/>
+                <RowConstraints maxHeight="125.0" minHeight="0.0" prefHeight="0.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="359.2" minHeight="10.0" percentHeight="80.0" prefHeight="351.2" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="63.0" minHeight="10.0" prefHeight="20.0" vgrow="SOMETIMES" />
             </rowConstraints>
             <children>
-                <GridPane fx:id="topPanel" alignment="TOP_RIGHT" maxWidth="-Infinity" prefHeight="0.0"
-                          prefWidth="4096.0">
+                <GridPane fx:id="topPanel" alignment="TOP_RIGHT" maxWidth="-Infinity" prefHeight="0.0" prefWidth="4096.0">
                     <GridPane.margin>
-                        <Insets top="10.0"/>
+                        <Insets top="10.0" />
                     </GridPane.margin>
                     <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="36.0"/>
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="64.0"/>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="36.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="64.0" />
                     </columnConstraints>
                     <rowConstraints>
-                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
+                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                     <children>
                         <VBox prefHeight="28.0" prefWidth="727.0">
@@ -49,175 +45,139 @@
                                             <items>
                                                 <Menu mnemonicParsing="false" text="Import from">
                                                     <items>
-                                                        <MenuItem mnemonicParsing="false" onAction="#importFromXML"
-                                                                  text="XML file"/>
-                                                        <MenuItem fx:id="MIdatabaseImport" mnemonicParsing="false"
-                                                                  onAction="#openNewWindow" text="JDBC Database"/>
+                                                        <MenuItem mnemonicParsing="false" onAction="#importFromXML" text="XML file" />
+                                                        <MenuItem fx:id="MIdatabaseImport" mnemonicParsing="false" onAction="#openNewWindow" text="JDBC Database" />
                                                     </items>
                                                 </Menu>
                                                 <Menu mnemonicParsing="false" text="Export to">
                                                     <items>
-                                                        <MenuItem fx:id="MIxmlFile" mnemonicParsing="false"
-                                                                  onAction="#exportToXML" text="XML file"/>
-                                                        <MenuItem fx:id="MIjdbcDatabase" mnemonicParsing="false"
-                                                                  onAction="#exportToDB" text="JDBC Database"/>
+                                                        <MenuItem fx:id="MIxmlFile" mnemonicParsing="false" onAction="#exportToXML" text="XML file" />
+                                                        <MenuItem fx:id="MIjdbcDatabase" mnemonicParsing="false" onAction="#exportToDB" text="JDBC Database" />
                                                     </items>
                                                 </Menu>
-                                                <MenuItem fx:id="MIsettings" mnemonicParsing="false"
-                                                          onAction="#openNewWindow" text="Settings"/>
-                                                <MenuItem fx:id="MIexit" mnemonicParsing="false" onAction="#closeWindow"
-                                                          text="Exit"/>
+                                                <MenuItem fx:id="MIsettings" mnemonicParsing="false" onAction="#openNewWindow" text="Settings" />
+                                                <MenuItem fx:id="MIexit" mnemonicParsing="false" onAction="#closeWindow" text="Exit" />
                                             </items>
                                         </Menu>
                                         <Menu mnemonicParsing="false" text="Engine">
                                             <items>
-                                                <MenuItem fx:id="MIstartEngine" mnemonicParsing="false"
-                                                          onAction="#startStopEngine" text="Start">
+                                                <MenuItem fx:id="MIstartEngine" mnemonicParsing="false" onAction="#startStopEngine" text="Start">
                                                     <accelerator>
-                                                        <KeyCodeCombination alt="UP" code="W" control="DOWN" meta="UP"
-                                                                            shift="UP" shortcut="UP"/>
+                                                        <KeyCodeCombination alt="UP" code="W" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                                                     </accelerator>
                                                 </MenuItem>
-                                                <MenuItem fx:id="MIstopEngine" disable="true" mnemonicParsing="false"
-                                                          onAction="#startStopEngine" text="Stop">
+                                                <MenuItem fx:id="MIstopEngine" disable="true" mnemonicParsing="false" onAction="#startStopEngine" text="Stop">
                                                     <accelerator>
-                                                        <KeyCodeCombination alt="UP" code="Q" control="DOWN" meta="UP"
-                                                                            shift="UP" shortcut="UP"/>
+                                                        <KeyCodeCombination alt="UP" code="Q" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                                                     </accelerator>
                                                 </MenuItem>
                                             </items>
                                         </Menu>
                                         <Menu mnemonicParsing="false" text="Lights">
                                             <items>
-                                                <CheckMenuItem fx:id="parkingLights" mnemonicParsing="false"
-                                                               onAction="#menuLightSwitch" text="Parking lights">
+                                                <CheckMenuItem fx:id="parkingLights" mnemonicParsing="false" onAction="#menuLightSwitch" text="Parking lights">
                                                     <accelerator>
-                                                        <KeyCodeCombination alt="UP" code="Z" control="DOWN" meta="UP"
-                                                                            shift="UP" shortcut="UP"/>
+                                                        <KeyCodeCombination alt="UP" code="Z" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                                                     </accelerator>
                                                 </CheckMenuItem>
                                                 <Menu mnemonicParsing="false" text="Headlights">
                                                     <items>
-                                                        <CheckMenuItem fx:id="headlightsLowBeam" mnemonicParsing="false"
-                                                                       onAction="#menuLightSwitch" text="Low beam">
+                                                        <CheckMenuItem fx:id="headlightsLowBeam" mnemonicParsing="false" onAction="#menuLightSwitch" text="Low beam">
                                                             <accelerator>
-                                                                <KeyCodeCombination alt="UP" code="X" control="DOWN"
-                                                                                    meta="UP" shift="UP" shortcut="UP"/>
+                                                                <KeyCodeCombination alt="UP" code="X" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                                                             </accelerator>
                                                         </CheckMenuItem>
-                                                        <CheckMenuItem fx:id="headlightsHighBeam"
-                                                                       mnemonicParsing="false"
-                                                                       onAction="#menuLightSwitch" text="High beam">
+                                                        <CheckMenuItem fx:id="headlightsHighBeam" mnemonicParsing="false" onAction="#menuLightSwitch" text="High beam">
                                                             <accelerator>
-                                                                <KeyCodeCombination alt="UP" code="C" control="DOWN"
-                                                                                    meta="UP" shift="UP" shortcut="UP"/>
+                                                                <KeyCodeCombination alt="UP" code="C" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                                                             </accelerator>
                                                         </CheckMenuItem>
                                                     </items>
                                                 </Menu>
                                                 <Menu mnemonicParsing="false" text="Fog lights">
                                                     <items>
-                                                        <CheckMenuItem fx:id="fogLightsBack" mnemonicParsing="false"
-                                                                       onAction="#menuLightSwitch" text="Back">
+                                                        <CheckMenuItem fx:id="fogLightsBack" mnemonicParsing="false" onAction="#menuLightSwitch" text="Back">
                                                             <accelerator>
-                                                                <KeyCodeCombination alt="UP" code="V" control="DOWN"
-                                                                                    meta="UP" shift="UP" shortcut="UP"/>
+                                                                <KeyCodeCombination alt="UP" code="V" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                                                             </accelerator>
                                                         </CheckMenuItem>
-                                                        <CheckMenuItem fx:id="fogLightsFront" mnemonicParsing="false"
-                                                                       onAction="#menuLightSwitch" text="Front">
+                                                        <CheckMenuItem fx:id="fogLightsFront" mnemonicParsing="false" onAction="#menuLightSwitch" text="Front">
                                                             <accelerator>
-                                                                <KeyCodeCombination alt="UP" code="B" control="DOWN"
-                                                                                    meta="UP" shift="UP" shortcut="UP"/>
+                                                                <KeyCodeCombination alt="UP" code="B" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                                                             </accelerator>
                                                         </CheckMenuItem>
                                                     </items>
                                                 </Menu>
                                                 <Menu mnemonicParsing="false" text="Indicators">
                                                     <items>
-                                                        <CheckMenuItem fx:id="indicatorsTurnLeft"
-                                                                       mnemonicParsing="false"
-                                                                       onAction="#menuLightSwitch" text="Turn left"/>
-                                                        <CheckMenuItem fx:id="indicatorsTurnRight"
-                                                                       mnemonicParsing="false"
-                                                                       onAction="#menuLightSwitch" text="Turn right"/>
+                                                        <CheckMenuItem fx:id="indicatorsTurnLeft" mnemonicParsing="false" onAction="#menuLightSwitch" text="Turn left" />
+                                                        <CheckMenuItem fx:id="indicatorsTurnRight" mnemonicParsing="false" onAction="#menuLightSwitch" text="Turn right" />
                                                     </items>
                                                 </Menu>
                                             </items>
                                         </Menu>
                                         <Menu mnemonicParsing="false" text="Cruise control">
                                             <items>
-                                                <MenuItem fx:id="MIspeedUp" mnemonicParsing="false"
-                                                          onAction="#changeSpeedCruiseControl" text="+5 km/h">
+                                                <MenuItem fx:id="MIspeedUp" mnemonicParsing="false" onAction="#changeSpeedCruiseControl" text="+5 km/h">
                                                     <accelerator>
-                                                        <KeyCodeCombination alt="UP" code="CLOSE_BRACKET" control="DOWN"
-                                                                            meta="UP" shift="UP" shortcut="UP"/>
+                                                        <KeyCodeCombination alt="UP" code="CLOSE_BRACKET" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                                                     </accelerator>
                                                 </MenuItem>
-                                                <CheckMenuItem fx:id="cruiseControl" mnemonicParsing="false"
-                                                               onAction="#menuLightSwitch" text="Active">
+                                                <CheckMenuItem fx:id="cruiseControl" disable="true" mnemonicParsing="false" onAction="#menuLightSwitch" text="Active">
                                                     <accelerator>
-                                                        <KeyCodeCombination alt="UP" code="G" control="DOWN" meta="UP"
-                                                                            shift="UP" shortcut="UP"/>
+                                                        <KeyCodeCombination alt="UP" code="G" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                                                     </accelerator>
                                                 </CheckMenuItem>
-                                                <MenuItem fx:id="MIspeedDown" mnemonicParsing="false"
-                                                          onAction="#changeSpeedCruiseControl" text="-5 km/h">
+                                                <MenuItem fx:id="MIspeedDown" mnemonicParsing="false" onAction="#changeSpeedCruiseControl" text="-5 km/h">
                                                     <accelerator>
-                                                        <KeyCodeCombination alt="UP" code="OPEN_BRACKET" control="DOWN"
-                                                                            meta="UP" shift="UP" shortcut="UP"/>
+                                                        <KeyCodeCombination alt="UP" code="OPEN_BRACKET" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                                                     </accelerator>
                                                 </MenuItem>
                                             </items>
                                         </Menu>
                                         <Menu mnemonicParsing="false" text="Help">
                                             <items>
-                                                <MenuItem fx:id="MIabout" mnemonicParsing="false"
-                                                          onAction="#openNewWindow" text="About"/>
+                                                <MenuItem fx:id="MIabout" mnemonicParsing="false" onAction="#openNewWindow" text="About" />
                                             </items>
                                         </Menu>
                                     </menus>
                                     <VBox.margin>
-                                        <Insets/>
+                                        <Insets />
                                     </VBox.margin>
                                 </MenuBar>
                             </children>
                         </VBox>
-                        <HBox alignment="TOP_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="5.0"
-                              GridPane.columnIndex="1">
+                        <HBox alignment="TOP_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="5.0" GridPane.columnIndex="1">
                             <GridPane.margin>
-                                <Insets right="10.0"/>
+                                <Insets right="10.0" />
                             </GridPane.margin>
                             <children>
                                 <ImageGridCell fx:id="minimizeIcon">
                                     <graphic>
-                                        <ImageView fx:id="IVminimizeApp" fitHeight="20.0" fitWidth="20.0"
-                                                   pickOnBounds="true" preserveRatio="true">
+                                        <ImageView fx:id="IVminimizeApp" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                                             <image>
-                                                <Image url="@images/minimize1.png"/>
+                                                <Image url="@images/minimize1.png" />
                                             </image>
                                         </ImageView>
                                     </graphic>
                                 </ImageGridCell>
                                 <ImageGridCell fx:id="maximizeIcon">
                                     <graphic>
-                                        <ImageView fx:id="IVmaximizeApp" fitHeight="20.0" fitWidth="20.0"
-                                                   pickOnBounds="true" preserveRatio="true">
+                                        <ImageView fx:id="IVmaximizeApp" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                                             <image>
-                                                <Image url="@images/maximize.png"/>
+                                                <Image url="@images/maximize.png" />
                                             </image>
                                         </ImageView>
                                     </graphic>
                                 </ImageGridCell>
                                 <ImageGridCell fx:id="closeIcon" textFill="WHITE">
                                     <item>
-                                        <Image url="@images/close.png"/>
+                                        <Image url="@images/close.png" />
                                     </item>
                                     <graphic>
-                                        <ImageView fx:id="IVcloseApp" fitHeight="25.0" fitWidth="25.0"
-                                                   pickOnBounds="true" preserveRatio="true">
+                                        <ImageView fx:id="IVcloseApp" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                                             <image>
-                                                <Image url="@images/close.png"/>
+                                                <Image url="@images/close.png" />
                                             </image>
                                         </ImageView>
                                     </graphic>
@@ -228,63 +188,50 @@
                 </GridPane>
                 <HBox alignment="CENTER" prefHeight="284.0" prefWidth="760.0" GridPane.rowIndex="1">
                     <children>
-                        <Gauge fx:id="revsGauge" borderPaint="#8009ab" borderWidth="3.0" decimals="0" knobType="FLAT"
-                               lcdDesign="ORANGE" lcdFont="LCD" majorTickSpace="1000.0" maxValue="8000.0"
-                               needleShape="FLAT" prefHeight="230.0" prefWidth="221.0" skinType="DIGITAL"
-                               styleClass="gaugeSize" stylesheets="@style.css" value="3200.0">
+                        <Gauge fx:id="revsGauge" borderPaint="#8009ab" borderWidth="3.0" decimals="0" knobType="FLAT" lcdDesign="ORANGE" lcdFont="LCD" majorTickSpace="1000.0" maxValue="8000.0" needleShape="FLAT" prefHeight="230.0" prefWidth="221.0" skinType="DIGITAL" styleClass="gaugeSize" stylesheets="@style.css" value="3200.0">
                             <effect>
-                                <Glow level="0.21"/>
+                                <Glow level="0.21" />
                             </effect>
                             <HBox.margin>
-                                <Insets left="20.0"/>
+                                <Insets left="20.0" />
                             </HBox.margin>
                         </Gauge>
-                        <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="321.0"
-                              prefWidth="228.0" style="-fx-border-color: white; -fx-border-width: 3px;">
+                        <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="321.0" prefWidth="228.0" style="-fx-border-color: white; -fx-border-width: 3px;">
                             <children>
                                 <HBox alignment="CENTER_LEFT" prefHeight="27.0" prefWidth="221.0">
                                     <children>
                                         <AnchorPane prefHeight="24.0" prefWidth="51.0">
                                             <children>
-                                                <Text fx:id="TXTclock" fill="WHITE" layoutX="10.0" layoutY="12.0"
-                                                      strokeType="OUTSIDE" strokeWidth="0.0" text="16:26"
-                                                      wrappingWidth="128.2920036315918" AnchorPane.bottomAnchor="2.0"
-                                                      AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="-72.0"
-                                                      AnchorPane.topAnchor="0.0">
+                                                <Text fx:id="TXTclock" fill="WHITE" layoutX="10.0" layoutY="12.0" strokeType="OUTSIDE" strokeWidth="0.0" text="16:26" wrappingWidth="128.2920036315918" AnchorPane.bottomAnchor="2.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="-72.0" AnchorPane.topAnchor="0.0">
                                                     <font>
-                                                        <Font name="System Bold" size="18.0"/>
+                                                        <Font name="System Bold" size="18.0" />
                                                     </font>
                                                     <effect>
-                                                        <Glow/>
+                                                        <Glow />
                                                     </effect>
                                                 </Text>
                                             </children>
                                         </AnchorPane>
                                         <AnchorPane prefHeight="200.0" prefWidth="200.0">
                                             <children>
-                                                <ImageView fx:id="IVcruiseControl" fitHeight="24.0" fitWidth="27.0"
-                                                           layoutX="32.0" layoutY="1.0" opacity="0.2"
-                                                           pickOnBounds="true" preserveRatio="true">
+                                                <ImageView fx:id="IVcruiseControl" fitHeight="24.0" fitWidth="27.0" layoutX="32.0" layoutY="1.0" opacity="0.2" pickOnBounds="true" preserveRatio="true">
                                                     <image>
-                                                        <Image url="@images/lights/cruiseControlOff.png"/>
+                                                        <Image url="@images/lights/cruiseControlOff.png" />
                                                     </image>
                                                     <effect>
-                                                        <Glow/>
+                                                        <Glow />
                                                     </effect>
                                                 </ImageView>
                                             </children>
                                         </AnchorPane>
                                         <AnchorPane nodeOrientation="RIGHT_TO_LEFT" prefHeight="24.0" prefWidth="174.0">
                                             <children>
-                                                <Text fx:id="TXTgear" fill="WHITE" strokeType="OUTSIDE"
-                                                      strokeWidth="0.0" text="5" AnchorPane.bottomAnchor="0.0"
-                                                      AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="0.0"
-                                                      AnchorPane.topAnchor="0.0">
+                                                <Text fx:id="TXTgear" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="5" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                     <font>
-                                                        <Font name="System Bold" size="18.0"/>
+                                                        <Font name="System Bold" size="18.0" />
                                                     </font>
                                                     <effect>
-                                                        <Glow/>
+                                                        <Glow />
                                                     </effect>
                                                 </Text>
                                             </children>
@@ -293,327 +240,257 @@
                                 </HBox>
                                 <AnchorPane prefHeight="200.0" prefWidth="200.0">
                                     <children>
-                                        <Line endX="118.0" startX="-100.0" stroke="WHITE" strokeWidth="3.0"
-                                              AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
-                                              AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
+                                        <Line endX="118.0" startX="-100.0" stroke="WHITE" strokeWidth="3.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                                     </children>
                                 </AnchorPane>
                                 <VBox alignment="CENTER" prefHeight="129.0" prefWidth="221.0">
                                     <children>
-                                        <Label fx:id="LtitleMP" alignment="CENTER" focusTraversable="false"
-                                               opacity="0.0" text="Slow Dance In A Parking Lot" textFill="#6e19dd">
+                                        <Label fx:id="LtitleMP" alignment="CENTER" focusTraversable="false" opacity="0.0" text="Slow Dance In A Parking Lot" textFill="#6e19dd">
                                             <font>
-                                                <Font size="15.0"/>
+                                                <Font size="15.0" />
                                             </font>
                                             <effect>
-                                                <Glow/>
+                                                <Glow />
                                             </effect>
                                             <VBox.margin>
-                                                <Insets left="5.0" right="5.0" top="3.0"/>
+                                                <Insets left="5.0" right="5.0" top="3.0" />
                                             </VBox.margin>
                                         </Label>
-                                        <Label fx:id="LartistMP" alignment="CENTER" focusTraversable="false"
-                                               opacity="0.0" text="Jordan Davis" textFill="WHITE">
+                                        <Label fx:id="LartistMP" alignment="CENTER" focusTraversable="false" opacity="0.0" text="Jordan Davis" textFill="WHITE">
                                             <VBox.margin>
-                                                <Insets left="5.0" right="5.0"/>
+                                                <Insets left="5.0" right="5.0" />
                                             </VBox.margin>
                                             <font>
-                                                <Font size="10.0"/>
+                                                <Font size="10.0" />
                                             </font>
                                             <effect>
-                                                <Glow/>
+                                                <Glow />
                                             </effect>
                                         </Label>
-                                        <ProgressBar fx:id="PBsongDuration" maxHeight="-Infinity" maxWidth="-Infinity"
-                                                     minHeight="-Infinity" prefHeight="6.0" prefWidth="200.0"
-                                                     progress="0.0" stylesheets="@style.css">
+                                        <ProgressBar fx:id="PBsongDuration" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" prefHeight="6.0" prefWidth="200.0" progress="0.0" stylesheets="@style.css">
                                             <VBox.margin>
-                                                <Insets top="10.0"/>
+                                                <Insets top="10.0" />
                                             </VBox.margin>
                                             <effect>
-                                                <Glow/>
+                                                <Glow />
                                             </effect>
                                         </ProgressBar>
                                         <HBox prefHeight="48.0" prefWidth="221.0">
                                             <children>
-                                                <AnchorPane layoutX="52.0" layoutY="10.0" prefHeight="200.0"
-                                                            prefWidth="200.0">
+                                                <AnchorPane layoutX="52.0" layoutY="10.0" prefHeight="200.0" prefWidth="200.0">
                                                     <children>
-                                                        <Polygon fill="#5c1f5e" layoutX="58.0"
-                                                                 onMouseClicked="#previousSong"
-                                                                 points="5.0, 13.0, 5.0, 32.5, 23.0, 23.25"
-                                                                 rotate="-180.0" stroke="#6319dd" strokeType="INSIDE"
-                                                                 AnchorPane.rightAnchor="9.0">
+                                                        <Polygon fill="#5c1f5e" layoutX="58.0" onMouseClicked="#previousSong" points="5.0, 13.0, 5.0, 32.5, 23.0, 23.25" rotate="-180.0" stroke="#6319dd" strokeType="INSIDE" AnchorPane.rightAnchor="9.0">
                                                             <effect>
-                                                                <Glow/>
+                                                                <Glow />
                                                             </effect>
                                                             <cursor>
-                                                                <Cursor fx:constant="HAND"/>
+                                                                <Cursor fx:constant="HAND" />
                                                             </cursor>
                                                         </Polygon>
-                                                        <Polygon fill="#5c1f5e" layoutX="50.0"
-                                                                 onMouseClicked="#previousSong"
-                                                                 points="5.0, 13.0, 5.0, 32.5, 23.0, 23.25"
-                                                                 rotate="-180.0" stroke="#6319dd" strokeType="INSIDE">
+                                                        <Polygon fill="#5c1f5e" layoutX="50.0" onMouseClicked="#previousSong" points="5.0, 13.0, 5.0, 32.5, 23.0, 23.25" rotate="-180.0" stroke="#6319dd" strokeType="INSIDE">
                                                             <effect>
-                                                                <Glow/>
+                                                                <Glow />
                                                             </effect>
                                                             <cursor>
-                                                                <Cursor fx:constant="HAND"/>
+                                                                <Cursor fx:constant="HAND" />
                                                             </cursor>
                                                         </Polygon>
                                                     </children>
                                                 </AnchorPane>
                                                 <AnchorPane prefHeight="47.0" prefWidth="41.0">
                                                     <children>
-                                                        <Circle fill="#6e19dd" layoutX="21.0" layoutY="23.0"
-                                                                onMouseClicked="#playPauseMP" radius="21.0"
-                                                                stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0">
+                                                        <Circle fill="#6e19dd" layoutX="21.0" layoutY="23.0" onMouseClicked="#playPauseMP" radius="21.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0">
                                                             <cursor>
-                                                                <Cursor fx:constant="HAND"/>
+                                                                <Cursor fx:constant="HAND" />
                                                             </cursor>
                                                         </Circle>
-                                                        <Polygon fx:id="PolyPlay" fill="WHITE"
-                                                                 onMouseClicked="#playPauseMP"
-                                                                 points="5.0, 13.0, 5.0, 32.5, 23.0, 23.25"
-                                                                 stroke="#9a9a9a" strokeType="INSIDE" strokeWidth="0.0"
-                                                                 AnchorPane.leftAnchor="14.0">
+                                                        <Polygon fx:id="PolyPlay" fill="WHITE" onMouseClicked="#playPauseMP" points="5.0, 13.0, 5.0, 32.5, 23.0, 23.25" stroke="#9a9a9a" strokeType="INSIDE" strokeWidth="0.0" AnchorPane.leftAnchor="14.0">
                                                             <cursor>
-                                                                <Cursor fx:constant="HAND"/>
+                                                                <Cursor fx:constant="HAND" />
                                                             </cursor>
                                                         </Polygon>
-                                                        <Rectangle fx:id="RecPause1" arcHeight="2.0" arcWidth="3.0"
-                                                                   fill="WHITE" height="20.0" layoutX="14.0"
-                                                                   layoutY="13.0" onMouseClicked="#playPauseMP"
-                                                                   stroke="WHITE" strokeType="INSIDE" visible="false"
-                                                                   width="4.0" AnchorPane.leftAnchor="14.0"/>
-                                                        <Rectangle fx:id="RecPause2" arcHeight="2.0" arcWidth="2.0"
-                                                                   fill="WHITE" height="20.0" layoutX="23.0"
-                                                                   layoutY="13.0" onMouseClicked="#playPauseMP"
-                                                                   stroke="#ffffff00" strokeType="INSIDE"
-                                                                   visible="false" width="4.0"
-                                                                   AnchorPane.rightAnchor="14.0"/>
+                                                        <Rectangle fx:id="RecPause1" arcHeight="2.0" arcWidth="3.0" fill="WHITE" height="20.0" layoutX="14.0" layoutY="13.0" onMouseClicked="#playPauseMP" stroke="WHITE" strokeType="INSIDE" visible="false" width="4.0" AnchorPane.leftAnchor="14.0" />
+                                                        <Rectangle fx:id="RecPause2" arcHeight="2.0" arcWidth="2.0" fill="WHITE" height="20.0" layoutX="23.0" layoutY="13.0" onMouseClicked="#playPauseMP" stroke="#ffffff00" strokeType="INSIDE" visible="false" width="4.0" AnchorPane.rightAnchor="14.0" />
                                                     </children>
                                                 </AnchorPane>
                                                 <AnchorPane prefHeight="200.0" prefWidth="200.0">
                                                     <children>
-                                                        <Polygon fill="#5c1f5e" layoutX="3.0"
-                                                                 onMouseClicked="#nextSongMP"
-                                                                 points="5.0, 13.0, 5.0, 32.5, 23.0, 23.25"
-                                                                 stroke="#6e19dd" strokeType="INSIDE">
+                                                        <Polygon fill="#5c1f5e" layoutX="3.0" onMouseClicked="#nextSongMP" points="5.0, 13.0, 5.0, 32.5, 23.0, 23.25" stroke="#6e19dd" strokeType="INSIDE">
                                                             <effect>
-                                                                <Glow/>
+                                                                <Glow />
                                                             </effect>
                                                             <cursor>
-                                                                <Cursor fx:constant="HAND"/>
+                                                                <Cursor fx:constant="HAND" />
                                                             </cursor>
                                                         </Polygon>
-                                                        <Polygon fill="#5c1f5e" layoutX="12.0"
-                                                                 onMouseClicked="#nextSongMP"
-                                                                 points="5.0, 13.0, 5.0, 32.5, 23.0, 23.25"
-                                                                 stroke="#6e19dd" strokeType="INSIDE">
+                                                        <Polygon fill="#5c1f5e" layoutX="12.0" onMouseClicked="#nextSongMP" points="5.0, 13.0, 5.0, 32.5, 23.0, 23.25" stroke="#6e19dd" strokeType="INSIDE">
                                                             <effect>
-                                                                <Glow/>
+                                                                <Glow />
                                                             </effect>
                                                             <cursor>
-                                                                <Cursor fx:constant="HAND"/>
+                                                                <Cursor fx:constant="HAND" />
                                                             </cursor>
                                                         </Polygon>
                                                     </children>
                                                     <HBox.margin>
-                                                        <Insets bottom="20.0"/>
+                                                        <Insets bottom="20.0" />
                                                     </HBox.margin>
                                                 </AnchorPane>
                                             </children>
                                             <VBox.margin>
-                                                <Insets top="10.0"/>
+                                                <Insets top="10.0" />
                                             </VBox.margin>
                                         </HBox>
-                                        <Slider fx:id="SLvolume" focusTraversable="false" maxWidth="-Infinity"
-                                                onMouseClicked="#changeVolumeMP" onMouseDragged="#changeVolumeMP"
-                                                onMouseReleased="#removeFocus" onScroll="#changeVolumeMP"
-                                                prefHeight="14.0" prefWidth="80.0" value="75.0">
+                                        <Slider fx:id="SLvolume" focusTraversable="false" maxWidth="-Infinity" onMouseClicked="#changeVolumeMP" onMouseDragged="#changeVolumeMP" onMouseReleased="#removeFocus" onScroll="#changeVolumeMP" prefHeight="14.0" prefWidth="80.0" value="75.0">
                                             <cursor>
-                                                <Cursor fx:constant="HAND"/>
+                                                <Cursor fx:constant="HAND" />
                                             </cursor>
                                         </Slider>
                                     </children>
                                     <effect>
-                                        <Glow/>
+                                        <Glow />
                                     </effect>
                                     <VBox.margin>
-                                        <Insets bottom="12.0"/>
+                                        <Insets bottom="12.0" />
                                     </VBox.margin>
                                 </VBox>
                                 <Line endX="118.0" startX="-100.0" stroke="WHITE" strokeWidth="3.0">
                                     <effect>
-                                        <Glow/>
+                                        <Glow />
                                     </effect>
                                 </Line>
                                 <HBox prefHeight="31.0" prefWidth="221.0">
                                     <children>
                                         <GridPane prefHeight="36.0" prefWidth="221.0" vgap="5.0">
                                             <columnConstraints>
-                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="69.75" minWidth="10.0"
-                                                                   prefWidth="53.0"/>
-                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="44.75" minWidth="0.0"
-                                                                   prefWidth="21.75"/>
-                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="49.25" minWidth="10.0"
-                                                                   prefWidth="29.25"/>
-                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="83.25" minWidth="0.0"
-                                                                   prefWidth="63.75"/>
-                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="117.25" minWidth="10.0"
-                                                                   prefWidth="27.5"/>
-                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="88.75" minWidth="10.0"
-                                                                   prefWidth="24.25"/>
+                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="69.75" minWidth="10.0" prefWidth="53.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="44.75" minWidth="0.0" prefWidth="21.75" />
+                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="49.25" minWidth="10.0" prefWidth="29.25" />
+                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="83.25" minWidth="0.0" prefWidth="63.75" />
+                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="117.25" minWidth="10.0" prefWidth="27.5" />
+                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="88.75" minWidth="10.0" prefWidth="24.25" />
                                             </columnConstraints>
                                             <rowConstraints>
-                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                             </rowConstraints>
                                             <children>
-                                                <AnchorPane prefHeight="200.0" prefWidth="200.0"
-                                                            GridPane.columnIndex="3" GridPane.rowIndex="1">
+                                                <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="1">
                                                     <children>
                                                         <Label text="Max fuel usg.:" textFill="WHITE">
                                                             <font>
-                                                                <Font size="10.0"/>
+                                                                <Font size="10.0" />
                                                             </font>
                                                             <effect>
-                                                                <Glow/>
+                                                                <Glow />
                                                             </effect>
                                                         </Label>
                                                     </children>
                                                 </AnchorPane>
                                                 <AnchorPane prefHeight="200.0" prefWidth="200.0">
                                                     <children>
-                                                        <Label layoutX="22.0" layoutY="-1.0" text="Avg. speed:"
-                                                               textFill="WHITE" AnchorPane.bottomAnchor="0.0"
-                                                               AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                        <Label layoutX="22.0" layoutY="-1.0" text="Avg. speed:" textFill="WHITE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                             <font>
-                                                                <Font size="10.0"/>
+                                                                <Font size="10.0" />
                                                             </font>
                                                             <effect>
-                                                                <Glow/>
+                                                                <Glow />
                                                             </effect>
                                                         </Label>
                                                     </children>
                                                 </AnchorPane>
-                                                <AnchorPane prefHeight="200.0" prefWidth="200.0"
-                                                            GridPane.columnIndex="3">
+                                                <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3">
                                                     <children>
-                                                        <Label text="Avg. fuel usg.:" textFill="WHITE"
-                                                               AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
-                                                               AnchorPane.topAnchor="0.0">
+                                                        <Label text="Avg. fuel usg.:" textFill="WHITE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                             <font>
-                                                                <Font size="10.0"/>
+                                                                <Font size="10.0" />
                                                             </font>
                                                             <effect>
-                                                                <Glow/>
+                                                                <Glow />
                                                             </effect>
                                                         </Label>
                                                     </children>
                                                 </AnchorPane>
                                                 <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
                                                     <children>
-                                                        <Label text="Max speed:" textFill="WHITE"
-                                                               AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
-                                                               AnchorPane.topAnchor="0.0">
+                                                        <Label text="Max speed:" textFill="WHITE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                             <font>
-                                                                <Font size="10.0"/>
+                                                                <Font size="10.0" />
                                                             </font>
                                                             <effect>
-                                                                <Glow/>
+                                                                <Glow />
                                                             </effect>
                                                         </Label>
                                                     </children>
                                                 </AnchorPane>
-                                                <AnchorPane prefHeight="200.0" prefWidth="200.0"
-                                                            GridPane.columnIndex="1">
+                                                <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">
                                                     <children>
-                                                        <Text fx:id="TXTavgSpeed" fill="WHITE"
-                                                              nodeOrientation="RIGHT_TO_LEFT" strokeType="OUTSIDE"
-                                                              strokeWidth="0.0" text="180" AnchorPane.bottomAnchor="0.0"
-                                                              AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                        <Text fx:id="TXTavgSpeed" fill="WHITE" nodeOrientation="RIGHT_TO_LEFT" strokeType="OUTSIDE" strokeWidth="0.0" text="180" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                             <font>
-                                                                <Font size="10.0"/>
+                                                                <Font size="10.0" />
                                                             </font>
                                                             <effect>
-                                                                <Glow/>
+                                                                <Glow />
                                                             </effect>
                                                         </Text>
                                                     </children>
                                                 </AnchorPane>
-                                                <AnchorPane prefHeight="200.0" prefWidth="200.0"
-                                                            GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                                <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                                     <children>
-                                                        <Text fx:id="TXTmaxSpeed" fill="WHITE"
-                                                              nodeOrientation="RIGHT_TO_LEFT" strokeType="OUTSIDE"
-                                                              strokeWidth="0.0" text="223" AnchorPane.bottomAnchor="0.0"
-                                                              AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                        <Text fx:id="TXTmaxSpeed" fill="WHITE" nodeOrientation="RIGHT_TO_LEFT" strokeType="OUTSIDE" strokeWidth="0.0" text="223" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                             <font>
-                                                                <Font size="10.0"/>
+                                                                <Font size="10.0" />
                                                             </font>
                                                             <effect>
-                                                                <Glow/>
+                                                                <Glow />
                                                             </effect>
                                                         </Text>
                                                     </children>
                                                 </AnchorPane>
-                                                <AnchorPane prefHeight="200.0" prefWidth="200.0"
-                                                            GridPane.columnIndex="4">
+                                                <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4">
                                                     <children>
-                                                        <Text fx:id="TXTavgFuelUsage" fill="WHITE" strokeType="OUTSIDE"
-                                                              strokeWidth="0.0" text="15.43"
-                                                              AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0"
-                                                              AnchorPane.topAnchor="0.0">
+                                                        <Text fx:id="TXTavgFuelUsage" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="15.43" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                             <font>
-                                                                <Font size="10.0"/>
+                                                                <Font size="10.0" />
                                                             </font>
                                                             <effect>
-                                                                <Glow/>
+                                                                <Glow />
                                                             </effect>
                                                         </Text>
                                                     </children>
                                                 </AnchorPane>
-                                                <AnchorPane prefHeight="200.0" prefWidth="200.0"
-                                                            GridPane.columnIndex="4" GridPane.rowIndex="1">
+                                                <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="1">
                                                     <children>
-                                                        <Text fx:id="TXTmaxFuelUsage" fill="WHITE" strokeType="OUTSIDE"
-                                                              strokeWidth="0.0" text="25.67"
-                                                              AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0"
-                                                              AnchorPane.topAnchor="0.0">
+                                                        <Text fx:id="TXTmaxFuelUsage" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="25.67" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                             <font>
-                                                                <Font size="10.0"/>
+                                                                <Font size="10.0" />
                                                             </font>
                                                             <effect>
-                                                                <Glow/>
+                                                                <Glow />
                                                             </effect>
                                                         </Text>
                                                     </children>
                                                 </AnchorPane>
-                                                <AnchorPane prefHeight="200.0" prefWidth="200.0"
-                                                            GridPane.columnIndex="5">
+                                                <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="5">
                                                     <children>
                                                         <Label text="l/km" textFill="WHITE">
                                                             <font>
-                                                                <Font size="10.0"/>
+                                                                <Font size="10.0" />
                                                             </font>
                                                             <effect>
-                                                                <Glow/>
+                                                                <Glow />
                                                             </effect>
                                                         </Label>
                                                     </children>
                                                 </AnchorPane>
-                                                <AnchorPane prefHeight="200.0" prefWidth="200.0"
-                                                            GridPane.columnIndex="5" GridPane.rowIndex="1">
+                                                <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="5" GridPane.rowIndex="1">
                                                     <children>
                                                         <Label text="l/km" textFill="WHITE">
                                                             <font>
-                                                                <Font size="10.0"/>
+                                                                <Font size="10.0" />
                                                             </font>
                                                             <effect>
-                                                                <Glow/>
+                                                                <Glow />
                                                             </effect>
                                                         </Label>
                                                     </children>
@@ -622,87 +499,76 @@
                                                     <children>
                                                         <Label text="km/h" textFill="WHITE">
                                                             <font>
-                                                                <Font size="10.0"/>
+                                                                <Font size="10.0" />
                                                             </font>
                                                             <effect>
-                                                                <Glow/>
+                                                                <Glow />
                                                             </effect>
                                                         </Label>
                                                     </children>
                                                 </AnchorPane>
-                                                <AnchorPane prefHeight="200.0" prefWidth="200.0"
-                                                            GridPane.columnIndex="2" GridPane.rowIndex="1">
+                                                <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
                                                     <children>
                                                         <Label text="km/h" textFill="WHITE">
                                                             <font>
-                                                                <Font size="10.0"/>
+                                                                <Font size="10.0" />
                                                             </font>
                                                             <effect>
-                                                                <Glow/>
+                                                                <Glow />
                                                             </effect>
                                                         </Label>
                                                     </children>
                                                 </AnchorPane>
                                             </children>
                                             <HBox.margin>
-                                                <Insets left="5.0" right="5.0"/>
+                                                <Insets left="5.0" right="5.0" />
                                             </HBox.margin>
                                         </GridPane>
                                     </children>
                                     <VBox.margin>
-                                        <Insets bottom="5.0" top="5.0"/>
+                                        <Insets bottom="5.0" top="5.0" />
                                     </VBox.margin>
                                 </HBox>
-                                <Line endX="118.0" startX="-100.0" stroke="WHITE" strokeWidth="3.0"/>
+                                <Line endX="118.0" startX="-100.0" stroke="WHITE" strokeWidth="3.0" />
                                 <HBox alignment="CENTER" prefHeight="6.0" prefWidth="221.0">
                                     <children>
-                                        <Text fx:id="TXTmainCounter" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0"
-                                              text="124585">
+                                        <Text fx:id="TXTmainCounter" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="124585">
                                             <font>
-                                                <Font name="System Bold" size="12.0"/>
+                                                <Font name="System Bold" size="12.0" />
                                             </font>
                                             <effect>
-                                                <Glow/>
+                                                <Glow />
                                             </effect>
                                         </Text>
                                         <Label text="km" textFill="WHITE">
                                             <effect>
-                                                <Glow/>
+                                                <Glow />
                                             </effect>
                                         </Label>
                                     </children>
                                     <VBox.margin>
-                                        <Insets bottom="5.0" top="5.0"/>
+                                        <Insets bottom="5.0" top="5.0" />
                                     </VBox.margin>
                                 </HBox>
-                                <Line endX="118.0" layoutX="115.0" layoutY="181.0" startX="-100.0" stroke="WHITE"
-                                      strokeWidth="3.0"/>
+                                <Line endX="118.0" layoutX="115.0" layoutY="181.0" startX="-100.0" stroke="WHITE" strokeWidth="3.0" />
                                 <GridPane prefHeight="10.0" prefWidth="212.0">
                                     <columnConstraints>
-                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="86.75" minWidth="10.0"
-                                                           prefWidth="63.5"/>
-                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="56.5" minWidth="0.0"
-                                                           prefWidth="20.75"/>
-                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="74.0" minWidth="10.0"
-                                                           prefWidth="31.25"/>
-                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="58.75" minWidth="0.0"
-                                                           prefWidth="53.0"/>
-                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="103.5" minWidth="10.0"
-                                                           prefWidth="20.5"/>
-                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="65.75" minWidth="10.0"
-                                                           prefWidth="34.5"/>
+                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="86.75" minWidth="10.0" prefWidth="63.5" />
+                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="56.5" minWidth="0.0" prefWidth="20.75" />
+                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="74.0" minWidth="10.0" prefWidth="31.25" />
+                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="58.75" minWidth="0.0" prefWidth="53.0" />
+                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="103.5" minWidth="10.0" prefWidth="20.5" />
+                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="65.75" minWidth="10.0" prefWidth="34.5" />
                                     </columnConstraints>
                                     <rowConstraints>
-                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                     </rowConstraints>
                                     <children>
                                         <AnchorPane prefHeight="200.0" prefWidth="200.0">
                                             <children>
-                                                <Text fx:id="TXTdayCounter1" fill="WHITE" strokeType="OUTSIDE"
-                                                      strokeWidth="0.0" text="150" AnchorPane.bottomAnchor="0.0"
-                                                      AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                <Text fx:id="TXTdayCounter1" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="150" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                     <effect>
-                                                        <Glow/>
+                                                        <Glow />
                                                     </effect>
                                                 </Text>
                                             </children>
@@ -711,39 +577,31 @@
                                             <children>
                                                 <Label text="km" textFill="WHITE">
                                                     <effect>
-                                                        <Glow/>
+                                                        <Glow />
                                                     </effect>
                                                 </Label>
                                             </children>
                                         </AnchorPane>
                                         <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2">
                                             <children>
-                                                <Circle fx:id="CresetDailyCounter1" fill="WHITE" layoutX="15.0"
-                                                        layoutY="15.0" onMouseClicked="#resetDailyCounter" radius="5.0"
-                                                        stroke="#9a9a9a" strokeType="INSIDE"
-                                                        AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
-                                                        AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                <Circle fx:id="CresetDailyCounter1" fill="WHITE" layoutX="15.0" layoutY="15.0" onMouseClicked="#resetDailyCounter" radius="5.0" stroke="#9a9a9a" strokeType="INSIDE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                     <effect>
-                                                        <Glow/>
+                                                        <Glow />
                                                     </effect>
                                                     <cursor>
-                                                        <Cursor fx:constant="HAND"/>
+                                                        <Cursor fx:constant="HAND" />
                                                     </cursor>
                                                 </Circle>
                                             </children>
                                         </AnchorPane>
                                         <AnchorPane prefHeight="10.0" prefWidth="17.0" GridPane.columnIndex="5">
                                             <children>
-                                                <Circle fx:id="CresetDailyCounter2" fill="WHITE" layoutX="12.0"
-                                                        layoutY="5.0" onMouseClicked="#resetDailyCounter" radius="5.0"
-                                                        stroke="#9a9a9a" strokeType="INSIDE"
-                                                        AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
-                                                        AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                <Circle fx:id="CresetDailyCounter2" fill="WHITE" layoutX="12.0" layoutY="5.0" onMouseClicked="#resetDailyCounter" radius="5.0" stroke="#9a9a9a" strokeType="INSIDE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                     <effect>
-                                                        <Glow/>
+                                                        <Glow />
                                                     </effect>
                                                     <cursor>
-                                                        <Cursor fx:constant="HAND"/>
+                                                        <Cursor fx:constant="HAND" />
                                                     </cursor>
                                                 </Circle>
                                             </children>
@@ -752,177 +610,162 @@
                                             <children>
                                                 <Label text="km" textFill="WHITE">
                                                     <effect>
-                                                        <Glow/>
+                                                        <Glow />
                                                     </effect>
                                                 </Label>
                                             </children>
                                         </AnchorPane>
                                         <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3">
                                             <children>
-                                                <Text fx:id="TXTdayCounter2" fill="WHITE" strokeType="OUTSIDE"
-                                                      strokeWidth="0.0" text="67" AnchorPane.bottomAnchor="0.0"
-                                                      AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                <Text fx:id="TXTdayCounter2" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="67" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                     <effect>
-                                                        <Glow/>
+                                                        <Glow />
                                                     </effect>
                                                 </Text>
                                             </children>
                                         </AnchorPane>
                                     </children>
                                     <VBox.margin>
-                                        <Insets bottom="10.0" top="10.0"/>
+                                        <Insets bottom="10.0" top="10.0" />
                                     </VBox.margin>
                                 </GridPane>
-                                <Line endX="118.0" layoutX="115.0" layoutY="249.0" startX="-100.0" stroke="WHITE"
-                                      strokeWidth="3.0"/>
+                                <Line endX="118.0" layoutX="115.0" layoutY="249.0" startX="-100.0" stroke="WHITE" strokeWidth="3.0" />
                                 <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="5.0">
                                     <children>
                                         <Label text="Distance" textFill="WHITE">
                                             <font>
-                                                <Font size="10.0"/>
+                                                <Font size="10.0" />
                                             </font>
                                         </Label>
-                                        <Text fx:id="TXTjourneyDistance" fill="WHITE" strokeType="OUTSIDE"
-                                              strokeWidth="0.0" text="123">
+                                        <Text fx:id="TXTjourneyDistance" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="123">
                                             <font>
-                                                <Font size="10.0"/>
+                                                <Font size="10.0" />
                                             </font>
                                         </Text>
                                         <Label layoutX="23.0" layoutY="10.0" text="km" textFill="WHITE">
                                             <font>
-                                                <Font size="10.0"/>
+                                                <Font size="10.0" />
                                             </font>
                                         </Label>
                                         <Label layoutX="107.0" layoutY="10.0" text="Journey time:" textFill="WHITE">
                                             <HBox.margin>
-                                                <Insets left="20.0"/>
+                                                <Insets left="20.0" />
                                             </HBox.margin>
                                             <font>
-                                                <Font size="10.0"/>
+                                                <Font size="10.0" />
                                             </font>
                                         </Label>
-                                        <Text fx:id="TXTjourneyTime" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0"
-                                              text="1h 34 min">
+                                        <Text fx:id="TXTjourneyTime" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="1h 34 min">
                                             <font>
-                                                <Font size="10.0"/>
+                                                <Font size="10.0" />
                                             </font>
                                         </Text>
                                     </children>
                                     <VBox.margin>
-                                        <Insets bottom="5.0" top="5.0"/>
+                                        <Insets bottom="5.0" top="5.0" />
                                     </VBox.margin>
                                     <effect>
-                                        <Glow/>
+                                        <Glow />
                                     </effect>
                                 </HBox>
                             </children>
                             <effect>
-                                <Glow/>
+                                <Glow />
                             </effect>
                             <HBox.margin>
-                                <Insets left="30.0" right="30.0"/>
+                                <Insets left="30.0" right="30.0" />
                             </HBox.margin>
                         </VBox>
-                        <Gauge fx:id="speedGauge" borderPaint="#8009ab" borderWidth="3.0" decimals="0" knobType="FLAT"
-                               lcdDesign="DARKGREEN" lcdFont="STANDARD" majorTickSpace="20.0" maxValue="320.0"
-                               needleShape="FLAT" prefHeight="230.0" prefWidth="221.0" skinType="DIGITAL"
-                               styleClass="gaugeSize" stylesheets="@style.css" value="32.0">
+                        <Gauge fx:id="speedGauge" borderPaint="#8009ab" borderWidth="3.0" decimals="0" knobType="FLAT" lcdDesign="DARKGREEN" lcdFont="STANDARD" majorTickSpace="20.0" maxValue="320.0" needleShape="FLAT" prefHeight="230.0" prefWidth="221.0" skinType="DIGITAL" styleClass="gaugeSize" stylesheets="@style.css" value="32.0">
                             <effect>
-                                <Glow level="0.21"/>
+                                <Glow level="0.21" />
                             </effect>
                             <barBackgroundColor>
-                                <Color/>
+                                <Color />
                             </barBackgroundColor>
                             <HBox.margin>
-                                <Insets right="20.0"/>
+                                <Insets right="20.0" />
                             </HBox.margin>
                         </Gauge>
                     </children>
                 </HBox>
                 <HBox alignment="BOTTOM_CENTER" prefHeight="0.0" prefWidth="760.0" GridPane.rowIndex="2">
                     <children>
-                        <ImageView fx:id="IVindicatorsTurnLeft" fitHeight="34.0" fitWidth="29.0" opacity="0.2"
-                                   pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="IVindicatorsTurnLeft" fitHeight="34.0" fitWidth="29.0" opacity="0.2" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@images/lights/indicatorsTurnLeftOff.png"/>
+                                <Image url="@images/lights/indicatorsTurnLeftOff.png" />
                             </image>
                             <HBox.margin>
-                                <Insets bottom="10.0" left="20.0" right="20.0" top="10.0"/>
+                                <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
                             </HBox.margin>
                             <effect>
-                                <Glow level="0.45"/>
+                                <Glow level="0.45" />
                             </effect>
                         </ImageView>
-                        <ImageView fx:id="IVparkingLights" fitHeight="33.0" fitWidth="62.0" opacity="0.2"
-                                   pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="IVparkingLights" fitHeight="33.0" fitWidth="62.0" opacity="0.2" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@images/lights/parkingLightsOff.png"/>
+                                <Image url="@images/lights/parkingLightsOff.png" />
                             </image>
                             <HBox.margin>
-                                <Insets bottom="10.0" left="20.0" right="20.0" top="10.0"/>
+                                <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
                             </HBox.margin>
                             <effect>
-                                <Glow level="0.45"/>
+                                <Glow level="0.45" />
                             </effect>
                         </ImageView>
-                        <ImageView fx:id="IVheadlightsLowBeam" fitHeight="30.0" fitWidth="39.0" opacity="0.2"
-                                   pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="IVheadlightsLowBeam" fitHeight="30.0" fitWidth="39.0" opacity="0.2" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@images/lights/headlightsLowBeamOff.png"/>
+                                <Image url="@images/lights/headlightsLowBeamOff.png" />
                             </image>
                             <effect>
-                                <Glow level="0.45"/>
+                                <Glow level="0.45" />
                             </effect>
                             <HBox.margin>
-                                <Insets bottom="10.0" left="20.0" right="20.0" top="10.0"/>
+                                <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
                             </HBox.margin>
                         </ImageView>
-                        <ImageView fx:id="IVheadlightsHighBeam" fitHeight="28.0" fitWidth="51.0" opacity="0.2"
-                                   pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="IVheadlightsHighBeam" fitHeight="28.0" fitWidth="51.0" opacity="0.2" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@images/lights/headlightsHighBeamOff.png"/>
+                                <Image url="@images/lights/headlightsHighBeamOff.png" />
                             </image>
                             <HBox.margin>
-                                <Insets bottom="10.0" left="20.0" right="20.0" top="10.0"/>
+                                <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
                             </HBox.margin>
                             <effect>
-                                <Glow level="0.45"/>
+                                <Glow level="0.45" />
                             </effect>
                         </ImageView>
-                        <ImageView fx:id="IVfogLightsBack" fitHeight="39.0" fitWidth="46.0" opacity="0.2"
-                                   pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="IVfogLightsBack" fitHeight="39.0" fitWidth="46.0" opacity="0.2" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@images/lights/fogLightsBackOff.png"/>
+                                <Image url="@images/lights/fogLightsBackOff.png" />
                             </image>
                             <HBox.margin>
-                                <Insets bottom="10.0" left="20.0" right="20.0" top="10.0"/>
+                                <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
                             </HBox.margin>
                             <effect>
-                                <Glow level="0.45"/>
+                                <Glow level="0.45" />
                             </effect>
                         </ImageView>
-                        <ImageView fx:id="IVfogLightsFront" fitHeight="34.0" fitWidth="46.0" layoutX="483.0"
-                                   layoutY="10.0" opacity="0.2" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="IVfogLightsFront" fitHeight="34.0" fitWidth="46.0" layoutX="483.0" layoutY="10.0" opacity="0.2" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@images/lights/fogLightsFrontOff.png"/>
+                                <Image url="@images/lights/fogLightsFrontOff.png" />
                             </image>
                             <HBox.margin>
-                                <Insets bottom="10.0" left="20.0" right="20.0" top="10.0"/>
+                                <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
                             </HBox.margin>
                             <effect>
-                                <Glow level="0.45"/>
+                                <Glow level="0.45" />
                             </effect>
                         </ImageView>
-                        <ImageView fx:id="IVindicatorsTurnRight" fitHeight="44.0" fitWidth="32.0" layoutX="525.0"
-                                   layoutY="10.0" opacity="0.2" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="IVindicatorsTurnRight" fitHeight="44.0" fitWidth="32.0" layoutX="525.0" layoutY="10.0" opacity="0.2" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@images/lights/indicatorsTurnRightOff.png"/>
+                                <Image url="@images/lights/indicatorsTurnRightOff.png" />
                             </image>
                             <HBox.margin>
-                                <Insets bottom="10.0" left="20.0" right="20.0" top="10.0"/>
+                                <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
                             </HBox.margin>
                             <effect>
-                                <Glow level="0.45"/>
+                                <Glow level="0.45" />
                             </effect>
                         </ImageView>
                     </children>
