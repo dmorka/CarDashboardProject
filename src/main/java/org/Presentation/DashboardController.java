@@ -168,6 +168,8 @@ public class DashboardController extends UIController {
             RecPause1.setVisible(true);
             RecPause2.setVisible(true);
             dashboard.getMusicPlayer().playSong();
+            LtitleMP.setOpacity(1);
+            LartistMP.setOpacity(1);
             progressBarMP(false, false);
             //dashboard.getMusicPlayer().autoPlayNext(this::nextSongMP);
         } else {
@@ -670,6 +672,8 @@ public class DashboardController extends UIController {
             switchEngine(false, false);
             LtitleMP.setOpacity(0);
             LartistMP.setOpacity(0);
+            PBsongDuration.setProgress(0.0);
+            dashboard.getMusicPlayer().stopSong();
         }
     }
 

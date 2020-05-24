@@ -145,7 +145,7 @@ public class SpeedThread extends Thread {
                             else
                                 revs += random.nextInt(20);
                         else
-                            if(dashboard.getRevs() < 1070)
+                            if(dashboard.getRevs() < 1050)
                                 revs -= random.nextInt(20);
                             else
                                 revs -= 100;
