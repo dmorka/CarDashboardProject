@@ -392,6 +392,7 @@ public class DashboardController extends UIController {
                 } catch (TurnSignalException e) {
                     openDialog(e.getClass().getSimpleName(), e.getMessage());
                     indicatorsTurnLeft.setSelected(false);
+                    dashboard.setKeyUp(false);
                     break;
                 }
                 indicatorSwitch(IVindicatorsTurnLeft, newImage, enable);
@@ -404,6 +405,7 @@ public class DashboardController extends UIController {
                 } catch (TurnSignalException e) {
                     openDialog(e.getClass().getSimpleName(), e.getMessage());
                     indicatorsTurnRight.setSelected(false);
+                    dashboard.setKeyUp(false);
                     break;
                 }
                 indicatorSwitch(IVindicatorsTurnRight, newImage, enable);

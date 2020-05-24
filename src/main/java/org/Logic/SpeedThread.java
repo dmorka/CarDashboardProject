@@ -115,6 +115,7 @@ public class SpeedThread extends Thread {
             }
         }
         Random random = new Random();
+        float lastGearMaxSpeed = 1;
         while (engineRunning) {
             synchronized (uiController) {
                 if ((dashboard.isKeyUp() && dashboard.getSpeed() < dashboard.getCurrentGearMaxSpeed()) ||
@@ -137,7 +138,8 @@ public class SpeedThread extends Thread {
 
                 //if(dashboard.getCurrentGear() > 0 ) {
                 try {
-
+                    gearMaxSpeed = dashboard.getCurrentGearMaxSpeed();
+                    lastGearMaxSpeed = (dashboard.getCurrentGear() != 0) ? gearMaxSpeed : lastGearMaxSpeed;
                     if (dashboard.getCurrentGear() == 0) {
                         if (dashboard.getRevs() < 1000)
                             if(dashboard.getRevs() < 900)
@@ -148,9 +150,10 @@ public class SpeedThread extends Thread {
                             if(dashboard.getRevs() < 1050)
                                 revs -= random.nextInt(20);
                             else
-                                revs -= 100;
+                                revs = (dashboard.getSettings().getMaxRevs()) * (dashboard.getSpeed() / lastGearMaxSpeed);
+//                                revs -= 100;
                     } else {
-                        gearMaxSpeed = dashboard.getCurrentGearMaxSpeed();
+
                         if (dashboard.getCurrentGear() == 1) {
                             if (dashboard.isKeyUp() && revs < maxRevs)
                                 revs += (dashboard.getSettings().getMaxRevs() - 1000) * (1 / gearMaxSpeed);
