@@ -20,12 +20,6 @@ import java.io.IOException;
 public class GUI extends Application {
     private DashboardController dashboardController;
 
-    private static FXMLLoader loadFXML(String fxml) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(GUI.class.getResource(fxml + ".fxml"));
-
-        return fxmlLoader;
-    }
-
     /**
      * Main.
      */
@@ -46,7 +40,7 @@ public class GUI extends Application {
         dashboardController = fxmlLoader.getController();
         StackPane stackPane = (StackPane) fxmlLoader.getNamespace().get("stackPane");
 
-        ImageGridCell closeIcon = (ImageGridCell) fxmlLoader.getNamespace().get("closeIcon");
+        ImageView closeIcon = (ImageView) fxmlLoader.getNamespace().get("closeIcon");
         closeIcon.setOnMouseClicked(event -> {
             stop();
             stage.close();
@@ -59,19 +53,20 @@ public class GUI extends Application {
 
         scene.removeDefaultCSS();
 
-        ImageGridCell minimizeIcon = (ImageGridCell) fxmlLoader.getNamespace().get("minimizeIcon");
+        ImageView minimizeIcon = (ImageView) fxmlLoader.getNamespace().get("minimizeIcon");
         minimizeIcon.setOnMouseClicked(event -> {
             scene.minimizeStage();
         });
-        ImageGridCell maximizeIcon = (ImageGridCell) fxmlLoader.getNamespace().get("maximizeIcon");
+
+        ImageView maximizeIcon = (ImageView) fxmlLoader.getNamespace().get("maximizeIcon");
         Image maxi = new Image(GUI.class.getResourceAsStream("images/window button icons/maximize.png"));
         Image mini = new Image(GUI.class.getResourceAsStream("images/window button icons/minimize.png"));
         maximizeIcon.setOnMouseClicked(event -> {
             scene.maximizeStage();
             if (scene.isMaximized())
-                ((ImageView) fxmlLoader.getNamespace().get("IVmaximizeApp")).setImage(mini);
+                ((ImageView) fxmlLoader.getNamespace().get("maximizeIcon")).setImage(mini);
             else
-                ((ImageView) fxmlLoader.getNamespace().get("IVmaximizeApp")).setImage(maxi);
+                ((ImageView) fxmlLoader.getNamespace().get("maximizeIcon")).setImage(maxi);
 
         });
 

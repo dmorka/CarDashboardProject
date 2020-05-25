@@ -263,7 +263,7 @@ public class TUI extends UIController {
 
     private void drawMainMenu() {
         clearTerminal();
-        drawMenu("Main Menu", new String[]{"Drive the car", "Import", "Export", "Settings", "About", "Exit"});
+        drawMenu("Main Menu", new String[]{"Drive the car", "Import", "Export", "Settings","Instruction", "About", "Exit"});
         Scanner scanner = new Scanner(System.in);
         char choice = scanner.next().charAt(0);
         switch (choice) {
@@ -281,9 +281,12 @@ public class TUI extends UIController {
                 drawSettingsMenu();
                 break;
             case '5':
-                drawAbout();
+                drawInstruction();
                 break;
             case '6':
+                drawAbout();
+                break;
+            case '7':
                 try {
                     Serialization.write(dashboard);
                 } catch (IOException e) {
@@ -295,6 +298,76 @@ public class TUI extends UIController {
                 redTextColor.println("\n\tWrong choice!");
                 waitForEnter(true);
         }
+    }
+
+    private void drawInstruction() {
+        clearTerminal();
+        purpleTextColor.print("\n\t+---------------------------- ");
+        yellowTextColor.print("Instructions");
+        purpleTextColor.print(" ----------------------------+\n\t" +
+                "|                                                                      |\n\t" +
+                "|   ");
+        blueTextColor.print("+-+                                +-+");
+        purpleTextColor.print("                             |\n\t" +
+                "|   ");
+        cyanTextColor.print("|q| - Engine off                   |n| - Left turn Signal On/Off");
+        purpleTextColor.print("   |\n\t" +
+                "|   ");
+        blueTextColor.print("+-+                                +-+");
+        purpleTextColor.print("                             |\n\t" +
+                "|                                                                      |\n\t" +
+                "|   ");
+        blueTextColor.print("+-+                                +-+");
+        purpleTextColor.print("                             |\n\t" +
+                "|   ");
+        cyanTextColor.print("|w| - Accelerate                   |m| - Right turn Signal On/Off");
+        purpleTextColor.print("  |\n\t" +
+                "|   ");
+        blueTextColor.print("+-+                                +-+");
+        purpleTextColor.print("                             |\n\t" +
+                "|                                                                      |\n\t" +
+                "|   ");
+        blueTextColor.print("+-+                                +-+");
+        purpleTextColor.print("                             |\n\t" +
+                "|   ");
+        cyanTextColor.print("|s| - Decelerate                   |v| - Back Fog lights On/Off");
+        purpleTextColor.print("    |\n\t" +
+                "|   ");
+        blueTextColor.print("+-+                                +-+");
+        purpleTextColor.print("                             |\n\t" +
+                "|                                                                      |\n\t" +
+                "|   ");
+        blueTextColor.print("+-+                                +-+");
+        purpleTextColor.print("                             |\n\t" +
+                "|   ");
+        cyanTextColor.print("|z| - ParkingalightsfOn/Off        |b| - Front Fog lights On/Off");
+        purpleTextColor.print("   |\n\t" +
+                "|   ");
+        blueTextColor.print("+-+                                +-+");
+        purpleTextColor.print("                             |\n\t" +
+                "|                                                                      |\n\t" +
+                "|   ");
+        blueTextColor.print("+-+                                +-+");
+        purpleTextColor.print("                             |\n\t" +
+                "|   ");
+        cyanTextColor.print("|x| - Low Beam On/Off              |c| - High Beam On/Off");
+        purpleTextColor.print("          |\n\t" +
+                "|   ");
+        blueTextColor.print("+-+                                +-+");
+        purpleTextColor.print("                             |\n\t" +
+                "|                                                                      |\n\t" +
+                "|   ");
+        blueTextColor.print("+-+ +-+ +-+ +-+ +-+ +-+");
+        purpleTextColor.print("                                            |\n\t" +
+                "|   ");
+        cyanTextColor.print("|1| |2| |3| |4| |5| |6| - Gears");
+        purpleTextColor.print("                                    |\n\t" +
+                "|   ");
+        blueTextColor.print("+-+ +-+ +-+ +-+ +-+ +-+");
+        purpleTextColor.println("                                            |\n\t" +
+                "|                                                                      |\n\t" +
+                "+----------------------------------------------------------------------+");
+        waitForEnter(true);
     }
 
     private void drawAbout() {

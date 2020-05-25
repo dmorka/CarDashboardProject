@@ -1,555 +1,512 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
-<VBox xmlns:fx="http://javafx.com/fxml/1" fx:id="vbox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
-      minWidth="-Infinity" prefHeight="407.0" prefWidth="429.0" style="-fx-background-color: black;"
-      xmlns="http://javafx.com/javafx/11.0.1">
-    <children>
-        <HBox fx:id="topPanel" alignment="TOP_RIGHT" prefHeight="25.0" prefWidth="200.0" spacing="5.0">
-            <children>
-                <ImageView fx:id="minimizeIcon" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true"
-                           preserveRatio="true">
-                    <image>
-                        <Image url="@images/window button icons/minimize1.png"/>
-                    </image>
-                </ImageView>
-                <ImageView fx:id="maximizeIcon" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true"
-                           preserveRatio="true">
-                    <image>
-                        <Image url="@images/window button icons/maximize.png"/>
-                    </image>
-                </ImageView>
-                <ImageView fx:id="closeIcon" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@images/window button icons/close.png"/>
-                    </image>
-                </ImageView>
-            </children>
-            <padding>
-                <Insets right="5.0" top="5.0"/>
-            </padding>
-        </HBox>
-        <ScrollPane hbarPolicy="NEVER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="10000.0"
-                    prefWidth="10000.0" style="-fx-background-color: black;" stylesheets="@style.css">
-            <content>
-                <VBox alignment="CENTER_LEFT" style="-fx-background-color: black;">
-                    <children>
-                        <Label layoutX="15.0" layoutY="310.0" text="Car Control:" textFill="WHITE">
-                            <font>
-                                <Font name="System Bold" size="17.0"/>
-                            </font>
-                            <VBox.margin>
-                                <Insets left="5.0"/>
-                            </VBox.margin>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox fx:id="vbox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="200.0" minWidth="420.0" prefHeight="410.0" prefWidth="430.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <HBox fx:id="topPanel" alignment="TOP_RIGHT" prefHeight="25.0" prefWidth="200.0" spacing="5.0">
+         <children>
+            <ImageView fx:id="minimizeIcon" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@images/window button icons/minimize1.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="maximizeIcon" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@images/window button icons/maximize.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="closeIcon" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@images/window button icons/close.png" />
+               </image>
+            </ImageView>
+         </children>
+         <padding>
+            <Insets right="5.0" top="5.0" />
+         </padding>
+      </HBox>
+      <ScrollPane hbarPolicy="NEVER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="10000.0" prefWidth="10000.0" style="-fx-background-color: black;" stylesheets="@style.css">
+         <content>
+            <VBox alignment="CENTER_LEFT" style="-fx-background-color: black;">
+               <children>
+                  <Label layoutX="15.0" layoutY="310.0" text="Car Control:" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="17.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets left="5.0" />
+                     </VBox.margin>
+                  </Label>
+                  <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="200.0" spacing="20.0">
+                     <children>
+                        <Label text="Start engine" textFill="WHITE">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
                         </Label>
-                        <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="200.0" spacing="20.0">
-                            <children>
-                                <Label text="Start engine" textFill="WHITE">
-                                    <font>
-                                        <Font size="15.0"/>
-                                    </font>
-                                </Label>
-                                <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                                    <image>
-                                        <Image url="@images/keyboard%20keys/Ctrl.png"/>
-                                    </image>
-                                </ImageView>
-                                <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="197.0" layoutY="45.0"
-                                           pickOnBounds="true" preserveRatio="true">
-                                    <image>
-                                        <Image url="@images/keyboard%20keys/W.png"/>
-                                    </image>
-                                </ImageView>
-                            </children>
-                            <padding>
-                                <Insets left="20.0"/>
-                            </padding>
-                        </HBox>
-                        <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="200.0" spacing="20.0">
-                            <children>
-                                <Label layoutX="294.0" layoutY="50.0" text="Stop engine" textFill="WHITE">
-                                    <font>
-                                        <Font size="15.0"/>
-                                    </font>
-                                </Label>
-                                <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="166.0" layoutY="45.0"
-                                           pickOnBounds="true" preserveRatio="true">
-                                    <image>
-                                        <Image url="@images/keyboard%20keys/Ctrl.png"/>
-                                    </image>
-                                </ImageView>
-                                <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="244.0" layoutY="45.0"
-                                           pickOnBounds="true" preserveRatio="true">
-                                    <image>
-                                        <Image url="@images/keyboard%20keys/Q.png"/>
-                                    </image>
-                                </ImageView>
-                            </children>
-                            <padding>
-                                <Insets left="20.0"/>
-                            </padding>
-                        </HBox>
-                        <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="200.0" spacing="20.0">
-                            <children>
-                                <Label text="Accelerate" textFill="WHITE">
-                                    <font>
-                                        <Font size="15.0"/>
-                                    </font>
-                                </Label>
-                                <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                                    <image>
-                                        <Image url="@images/keyboard%20keys/arrowUp.png"/>
-                                    </image>
-                                </ImageView>
-                            </children>
-                            <opaqueInsets>
-                                <Insets/>
-                            </opaqueInsets>
-                            <padding>
-                                <Insets left="20.0"/>
-                            </padding>
-                        </HBox>
-                        <HBox alignment="CENTER_LEFT" prefHeight="50.0" spacing="20.0">
-                            <children>
-                                <Label text="Brake" textFill="WHITE">
-                                    <font>
-                                        <Font size="15.0"/>
-                                    </font>
-                                </Label>
-                                <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                                    <image>
-                                        <Image url="@images/keyboard%20keys/arrowDown.png"/>
-                                    </image>
-                                </ImageView>
-                            </children>
-                            <padding>
-                                <Insets left="20.0"/>
-                            </padding>
-                        </HBox>
-                        <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="200.0" spacing="20.0">
-                            <children>
-                                <Label layoutX="294.0" layoutY="50.0" text="Gears" textFill="WHITE">
-                                    <font>
-                                        <Font size="15.0"/>
-                                    </font>
-                                </Label>
-                                <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                                    <image>
-                                        <Image url="@images/keyboard%20keys/1.png"/>
-                                    </image>
-                                </ImageView>
-                                <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="197.0" layoutY="45.0"
-                                           pickOnBounds="true" preserveRatio="true">
-                                    <image>
-                                        <Image url="@images/keyboard%20keys/2.png"/>
-                                    </image>
-                                </ImageView>
-                                <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="166.0" layoutY="45.0"
-                                           pickOnBounds="true" preserveRatio="true">
-                                    <image>
-                                        <Image url="@images/keyboard%20keys/3.png"/>
-                                    </image>
-                                </ImageView>
-                                <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="244.0" layoutY="45.0"
-                                           pickOnBounds="true" preserveRatio="true">
-                                    <image>
-                                        <Image url="@images/keyboard%20keys/4.png"/>
-                                    </image>
-                                </ImageView>
-                                <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="320.0" layoutY="45.0"
-                                           pickOnBounds="true" preserveRatio="true">
-                                    <image>
-                                        <Image url="@images/keyboard%20keys/5.png"/>
-                                    </image>
-                                </ImageView>
-                                <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="445.0" layoutY="45.0"
-                                           pickOnBounds="true" preserveRatio="true">
-                                    <image>
-                                        <Image url="@images/keyboard%20keys/6.png"/>
-                                    </image>
-                                </ImageView>
-                            </children>
-                            <padding>
-                                <Insets left="20.0"/>
-                            </padding>
-                        </HBox>
-                        <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="160.0" prefHeight="50.0" spacing="20.0">
-                            <children>
-                                <Label text="Honk" textFill="WHITE">
-                                    <font>
-                                        <Font size="15.0"/>
-                                    </font>
-                                </Label>
-                                <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                                    <image>
-                                        <Image url="@images/keyboard%20keys/H.png"/>
-                                    </image>
-                                </ImageView>
-                            </children>
-                            <padding>
-                                <Insets left="20.0"/>
-                            </padding>
-                        </HBox>
-                        <Label text="Lights:" textFill="WHITE">
-                            <font>
-                                <Font name="System Bold" size="17.0"/>
-                            </font>
-                            <VBox.margin>
-                                <Insets left="5.0"/>
-                            </VBox.margin>
+                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@images/keyboard%20keys/Ctrl.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="197.0" layoutY="45.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@images/keyboard%20keys/W.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                     <padding>
+                        <Insets left="20.0" />
+                     </padding>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="200.0" spacing="20.0">
+                     <children>
+                        <Label layoutX="294.0" layoutY="50.0" text="Stop engine" textFill="WHITE">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
                         </Label>
-                        <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="455.0" spacing="20.0">
-                            <children>
-                                <Label text="Left turn signal" textFill="WHITE">
-                                    <font>
-                                        <Font size="15.0"/>
-                                    </font>
-                                </Label>
-                                <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                                    <image>
-                                        <Image url="@images/keyboard%20keys/arrowLeft.png"/>
-                                    </image>
-                                </ImageView>
-                            </children>
-                            <padding>
-                                <Insets left="20.0"/>
-                            </padding>
-                        </HBox>
-                        <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="455.0" spacing="20.0">
-                            <children>
-                                <Label layoutX="294.0" layoutY="50.0" text="Right turn signal" textFill="WHITE">
-                                    <font>
-                                        <Font size="15.0"/>
-                                    </font>
-                                </Label>
-                                <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="244.0" layoutY="45.0"
-                                           pickOnBounds="true" preserveRatio="true">
-                                    <image>
-                                        <Image url="@images/keyboard%20keys/arrowRight.png"/>
-                                    </image>
-                                </ImageView>
-                            </children>
-                            <padding>
-                                <Insets left="20.0"/>
-                            </padding>
-                        </HBox>
-                        <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="455.0" spacing="20.0">
-                            <children>
-                                <Label layoutX="294.0" layoutY="50.0" text="Parking lights On/Off" textFill="WHITE">
-                                    <font>
-                                        <Font size="15.0"/>
-                                    </font>
-                                </Label>
-                                <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="244.0" layoutY="45.0"
-                                           pickOnBounds="true" preserveRatio="true">
-                                    <image>
-                                        <Image url="@images/keyboard%20keys/Ctrl.png"/>
-                                    </image>
-                                </ImageView>
-                                <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="191.0" layoutY="20.0"
-                                           pickOnBounds="true" preserveRatio="true">
-                                    <image>
-                                        <Image url="@images/keyboard%20keys/Z.png"/>
-                                    </image>
-                                </ImageView>
-                            </children>
-                            <padding>
-                                <Insets left="20.0"/>
-                            </padding>
-                        </HBox>
-                        <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="360.0" prefHeight="50.0" prefWidth="455.0"
-                              spacing="20.0">
-                            <children>
-                                <Label layoutX="294.0" layoutY="50.0" text="Low Beam On/Off" textFill="WHITE">
-                                    <font>
-                                        <Font size="15.0"/>
-                                    </font>
-                                </Label>
-                                <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="244.0" layoutY="45.0"
-                                           pickOnBounds="true" preserveRatio="true">
-                                    <image>
-                                        <Image url="@images/keyboard%20keys/Ctrl.png"/>
-                                    </image>
-                                </ImageView>
-                                <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="191.0" layoutY="20.0"
-                                           pickOnBounds="true" preserveRatio="true">
-                                    <image>
-                                        <Image url="@images/keyboard%20keys/X.png"/>
-                                    </image>
-                                </ImageView>
-                            </children>
-                            <padding>
-                                <Insets left="20.0"/>
-                            </padding>
-                        </HBox>
-                        <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="410.0" prefHeight="50.0" prefWidth="455.0"
-                              spacing="20.0">
-                            <children>
-                                <Label layoutX="294.0" layoutY="50.0" text="High Beam On/Off" textFill="WHITE">
-                                    <font>
-                                        <Font size="15.0"/>
-                                    </font>
-                                </Label>
-                                <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="244.0" layoutY="45.0"
-                                           pickOnBounds="true" preserveRatio="true">
-                                    <image>
-                                        <Image url="@images/keyboard%20keys/Ctrl.png"/>
-                                    </image>
-                                </ImageView>
-                                <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="191.0" layoutY="20.0"
-                                           pickOnBounds="true" preserveRatio="true">
-                                    <image>
-                                        <Image url="@images/keyboard%20keys/C.png"/>
-                                    </image>
-                                </ImageView>
-                            </children>
-                            <padding>
-                                <Insets left="20.0"/>
-                            </padding>
-                        </HBox>
-                        <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="460.0" prefHeight="50.0" prefWidth="455.0"
-                              spacing="20.0">
-                            <children>
-                                <Label layoutX="294.0" layoutY="50.0" text="Front Fog lights On/Off" textFill="WHITE">
-                                    <font>
-                                        <Font size="15.0"/>
-                                    </font>
-                                </Label>
-                                <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="244.0" layoutY="45.0"
-                                           pickOnBounds="true" preserveRatio="true">
-                                    <image>
-                                        <Image url="@images/keyboard%20keys/Ctrl.png"/>
-                                    </image>
-                                </ImageView>
-                                <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="191.0" layoutY="20.0"
-                                           pickOnBounds="true" preserveRatio="true">
-                                    <image>
-                                        <Image url="@images/keyboard%20keys/B.png"/>
-                                    </image>
-                                </ImageView>
-                            </children>
-                            <padding>
-                                <Insets left="20.0"/>
-                            </padding>
-                        </HBox>
-                        <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="510.0" prefHeight="50.0" prefWidth="455.0"
-                              spacing="20.0">
-                            <children>
-                                <Label layoutX="294.0" layoutY="50.0" text="Back Fog lights On/Off" textFill="WHITE">
-                                    <font>
-                                        <Font size="15.0"/>
-                                    </font>
-                                </Label>
-                                <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="244.0" layoutY="45.0"
-                                           pickOnBounds="true" preserveRatio="true">
-                                    <image>
-                                        <Image url="@images/keyboard%20keys/Ctrl.png"/>
-                                    </image>
-                                </ImageView>
-                                <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="191.0" layoutY="20.0"
-                                           pickOnBounds="true" preserveRatio="true">
-                                    <image>
-                                        <Image url="@images/keyboard%20keys/V.png"/>
-                                    </image>
-                                </ImageView>
-                            </children>
-                            <padding>
-                                <Insets left="20.0"/>
-                            </padding>
-                        </HBox>
-                        <Label text="Cruise control:" textFill="WHITE">
-                            <font>
-                                <Font name="System Bold" size="17.0"/>
-                            </font>
-                            <VBox.margin>
-                                <Insets left="5.0"/>
-                            </VBox.margin>
+                        <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="166.0" layoutY="45.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@images/keyboard%20keys/Ctrl.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="244.0" layoutY="45.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@images/keyboard%20keys/Q.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                     <padding>
+                        <Insets left="20.0" />
+                     </padding>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="200.0" spacing="20.0">
+                     <children>
+                        <Label text="Accelerate" textFill="WHITE">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
                         </Label>
-                        <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="560.0" prefHeight="50.0" prefWidth="455.0"
-                              spacing="20.0">
-                            <children>
-                                <Label layoutX="294.0" layoutY="50.0" text="Turn On/Off" textFill="WHITE">
-                                    <font>
-                                        <Font size="15.0"/>
-                                    </font>
-                                </Label>
-                                <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="244.0" layoutY="45.0"
-                                           pickOnBounds="true" preserveRatio="true">
-                                    <image>
-                                        <Image url="@images/keyboard%20keys/Ctrl.png"/>
-                                    </image>
-                                </ImageView>
-                                <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="191.0" layoutY="20.0"
-                                           pickOnBounds="true" preserveRatio="true">
-                                    <image>
-                                        <Image url="@images/keyboard%20keys/G.png"/>
-                                    </image>
-                                </ImageView>
-                            </children>
-                            <padding>
-                                <Insets left="20.0"/>
-                            </padding>
-                        </HBox>
-                        <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="610.0" prefHeight="50.0" prefWidth="455.0"
-                              spacing="20.0">
-                            <children>
-                                <Label layoutX="294.0" layoutY="50.0" text="Add 5 km/h" textFill="WHITE">
-                                    <font>
-                                        <Font size="15.0"/>
-                                    </font>
-                                </Label>
-                                <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="244.0" layoutY="45.0"
-                                           pickOnBounds="true" preserveRatio="true">
-                                    <image>
-                                        <Image url="@images/keyboard%20keys/Ctrl.png"/>
-                                    </image>
-                                </ImageView>
-                                <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="191.0" layoutY="20.0"
-                                           pickOnBounds="true" preserveRatio="true">
-                                    <image>
-                                        <Image url="@images/keyboard%20keys/%5D.png"/>
-                                    </image>
-                                </ImageView>
-                            </children>
-                            <padding>
-                                <Insets left="20.0"/>
-                            </padding>
-                        </HBox>
-                        <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="660.0" prefHeight="50.0" prefWidth="455.0"
-                              spacing="20.0">
-                            <children>
-                                <Label layoutX="294.0" layoutY="50.0" text="Subtract 5 km/h" textFill="WHITE">
-                                    <font>
-                                        <Font size="15.0"/>
-                                    </font>
-                                </Label>
-                                <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="244.0" layoutY="45.0"
-                                           pickOnBounds="true" preserveRatio="true">
-                                    <image>
-                                        <Image url="@images/keyboard%20keys/Ctrl.png"/>
-                                    </image>
-                                </ImageView>
-                                <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="191.0" layoutY="20.0"
-                                           pickOnBounds="true" preserveRatio="true">
-                                    <image>
-                                        <Image url="@images/keyboard%20keys/%5B.png"/>
-                                    </image>
-                                </ImageView>
-                            </children>
-                            <padding>
-                                <Insets left="20.0"/>
-                            </padding>
-                        </HBox>
-                        <Label layoutX="15.0" layoutY="686.0" text="Music Player:" textFill="WHITE">
-                            <font>
-                                <Font name="System Bold" size="17.0"/>
-                            </font>
-                            <VBox.margin>
-                                <Insets left="5.0"/>
-                            </VBox.margin>
+                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@images/keyboard%20keys/arrowUp.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                     <padding>
+                        <Insets left="20.0" />
+                     </padding>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" prefHeight="50.0" spacing="20.0">
+                     <children>
+                        <Label text="Brake" textFill="WHITE">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
                         </Label>
-                        <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="812.0" prefHeight="50.0" prefWidth="455.0"
-                              spacing="20.0">
-                            <children>
-                                <Label layoutX="294.0" layoutY="50.0" text="Play/Pause" textFill="WHITE">
-                                    <font>
-                                        <Font size="15.0"/>
-                                    </font>
-                                </Label>
-                                <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="244.0" layoutY="45.0"
-                                           pickOnBounds="true" preserveRatio="true">
-                                    <image>
-                                        <Image url="@images/keyboard%20keys/I.png"/>
-                                    </image>
-                                </ImageView>
-                            </children>
-                            <padding>
-                                <Insets left="20.0"/>
-                            </padding>
-                        </HBox>
-                        <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="888.0" prefHeight="50.0" prefWidth="455.0"
-                              spacing="20.0">
-                            <children>
-                                <Label layoutX="294.0" layoutY="50.0" text="Next Song" textFill="WHITE">
-                                    <font>
-                                        <Font size="15.0"/>
-                                    </font>
-                                </Label>
-                                <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="244.0" layoutY="45.0"
-                                           pickOnBounds="true" preserveRatio="true">
-                                    <image>
-                                        <Image url="@images/keyboard%20keys/O.png"/>
-                                    </image>
-                                </ImageView>
-                            </children>
-                            <padding>
-                                <Insets left="20.0"/>
-                            </padding>
-                        </HBox>
-                        <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="938.0" prefHeight="50.0" prefWidth="455.0"
-                              spacing="20.0">
-                            <children>
-                                <Label layoutX="294.0" layoutY="50.0" text="Previous Song" textFill="WHITE">
-                                    <font>
-                                        <Font size="15.0"/>
-                                    </font>
-                                </Label>
-                                <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="244.0" layoutY="45.0"
-                                           pickOnBounds="true" preserveRatio="true">
-                                    <image>
-                                        <Image url="@images/keyboard%20keys/U.png"/>
-                                    </image>
-                                </ImageView>
-                            </children>
-                            <padding>
-                                <Insets left="20.0"/>
-                            </padding>
-                        </HBox>
-                        <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="1014.0" prefHeight="50.0"
-                              prefWidth="455.0" spacing="20.0">
-                            <children>
-                                <Label layoutX="294.0" layoutY="50.0" text="Volume Up" textFill="WHITE">
-                                    <font>
-                                        <Font size="15.0"/>
-                                    </font>
-                                </Label>
-                                <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="244.0" layoutY="45.0"
-                                           pickOnBounds="true" preserveRatio="true">
-                                    <image>
-                                        <Image url="@images/keyboard%20keys/Y.png"/>
-                                    </image>
-                                </ImageView>
-                            </children>
-                            <padding>
-                                <Insets left="20.0"/>
-                            </padding>
-                        </HBox>
-                        <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="1064.0" prefHeight="50.0"
-                              prefWidth="455.0" spacing="20.0">
-                            <children>
-                                <Label layoutX="294.0" layoutY="50.0" text="Volume Down" textFill="WHITE">
-                                    <font>
-                                        <Font size="15.0"/>
-                                    </font>
-                                </Label>
-                                <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="244.0" layoutY="45.0"
-                                           pickOnBounds="true" preserveRatio="true">
-                                    <image>
-                                        <Image url="@images/keyboard%20keys/T.png"/>
-                                    </image>
-                                </ImageView>
-                            </children>
-                            <padding>
-                                <Insets left="20.0"/>
-                            </padding>
-                        </HBox>
-                    </children>
-                </VBox>
-            </content>
-        </ScrollPane>
-    </children>
+                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@images/keyboard%20keys/arrowDown.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                     <padding>
+                        <Insets left="20.0" />
+                     </padding>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="200.0" spacing="20.0">
+                     <children>
+                        <Label layoutX="294.0" layoutY="50.0" text="Gears" textFill="WHITE">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@images/keyboard%20keys/1.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="197.0" layoutY="45.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@images/keyboard%20keys/2.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="166.0" layoutY="45.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@images/keyboard%20keys/3.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="244.0" layoutY="45.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@images/keyboard%20keys/4.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="320.0" layoutY="45.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@images/keyboard%20keys/5.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="445.0" layoutY="45.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@images/keyboard%20keys/6.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                     <padding>
+                        <Insets left="20.0" />
+                     </padding>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="160.0" prefHeight="50.0" spacing="20.0">
+                     <children>
+                        <Label text="Honk" textFill="WHITE">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@images/keyboard%20keys/H.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                     <padding>
+                        <Insets left="20.0" />
+                     </padding>
+                  </HBox>
+                  <Label text="Lights:" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="17.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets left="5.0" />
+                     </VBox.margin>
+                  </Label>
+                  <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="455.0" spacing="20.0">
+                     <children>
+                        <Label text="Left turn signal" textFill="WHITE">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@images/keyboard%20keys/arrowLeft.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                     <padding>
+                        <Insets left="20.0" />
+                     </padding>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="455.0" spacing="20.0">
+                     <children>
+                        <Label layoutX="294.0" layoutY="50.0" text="Right turn signal" textFill="WHITE">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                        <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="244.0" layoutY="45.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@images/keyboard%20keys/arrowRight.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                     <padding>
+                        <Insets left="20.0" />
+                     </padding>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="455.0" spacing="20.0">
+                     <children>
+                        <Label layoutX="294.0" layoutY="50.0" text="Parking lights On/Off" textFill="WHITE">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                        <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="244.0" layoutY="45.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@images/keyboard%20keys/Ctrl.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="191.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@images/keyboard%20keys/Z.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                     <padding>
+                        <Insets left="20.0" />
+                     </padding>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="360.0" prefHeight="50.0" prefWidth="455.0" spacing="20.0">
+                     <children>
+                        <Label layoutX="294.0" layoutY="50.0" text="Low Beam On/Off" textFill="WHITE">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                        <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="244.0" layoutY="45.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@images/keyboard%20keys/Ctrl.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="191.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@images/keyboard%20keys/X.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                     <padding>
+                        <Insets left="20.0" />
+                     </padding>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="410.0" prefHeight="50.0" prefWidth="455.0" spacing="20.0">
+                     <children>
+                        <Label layoutX="294.0" layoutY="50.0" text="High Beam On/Off" textFill="WHITE">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                        <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="244.0" layoutY="45.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@images/keyboard%20keys/Ctrl.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="191.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@images/keyboard%20keys/C.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                     <padding>
+                        <Insets left="20.0" />
+                     </padding>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="460.0" prefHeight="50.0" prefWidth="455.0" spacing="20.0">
+                     <children>
+                        <Label layoutX="294.0" layoutY="50.0" text="Front Fog lights On/Off" textFill="WHITE">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                        <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="244.0" layoutY="45.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@images/keyboard%20keys/Ctrl.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="191.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@images/keyboard%20keys/B.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                     <padding>
+                        <Insets left="20.0" />
+                     </padding>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="510.0" prefHeight="50.0" prefWidth="455.0" spacing="20.0">
+                     <children>
+                        <Label layoutX="294.0" layoutY="50.0" text="Back Fog lights On/Off" textFill="WHITE">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                        <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="244.0" layoutY="45.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@images/keyboard%20keys/Ctrl.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="191.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@images/keyboard%20keys/V.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                     <padding>
+                        <Insets left="20.0" />
+                     </padding>
+                  </HBox>
+                  <Label text="Cruise control:" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="17.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets left="5.0" />
+                     </VBox.margin>
+                  </Label>
+                  <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="560.0" prefHeight="50.0" prefWidth="455.0" spacing="20.0">
+                     <children>
+                        <Label layoutX="294.0" layoutY="50.0" text="Turn On/Off" textFill="WHITE">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                        <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="244.0" layoutY="45.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@images/keyboard%20keys/Ctrl.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="191.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@images/keyboard%20keys/G.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                     <padding>
+                        <Insets left="20.0" />
+                     </padding>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="610.0" prefHeight="50.0" prefWidth="455.0" spacing="20.0">
+                     <children>
+                        <Label layoutX="294.0" layoutY="50.0" text="Add 5 km/h" textFill="WHITE">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                        <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="244.0" layoutY="45.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@images/keyboard%20keys/Ctrl.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="191.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@images/keyboard%20keys/%5D.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                     <padding>
+                        <Insets left="20.0" />
+                     </padding>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="660.0" prefHeight="50.0" prefWidth="455.0" spacing="20.0">
+                     <children>
+                        <Label layoutX="294.0" layoutY="50.0" text="Subtract 5 km/h" textFill="WHITE">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                        <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="244.0" layoutY="45.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@images/keyboard%20keys/Ctrl.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="191.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@images/keyboard%20keys/%5B.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                     <padding>
+                        <Insets left="20.0" />
+                     </padding>
+                  </HBox>
+                  <Label layoutX="15.0" layoutY="686.0" text="Music Player:" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="17.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets left="5.0" />
+                     </VBox.margin>
+                  </Label>
+                  <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="812.0" prefHeight="50.0" prefWidth="455.0" spacing="20.0">
+                     <children>
+                        <Label layoutX="294.0" layoutY="50.0" text="Play/Pause" textFill="WHITE">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                        <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="244.0" layoutY="45.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@images/keyboard%20keys/I.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                     <padding>
+                        <Insets left="20.0" />
+                     </padding>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="888.0" prefHeight="50.0" prefWidth="455.0" spacing="20.0">
+                     <children>
+                        <Label layoutX="294.0" layoutY="50.0" text="Next Song" textFill="WHITE">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                        <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="244.0" layoutY="45.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@images/keyboard%20keys/O.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                     <padding>
+                        <Insets left="20.0" />
+                     </padding>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="938.0" prefHeight="50.0" prefWidth="455.0" spacing="20.0">
+                     <children>
+                        <Label layoutX="294.0" layoutY="50.0" text="Previous Song" textFill="WHITE">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                        <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="244.0" layoutY="45.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@images/keyboard%20keys/U.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                     <padding>
+                        <Insets left="20.0" />
+                     </padding>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="1014.0" prefHeight="50.0" prefWidth="455.0" spacing="20.0">
+                     <children>
+                        <Label layoutX="294.0" layoutY="50.0" text="Volume Up" textFill="WHITE">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                        <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="244.0" layoutY="45.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@images/keyboard%20keys/Y.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                     <padding>
+                        <Insets left="20.0" />
+                     </padding>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="1064.0" prefHeight="50.0" prefWidth="455.0" spacing="20.0">
+                     <children>
+                        <Label layoutX="294.0" layoutY="50.0" text="Volume Down" textFill="WHITE">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                        <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="244.0" layoutY="45.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@images/keyboard%20keys/T.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                     <padding>
+                        <Insets left="20.0" />
+                     </padding>
+                  </HBox>
+               </children>
+            </VBox>
+         </content>
+      </ScrollPane>
+   </children>
 </VBox>
