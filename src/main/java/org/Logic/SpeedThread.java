@@ -151,6 +151,7 @@ public class SpeedThread extends Thread {
                     } else {
 
                         if (dashboard.getCurrentGear() == 1) {
+                            revs = dashboard.getRevs();
                             if (dashboard.isKeyUp() && revs < maxRevs)
                                 revs += (dashboard.getSettings().getMaxRevs() - 1000) * (1 / gearMaxSpeed);
                             else if (revs > 1000)

@@ -531,6 +531,9 @@ public class Dashboard implements Serializable {
      */
     public void setCurrentGear(short currentGear, boolean engineRunning) throws GearException {
         if (currentGear < gears.size()) {
+            if(currentGear == 1 && this.currentGear > 1) {
+                this.revs = (int) (this.settings.getMaxRevs() * ((float)this.speed / this.gears.get(1)));
+            }
             if (currentGear == 0 || engineRunning)
                 this.currentGear = currentGear;
             else if (this.speed > gears.get(currentGear)) {
