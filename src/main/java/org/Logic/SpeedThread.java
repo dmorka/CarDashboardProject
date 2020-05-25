@@ -135,7 +135,7 @@ public class SpeedThread extends Thread {
 
                 try {
                     gearMaxSpeed = dashboard.getCurrentGearMaxSpeed();
-                    lastGearMaxSpeed = (dashboard.getCurrentGear() != 0) ? gearMaxSpeed : dashboard.getSettings().getMaxSpeed();
+                    lastGearMaxSpeed = (dashboard.getCurrentGear() != 0) ? gearMaxSpeed : ((revs == 0) ? dashboard.getSettings().getMaxSpeed() : lastGearMaxSpeed);
                     if (dashboard.getCurrentGear() == 0) {
                         if (dashboard.getRevs() < 1000)
                             if(dashboard.getRevs() < 900)
