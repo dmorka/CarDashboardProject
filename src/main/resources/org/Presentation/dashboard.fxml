@@ -108,7 +108,7 @@
                                                         </CheckMenuItem>
                                                     </items>
                                                 </Menu>
-                                                <Menu mnemonicParsing="false" text="Indicators">
+                                                <Menu fx:id="Mindicators" mnemonicParsing="false" text="Indicators" disable="true">
                                                     <items>
                                                         <CheckMenuItem fx:id="indicatorsTurnLeft" mnemonicParsing="false" onAction="#menuLightSwitch" text="Turn left" />
                                                         <CheckMenuItem fx:id="indicatorsTurnRight" mnemonicParsing="false" onAction="#menuLightSwitch" text="Turn right" />

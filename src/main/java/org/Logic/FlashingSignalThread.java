@@ -10,7 +10,13 @@ import java.io.File;
  * The type Flashing signal thread.
  */
 public class FlashingSignalThread extends Thread {
+    /**
+     * The B 1.
+     */
     AudioClip b1 = new AudioClip(new File("sounds/blinkerSound1.mp3").toURI().toString());
+    /**
+     * The B 2.
+     */
     AudioClip b2 = new AudioClip(new File("sounds/blinkerSound2.mp3").toURI().toString());
     /**
      * The Light.

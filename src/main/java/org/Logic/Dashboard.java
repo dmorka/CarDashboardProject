@@ -531,21 +531,14 @@ public class Dashboard implements Serializable {
      */
     public void setCurrentGear(short currentGear, boolean engineRunning) throws GearException {
         if (currentGear < gears.size()) {
-            if (currentGear == 0)
+            if (currentGear == 0 || engineRunning)
                 this.currentGear = currentGear;
             else if (this.speed > gears.get(currentGear)) {
                 this.keyUp = false;
                 this.keyDown = false;
                 throw new GearException("You cannot change the gear to " + currentGear + " at this speed!");
-            } else if (currentGear == 1)
-                this.currentGear = currentGear;
-            else if (revs >= 1999 || engineRunning)
-                this.currentGear = currentGear;
-            else {
-                this.keyUp = false;
-                this.keyDown = false;
-                throw new GearException("You cannot change the gear to " + currentGear + " at this speed!");
             }
+            else this.currentGear = currentGear;
         }
     }
 
@@ -631,7 +624,18 @@ public class Dashboard implements Serializable {
      * Play start engine sound.
      */
     public enum CarSound {
-        START_ENGINE("engineStartSound.mp3"), HONK("honk.mp3"), GEAR_SHIFT("gearShiftSound.mp3");
+        /**
+         * Start engine car sound.
+         */
+        START_ENGINE("engineStartSound.mp3"),
+        /**
+         * Honk car sound.
+         */
+        HONK("honk.mp3"),
+        /**
+         * Gear shift car sound.
+         */
+        GEAR_SHIFT("gearShiftSound.mp3");
 
         private final String filename;
         CarSound(String filename) {
@@ -639,6 +643,12 @@ public class Dashboard implements Serializable {
         }
     }
 
+    /**
+     * Play car sound.
+     *
+     * @param carSound the car sound
+     * @param play     the play
+     */
     public void playCarSound(CarSound carSound, boolean play) {
         if(play) {
             if(audioClip != null)

@@ -58,6 +58,9 @@ public class SpeedThread extends Thread {
         this.engineRunning = running;
     }
 
+    /**
+     * Count distances.
+     */
     public void countDistances() {
         distance = dashboard.getSpeed() * (1f / 3600f);
         dashboard.setCounter(dashboard.getCounter() + distance);
@@ -67,7 +70,7 @@ public class SpeedThread extends Thread {
 
     public void run() {
         long startTime = System.currentTimeMillis();
-        float revs = 0;
+        float revs = dashboard.getRevs();
         short maxRevs = dashboard.getSettings().getMaxRevs();
         float gearMaxSpeed;
         float maxSpeed = 0;
@@ -92,8 +95,8 @@ public class SpeedThread extends Thread {
                     if (dashboard.getCurrentGear() != 0)
                         revs = (dashboard.getSettings().getMaxRevs() - 1000) * (dashboard.getSpeed() / (float) dashboard.getCurrentGearMaxSpeed());
                     else
-                    if(revs != 0)
-                        revs *= 0.99;
+                        if(revs != 0)
+                            revs *= 0.99;
                 } else {
                     revs -= 100;
                 }
@@ -132,7 +135,7 @@ public class SpeedThread extends Thread {
 
                 try {
                     gearMaxSpeed = dashboard.getCurrentGearMaxSpeed();
-                    lastGearMaxSpeed = (dashboard.getCurrentGear() != 0) ? gearMaxSpeed : lastGearMaxSpeed;
+                    lastGearMaxSpeed = (dashboard.getCurrentGear() != 0) ? gearMaxSpeed : dashboard.getSettings().getMaxSpeed();
                     if (dashboard.getCurrentGear() == 0) {
                         if (dashboard.getRevs() < 1000)
                             if(dashboard.getRevs() < 900)

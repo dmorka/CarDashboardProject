@@ -96,6 +96,8 @@ public class DashboardController extends UIController {
     @FXML
     private MenuItem MIsettings;
     @FXML
+    private Menu Mindicators;
+    @FXML
     private CheckMenuItem indicatorsTurnLeft;
     @FXML
     private CheckMenuItem indicatorsTurnRight;
@@ -530,7 +532,7 @@ public class DashboardController extends UIController {
             dashboard.setKeyUp(true);
         } else if (event.getCode() == KeyCode.DOWN) {
             dashboard.setKeyDown(true);
-        } else if ((event.getCode() == KeyCode.LEFT) && !this.dashboard.isLeftTurnSignal()) {
+        } else if ((event.getCode() == KeyCode.LEFT) && !this.dashboard.isLeftTurnSignal() && !Mindicators.isDisable()) {
             try {
                 dashboard.setLeftTurnSignal(true);
                 indicatorsTurnLeft.setSelected(true);
@@ -539,7 +541,7 @@ public class DashboardController extends UIController {
                 openDialog(e.getClass().getSimpleName(), e.getMessage());
                 dashboard.setKeyUp(false);
             }
-        } else if ((event.getCode() == KeyCode.RIGHT) && (!this.dashboard.isRightTurnSignal())) {
+        } else if ((event.getCode() == KeyCode.RIGHT) && (!this.dashboard.isRightTurnSignal()) && !Mindicators.isDisable()) {
             try {
                 dashboard.setRightTurnSignal(true);
                 indicatorsTurnRight.setSelected(true);
@@ -586,12 +588,12 @@ public class DashboardController extends UIController {
             dashboard.setKeyUp(false);
         } else if (event.getCode() == KeyCode.DOWN) {
             dashboard.setKeyDown(false);
-        } else if (event.getCode() == KeyCode.LEFT) {
+        } else if (event.getCode() == KeyCode.LEFT && !Mindicators.isDisable()) {
             dashboard.setLeftTurnSignal(false);
             indicatorsTurnLeft.setSelected(false);
             lightSwitch("indicatorsTurnLeft", false);
             //indicatorSwitch(IVindicatorsTurnLeft,lights.get("indicatorsTurnLeft")[0],false);
-        } else if (event.getCode() == KeyCode.RIGHT) {
+        } else if (event.getCode() == KeyCode.RIGHT && !Mindicators.isDisable()) {
             dashboard.setRightTurnSignal(false);
             indicatorsTurnRight.setSelected(false);
             lightSwitch("indicatorsTurnRight", false);
@@ -655,6 +657,7 @@ public class DashboardController extends UIController {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+
         switchAllLights(forward);
         if (!forward)
             startupLightSwitch();
@@ -689,6 +692,7 @@ public class DashboardController extends UIController {
             MIstopEngine.setDisable(false);
             MIstartEngine.setDisable(true);
             McruiseControl.setDisable(false);
+            Mindicators.setDisable(false);
             dashboard.getOnBoardComputer().startJourneyTime();
             dashboard.playCarSound(Dashboard.CarSound.START_ENGINE, true);
             if (dashboard.getSpeed() == 0)
@@ -714,6 +718,7 @@ public class DashboardController extends UIController {
                     openDialog("EngineException", "The engine went out!");
                 });
             MIstartEngine.setDisable(false);
+            Mindicators.setDisable(true);
             MIstopEngine.setDisable(true);
             McruiseControl.setDisable(true);
             speedThread.setEngineRunning(false);

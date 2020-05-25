@@ -5,7 +5,7 @@ import javafx.collections.ObservableList;
 import java.nio.file.Path;
 
 /**
- * The interface Data handling. Created to write and read fom databases or files, for example XML.
+ * The interface Data handling. Created to write and read fom databases or files, like XML.
  */
 public interface DataHandling {
     /**
