@@ -154,8 +154,10 @@ public class SpeedThread extends Thread {
                             revs = dashboard.getRevs();
                             if (dashboard.isKeyUp() && revs < maxRevs)
                                 revs += (dashboard.getSettings().getMaxRevs() - 1000) * (1 / gearMaxSpeed);
-                            else if (revs > 1000)
+                            else if (revs > 1050)
                                 revs -= (dashboard.getSettings().getMaxRevs() - 1000) * (1 / gearMaxSpeed);
+                            else if(revs<1000) revs += random.nextInt(20);
+                            else revs -= random.nextInt(20);
                         } else
                             revs = (dashboard.getSettings().getMaxRevs()) * (dashboard.getSpeed() / gearMaxSpeed);
                         if (revs < 800) {
