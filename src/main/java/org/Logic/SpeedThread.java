@@ -130,7 +130,6 @@ public class SpeedThread extends Thread {
 
                 }
 
-                //if(dashboard.getCurrentGear() > 0 ) {
                 try {
                     gearMaxSpeed = dashboard.getCurrentGearMaxSpeed();
                     lastGearMaxSpeed = (dashboard.getCurrentGear() != 0) ? gearMaxSpeed : lastGearMaxSpeed;
@@ -145,7 +144,7 @@ public class SpeedThread extends Thread {
                                 revs -= random.nextInt(20);
                             else
                                 revs = (dashboard.getSettings().getMaxRevs()) * (dashboard.getSpeed() / lastGearMaxSpeed);
-//                                revs -= 100;
+
                     } else {
 
                         if (dashboard.getCurrentGear() == 1) {
@@ -165,7 +164,6 @@ public class SpeedThread extends Thread {
                     if (revs > 0)
                         dashboard.setRevs((int) revs);
                 } catch (NegativeValueException ignore) {}
-                //}
 
                 //Czas próbkowania co 1s
                 if (System.currentTimeMillis() - startTime >= 1000) {
