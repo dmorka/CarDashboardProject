@@ -99,3 +99,7 @@
 .scroll-pane {
     -fx-background-color: transparent;
 }
+
+#cruiseControlMenu:disabled .label {
+    -fx-text-fill: white;
+}

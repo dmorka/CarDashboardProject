@@ -132,7 +132,7 @@
                                                 </Menu>
                                             </items>
                                         </Menu>
-                                        <Menu fx:id="McruiseControl" disable="true" mnemonicParsing="false" text="Cruise control">
+                                        <Menu id="cruiseControlMenu" fx:id="McruiseControl" disable="true" mnemonicParsing="false" text="Cruise control">
                                             <items>
                                                 <MenuItem fx:id="MIspeedUp" mnemonicParsing="false" onAction="#changeSpeedCruiseControl" text="+5 km/h">
                                                     <accelerator>
