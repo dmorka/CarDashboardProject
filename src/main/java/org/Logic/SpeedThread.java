@@ -25,6 +25,7 @@ public class SpeedThread extends Thread {
      */
 //Konstruktor klasy
     public SpeedThread(UIController uiController, int startAfter) {
+        System.out.println("Speed thread was created!");
         this.uiController = uiController;
         this.startAfter = startAfter;
         this.dashboard = uiController.getDashboard();
@@ -73,10 +74,10 @@ public class SpeedThread extends Thread {
         float revs = dashboard.getRevs();
         short maxRevs = dashboard.getSettings().getMaxRevs();
         float gearMaxSpeed;
-        float maxSpeed = 0;
-        long sumSpeed = 0;
-        long sumAvgFuel = 0;
-        float iter = 1;
+        float maxSpeed = onBoardComputer.getMaxSpeed();
+        float iter = onBoardComputer.getJourneyTime();
+        long sumSpeed = (long) (onBoardComputer.getAvgSpeed() * iter);
+        long sumAvgFuel = (long) (onBoardComputer.getAvgCombustion() * iter);
         float fuelCoeff = (dashboard.getSettings().getEngineType() == 'P') ? 3.33f : 4.2f;
         float currFuelComb;
         distance = 0.0f;
