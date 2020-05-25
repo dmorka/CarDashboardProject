@@ -160,7 +160,7 @@
                                     <graphic>
                                         <ImageView fx:id="IVminimizeApp" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                                             <image>
-                                                <Image url="@images/minimize1.png" />
+                                                <Image url="@images/window button icons/minimize1.png" />
                                             </image>
                                         </ImageView>
                                     </graphic>
@@ -169,19 +169,19 @@
                                     <graphic>
                                         <ImageView fx:id="IVmaximizeApp" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                                             <image>
-                                                <Image url="@images/maximize.png" />
+                                                <Image url="@images/window button icons/maximize.png" />
                                             </image>
                                         </ImageView>
                                     </graphic>
                                 </ImageGridCell>
                                 <ImageGridCell fx:id="closeIcon" textFill="WHITE">
                                     <item>
-                                        <Image url="@images/close.png" />
+                                        <Image url="@images/window button icons/close.png" />
                                     </item>
                                     <graphic>
                                         <ImageView fx:id="IVcloseApp" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                                             <image>
-                                                <Image url="@images/close.png" />
+                                                <Image url="@images/window button icons/close.png" />
                                             </image>
                                         </ImageView>
                                     </graphic>

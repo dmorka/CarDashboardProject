@@ -7,6 +7,9 @@ import org.Data.LoadFilesFromDisk;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -32,11 +35,15 @@ public class MusicPlayer {
     public String getTitle() {
         if (playlist.isEmpty())
             return "Playlist is empty";
-        String title;
+        String title="";
         try {
             title = mediaPlayer.getMedia().getMetadata().get("title").toString();
         } catch (NullPointerException e) {
-            return new File(playlist.get(currentSong).getSource()).getName().replaceFirst(".mp3", "");
+            try {
+                return URLDecoder.decode(new File(playlist.get(currentSong).getSource()).getName().replaceFirst(".mp3", ""), StandardCharsets.UTF_8.toString());
+            } catch (UnsupportedEncodingException unsupportedEncodingException) {
+                unsupportedEncodingException.printStackTrace();
+            }
         }
 
         return title;

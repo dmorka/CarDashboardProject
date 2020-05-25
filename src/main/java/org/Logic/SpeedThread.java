@@ -79,9 +79,7 @@ public class SpeedThread extends Thread {
         distance = 0.0f;
         try {
             Thread.sleep(startAfter);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        } catch (InterruptedException ignore) { }
         if (!engineRunning) {
             revs = dashboard.getRevs();
             while ((dashboard.getSpeed() > 0 || dashboard.getRevs() > 0) && animationToZero) {
@@ -101,17 +99,13 @@ public class SpeedThread extends Thread {
                 }
                 try {
                     dashboard.setRevs((int) ((revs >= 0) ? revs : 0));
-                } catch (NegativeValueException e) {
-                    e.printStackTrace();
-                }
+                } catch (NegativeValueException ignore) { }
                 synchronized (uiController) {
                     uiController.refresh();
                 }
                 try {
                     Thread.sleep(100);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+                } catch (InterruptedException ignore) {}
             }
         }
         Random random = new Random();
@@ -170,9 +164,7 @@ public class SpeedThread extends Thread {
 
                     if (revs > 0)
                         dashboard.setRevs((int) revs);
-                } catch (NegativeValueException e) {
-                    e.printStackTrace();
-                }
+                } catch (NegativeValueException ignore) {}
                 //}
 
                 //Czas próbkowania co 1s
@@ -193,9 +185,7 @@ public class SpeedThread extends Thread {
             }
             try {
                 Thread.sleep(100);
-            } catch (InterruptedException e) {
-                //e.printStackTrace();
-            }
+            } catch (InterruptedException ignore) { }
         }
     }
 

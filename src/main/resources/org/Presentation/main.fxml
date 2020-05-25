@@ -20,7 +20,7 @@
                         <Insets right="5.0" top="5.0"/>
                     </HBox.margin>
                     <image>
-                        <Image url="@images/close.png"/>
+                        <Image url="@images/window button icons/close.png"/>
                     </image>
                 </ImageView>
             </children>

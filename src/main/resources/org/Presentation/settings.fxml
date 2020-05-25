@@ -18,19 +18,19 @@
                 <ImageView fx:id="minimizeIcon" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true"
                            preserveRatio="true">
                     <image>
-                        <Image url="@images/minimize1.png"/>
+                        <Image url="@images/window button icons/minimize1.png"/>
                     </image>
                 </ImageView>
                 <ImageView fx:id="maximizeIcon" fitHeight="20.0" fitWidth="20.0" layoutX="10.0" layoutY="10.0"
                            pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="@images/maximize.png"/>
+                        <Image url="@images/window button icons/maximize.png"/>
                     </image>
                 </ImageView>
                 <ImageView fx:id="closeIcon" fitHeight="25.0" fitWidth="25.0" layoutX="30.0" layoutY="10.0"
                            pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="@images/close.png"/>
+                        <Image url="@images/window button icons/close.png"/>
                     </image>
                 </ImageView>
             </children>

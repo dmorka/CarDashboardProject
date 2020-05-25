@@ -13,7 +13,7 @@
                 <ImageView fx:id="minimizeIcon" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true"
                            preserveRatio="true">
                     <image>
-                        <Image url="@images/minimize1.png"/>
+                        <Image url="@images/window button icons/minimize1.png"/>
                     </image>
                     <HBox.margin>
                         <Insets right="5.0" top="5.0"/>
@@ -22,7 +22,7 @@
                 <ImageView fx:id="maximizeIcon" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true"
                            preserveRatio="true">
                     <image>
-                        <Image url="@images/maximize.png"/>
+                        <Image url="@images/window button icons/maximize.png"/>
                     </image>
                     <HBox.margin>
                         <Insets right="5.0" top="5.0"/>
@@ -30,7 +30,7 @@
                 </ImageView>
                 <ImageView fx:id="closeIcon" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="@images/close.png"/>
+                        <Image url="@images/window button icons/close.png"/>
                     </image>
                     <HBox.margin>
                         <Insets right="5.0" top="5.0"/>
@@ -47,7 +47,7 @@
                         <ImageView fitHeight="198.0" fitWidth="299.0" layoutX="11.0" layoutY="-8.0" pickOnBounds="true"
                                    preserveRatio="true">
                             <image>
-                                <Image url="@images/dashboard-icon.png"/>
+                                <Image url="@images/dashboard-transparent.png"/>
                             </image>
                         </ImageView>
                         <Label layoutX="154.0" layoutY="6.0" text="CAR DASHBOARD - PROJECT" textFill="WHITE">

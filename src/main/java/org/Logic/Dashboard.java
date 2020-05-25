@@ -45,6 +45,7 @@ public class Dashboard implements Serializable {
     private transient int revs;
     private short currentGear;
     private ArrayList<Short> gears;
+    private transient AudioClip audioClip;
 
     /**
      * Instantiates a new Dashboard.
@@ -629,10 +630,25 @@ public class Dashboard implements Serializable {
     /**
      * Play start engine sound.
      */
-    public void playStartEngineSound() {
-        AudioClip audioClip = new AudioClip(new File("sounds/engineStartSound.mp3").toURI().toString());
+    public enum CarSound {
+        START_ENGINE("engineStartSound.mp3"), HONK("honk.mp3"), GEAR_SHIFT("gearShiftSound.mp3");
 
-        audioClip.play();
+        private final String filename;
+        CarSound(String filename) {
+            this.filename = filename;
+        }
+    }
+
+    public void playCarSound(CarSound carSound, boolean play) {
+        if(play) {
+            if(audioClip != null)
+                audioClip.stop();
+            audioClip = new AudioClip(new File("sounds/"+carSound.filename).toURI().toString());
+            audioClip.play();
+        }
+        else
+            if(audioClip != null)
+                audioClip.stop();
     }
 
     /**

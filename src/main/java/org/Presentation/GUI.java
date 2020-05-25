@@ -58,8 +58,8 @@ public class GUI extends Application {
             scene.minimizeStage();
         });
         ImageGridCell maximizeIcon = (ImageGridCell) fxmlLoader.getNamespace().get("maximizeIcon");
-        Image maxi = new Image(GUI.class.getResourceAsStream("images/maximize.png"));
-        Image mini = new Image(GUI.class.getResourceAsStream("images/minimize.png"));
+        Image maxi = new Image(GUI.class.getResourceAsStream("images/window button icons/maximize.png"));
+        Image mini = new Image(GUI.class.getResourceAsStream("images/window button icons/minimize.png"));
         maximizeIcon.setOnMouseClicked(event -> {
             scene.maximizeStage();
             if (scene.isMaximized())
@@ -72,6 +72,7 @@ public class GUI extends Application {
         scene.setMoveControl((GridPane) fxmlLoader.getNamespace().get("topPanel"));
 
         //Show
+        stage.getIcons().add(new Image(GUI.class.getResourceAsStream("images/icon.png")));
         stage.setTitle("Dashboard");
         stage.show();
     }

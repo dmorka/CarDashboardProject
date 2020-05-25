@@ -3,6 +3,7 @@ package org.Presentation;
 import com.goxr3plus.fxborderlessscene.borderless.BorderlessScene;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -46,6 +47,7 @@ public class Main extends Application {
         scene.setMoveControl((HBox) fxmlLoader.getNamespace().get("topPanel"));
         scene.setResizable(false);
         //Show
+        stage.getIcons().add(new Image(Main.class.getResourceAsStream("images/icon.png")));
         stage.setTitle("Dashboard mode");
         stage.show();
 

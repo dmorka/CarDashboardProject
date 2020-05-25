@@ -164,22 +164,24 @@ public class DashboardController extends UIController {
             return;
 
         if (!dashboard.getMusicPlayer().isPlaying()) {
-            PolyPlay.setVisible(false);
-            RecPause1.setVisible(true);
-            RecPause2.setVisible(true);
+            musicPlayButtonSwitch(false);
             dashboard.getMusicPlayer().playSong();
             LtitleMP.setOpacity(1);
             LartistMP.setOpacity(1);
             progressBarMP(false, false);
-            //dashboard.getMusicPlayer().autoPlayNext(this::nextSongMP);
+            dashboard.getMusicPlayer().setAutoPlayNext(this::nextSongMP);
         } else {
-            PolyPlay.setVisible(true);
-            RecPause1.setVisible(false);
-            RecPause2.setVisible(false);
+            musicPlayButtonSwitch(true);
             dashboard.getMusicPlayer().pauseSong();
             progressBarMP(false, true);
         }
         setTitleArtist();
+    }
+
+    private void musicPlayButtonSwitch(boolean showPlay) {
+        PolyPlay.setVisible(showPlay);
+        RecPause1.setVisible(!showPlay);
+        RecPause2.setVisible(!showPlay);
     }
 
     @FXML
@@ -287,8 +289,8 @@ public class DashboardController extends UIController {
             stage.close();
         });
         ImageView maximizeIcon = (ImageView) root.getNamespace().get("maximizeIcon");
-        Image maxi = new Image(GUI.class.getResourceAsStream("images/maximize.png"));
-        Image mini = new Image(GUI.class.getResourceAsStream("images/minimize.png"));
+        Image maxi = new Image(GUI.class.getResourceAsStream("images/window button icons/maximize.png"));
+        Image mini = new Image(GUI.class.getResourceAsStream("images/window button icons/minimize.png"));
         maximizeIcon.setOnMouseClicked(event -> {
             scene.maximizeStage();
             if (scene.isMaximized())
@@ -341,15 +343,6 @@ public class DashboardController extends UIController {
             }
         }
     }
-
-//    @FXML
-//    private void openDialog(AlertType alertType, String title, String headerText, String contentText) {
-//        Alert alert = new Alert(alertType);
-//        alert.setTitle(title);
-//        alert.setHeaderText(headerText);
-//        alert.setContentText(contentText);
-//        alert.showAndWait();
-//    }
 
     @FXML
     private void openDialog(String header, String message) {
@@ -443,7 +436,7 @@ public class DashboardController extends UIController {
 
             case "cruiseControl":
                 try {
-                    if(MIstartEngine.isDisable()) {
+                    if (MIstartEngine.isDisable()) {
                         dashboard.setCruiseSpeed(dashboard.getSpeed());
                         cruiseControl.setSelected(enable);
                         dashboard.setCruiseControl(enable);
@@ -452,6 +445,7 @@ public class DashboardController extends UIController {
                 } catch (CruiseControlException e) {
                     openDialog(e.getClass().getSimpleName(), e.getMessage());
                     cruiseControl.setSelected(false);
+                    dashboard.setKeyUp(false);
                 }
                 break;
         }
@@ -491,7 +485,6 @@ public class DashboardController extends UIController {
 
     public void reloadAfterSettings() {
         if (dashboard.getMusicPlayer() != null) {
-            //boolean wasPlaying = dashboard.getMusicPlayer().isPlaying();
             dashboard.getMusicPlayer().dispose();
             try {
                 dashboard.getMusicPlayer().loadSongs(dashboard.getSettings().getPlaylistDirectoryPath());
@@ -499,19 +492,9 @@ public class DashboardController extends UIController {
                 openDialog(e.getClass().getSimpleName(), e.getMessage());
             }
 
-            //progressBarMP(true, !wasPlaying);
             progressBarMP(true, true);
             if (dashboard.getSettings().isShuffleMode())
                 dashboard.getMusicPlayer().shufflePlaylist();
-
-
-//            if(wasPlaying && !dashboard.getMusicPlayer().isEmpty()) {
-//                playPauseMP();
-//            } else {
-//                PolyPlay.setVisible(true);
-//                RecPause1.setVisible(false);
-//                RecPause2.setVisible(false);
-//            }
 
             PolyPlay.setVisible(true);
             RecPause1.setVisible(false);
@@ -525,6 +508,9 @@ public class DashboardController extends UIController {
         int color = dashboard.getSettings().getDashboardLightIntesity();
         GPmain.setStyle("-fx-background-color: rgb(" + color + ", " + color + ", " + color + ");");
         dashboard.setGears();
+        if(MIstartEngine.isDisable()) {
+            lightSwitch("headlightsLowBeam", true);
+        }
     }
 
     @FXML
@@ -549,27 +535,43 @@ public class DashboardController extends UIController {
                 dashboard.setLeftTurnSignal(true);
                 indicatorsTurnLeft.setSelected(true);
                 lightSwitch("indicatorsTurnLeft", true);
-                //indicatorSwitch(IVindicatorsTurnLeft, lights.get("indicatorsTurnLeft")[1], true);
             } catch (TurnSignalException e) {
                 openDialog(e.getClass().getSimpleName(), e.getMessage());
+                dashboard.setKeyUp(false);
             }
         } else if ((event.getCode() == KeyCode.RIGHT) && (!this.dashboard.isRightTurnSignal())) {
             try {
                 dashboard.setRightTurnSignal(true);
                 indicatorsTurnRight.setSelected(true);
                 lightSwitch("indicatorsTurnRight", true);
-                //indicatorSwitch(IVindicatorsTurnRight, lights.get("indicatorsTurnRight")[1],true);
             } catch (TurnSignalException e) {
                 openDialog(e.getClass().getSimpleName(), e.getMessage());
+                dashboard.setKeyUp(false);
             }
-        } else if (event.getText().compareTo("0") >= 0 && 0 >= event.getText().compareTo("6")) {
+        } else if (event.getText().compareTo("0") >= 0 && 0 >= event.getText().compareTo(String.valueOf(dashboard.getSettings().getNumberOfGears()))) {
             try {
                 dashboard.setCurrentGear(Short.parseShort(event.getText()), MIstopEngine.isDisable());
+                dashboard.playCarSound(Dashboard.CarSound.GEAR_SHIFT, true);
                 refresh();
             } catch (GearException e) {
                 openDialog(e.getClass().getSimpleName(), e.getMessage());
             }
+        } else if(event.getCode() == KeyCode.H) {
+            dashboard.playCarSound(Dashboard.CarSound.HONK, true);
+        } else if(event.getCode() == KeyCode.I) {
+            playPauseMP();
+        } else if(event.getCode() == KeyCode.O) {
+            nextSongMP();
+        } else if(event.getCode() == KeyCode.U) {
+            previousSong();
+        } else if(event.getCode() == KeyCode.T) {
+            SLvolume.setValue(SLvolume.getValue()-5);
+            changeVolumeMP();
+        } else if(event.getCode() == KeyCode.Y) {
+            SLvolume.setValue(SLvolume.getValue()+5);
+            changeVolumeMP();
         }
+
     }
 
     /**
@@ -594,6 +596,8 @@ public class DashboardController extends UIController {
             indicatorsTurnRight.setSelected(false);
             lightSwitch("indicatorsTurnRight", false);
             //indicatorSwitch(IVindicatorsTurnRight, lights.get("indicatorsTurnRight")[0],false);
+        } else if(event.getCode() == KeyCode.H) {
+            dashboard.playCarSound(Dashboard.CarSound.HONK, false);
         }
     }
 
@@ -664,17 +668,16 @@ public class DashboardController extends UIController {
     @FXML
     public void startStopEngine() {
         if (!MIstartEngine.isDisable()) {
-            McruiseControl.setDisable(false);
             switchEngine(true, false);
             LtitleMP.setOpacity(1);
             LartistMP.setOpacity(1);
         } else {
             dashboard.setCruiseControl(false);
-            McruiseControl.setDisable(true);
             switchEngine(false, false);
             LtitleMP.setOpacity(0);
             LartistMP.setOpacity(0);
-            PBsongDuration.setProgress(0.0);
+            musicPlayButtonSwitch(true);
+            progressBarMP(true, true);
             dashboard.getMusicPlayer().stopSong();
         }
     }
@@ -685,8 +688,9 @@ public class DashboardController extends UIController {
                 speedThread.setAnimationToZero(false);
             MIstopEngine.setDisable(false);
             MIstartEngine.setDisable(true);
+            McruiseControl.setDisable(false);
             dashboard.getOnBoardComputer().startJourneyTime();
-            dashboard.playStartEngineSound();
+            dashboard.playCarSound(Dashboard.CarSound.START_ENGINE, true);
             if (dashboard.getSpeed() == 0)
                 animateEngineStart(true);
             else
@@ -711,6 +715,7 @@ public class DashboardController extends UIController {
                 });
             MIstartEngine.setDisable(false);
             MIstopEngine.setDisable(true);
+            McruiseControl.setDisable(true);
             speedThread.setEngineRunning(false);
             dashboard.getOnBoardComputer().pauseJourneyTime();
             switchAllLights(false);
@@ -739,8 +744,10 @@ public class DashboardController extends UIController {
         TXTdayCounter2.setText(String.valueOf(Math.round(dashboard.getDayCounter2() * 10.0) / 10.0f));
         TXTjourneyDistance.setText(String.valueOf(Math.round(dashboard.getOnBoardComputer().getJourneyDistance() * 10.0) / 10.0f));
         TXTjourneyTime.setText(dashboard.getOnBoardComputer().getJourneyStartTime());
-        speedGauge.setValue(dashboard.getSpeed());
-        revsGauge.setValue(dashboard.getRevs());
+        try {
+            speedGauge.setValue(dashboard.getSpeed());
+            revsGauge.setValue(dashboard.getRevs());
+        } catch (NullPointerException ignore){}
     }
 
 
