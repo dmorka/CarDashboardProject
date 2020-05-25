@@ -61,6 +61,12 @@ public class TUI extends UIController {
 
 
     /**
+     * Instantiates a new Tui.
+     */
+    public TUI() {
+    }
+
+    /**
      * The entry point of application.
      *
      * @param args the input arguments
