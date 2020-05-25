@@ -238,85 +238,66 @@ public class DashboardController extends UIController {
 
     @FXML
     private void openNewWindow(ActionEvent actionEvent) throws IOException {
+        FXMLLoader root = null;
         Stage stage = new Stage();
         MenuItem menuItem = (MenuItem) actionEvent.getSource();
-        String filename, title;
+        String title;
+        DatabaseImportController dbController = null;
         switch (menuItem.getId()) {
             case "MIabout":
-                filename = "about.fxml";
+                root = loadFXML("about.fxml");
                 title = "About";
                 break;
             case "MIsettings":
-                filename = "settings.fxml";
+                root = loadFXML("settings.fxml");
+                SettingsController settingsController = root.getController();
+                settingsController.lockSettings(MIstartEngine.isDisable());
+                settingsController.loadSettings(this.dashboard.getSettings(), this);
                 title = "Settings";
                 break;
             case "MIdatabaseImport":
-                filename = "databaseImport.fxml";
+                root = loadFXML("databaseImport.fxml");
+                dbController = root.getController();
+                dbController.loadDB(dashboard.readFromDB());
                 title = "SQL Import";
                 break;
             case "MIkeyShortcuts":
-                filename = "keyShortcuts.fxml";
+                root = loadFXML("keyShortcuts.fxml");
                 title = "Key shortcuts";
                 break;
             default:
-                filename = "";
                 title = "";
         }
-        DatabaseImportController dbController = null;
-        FXMLLoader root = new FXMLLoader(GUI.class.getResource(filename));
-        root.load();
-        Parent pane = null;
-        if (filename.equals("settings.fxml")) {
-            SettingsController settingsController = root.getController();
-            settingsController.lockSettings(MIstartEngine.isDisable());
-            settingsController.loadSettings(this.dashboard.getSettings(), this);
-            pane = (VBox) root.getNamespace().get("vbox");
-        } else if (filename.equals("databaseImport.fxml")) {
-            dbController = root.getController();
-            dbController.loadDB(dashboard.readFromDB());
-            pane = (VBox) root.getNamespace().get("vbox");
-        } else if (filename.equals("about.fxml")) {
-            pane = (Pane) root.getNamespace().get("vbox");
-        } else if (filename.equals("keyShortcuts.fxml")) {
-            pane = (Pane) root.getNamespace().get("vbox");
-        }
-        BorderlessScene scene = new BorderlessScene(stage, StageStyle.UNDECORATED, pane, 250, 250);
-        stage.setScene(scene);
-        scene.removeDefaultCSS();
-        ImageView minimizeIcon = (ImageView) root.getNamespace().get("minimizeIcon");
-        minimizeIcon.setOnMouseClicked(event -> {
-            scene.minimizeStage();
-        });
 
-        ImageView closeIcon = (ImageView) root.getNamespace().get("closeIcon");
-        closeIcon.setOnMouseClicked(event -> {
-            stage.close();
-        });
-        ImageView maximizeIcon = (ImageView) root.getNamespace().get("maximizeIcon");
-        Image maxi = new Image(GUI.class.getResourceAsStream("images/window button icons/maximize.png"));
-        Image mini = new Image(GUI.class.getResourceAsStream("images/window button icons/minimize.png"));
-        maximizeIcon.setOnMouseClicked(event -> {
-            scene.maximizeStage();
-            if (scene.isMaximized())
-                ((ImageView) root.getNamespace().get("maximizeIcon")).setImage(mini);
-            else
-                ((ImageView) root.getNamespace().get("maximizeIcon")).setImage(maxi);
+        assert root != null;
+        Pane pane =  (Pane) root.getNamespace().get("mainPane");
 
-        });
+        GUI.createBorderlessScene(stage,pane,title,root);
 
-        scene.setMoveControl((Parent) root.getNamespace().get("topPanel"));
-
-
-        stage.setTitle(title);
         stage.show();
+
         DatabaseImportController finalDbController = dbController;
         stage.setOnCloseRequest(e -> {
-            if (filename.equals("databaseImport.fxml") && finalDbController.getSelectedRecord() != null) {
-                dashboard.updateDashboard(finalDbController.getSelectedRecord());
-                refresh();
+            if (stage.getTitle().equals("SQL Import")) {
+                assert finalDbController != null;
+                if (finalDbController.getSelectedRecord() != null) {
+                    dashboard.updateDashboard(finalDbController.getSelectedRecord());
+                    refresh();
+                }
             }
         });
 
+    }
+
+    @FXML
+    private FXMLLoader loadFXML(String filename) {
+        FXMLLoader root = new FXMLLoader(GUI.class.getResource(filename));
+        try {
+            root.load();
+        } catch (IOException e) {
+            openDialog(e.getClass().getSimpleName(), e.getMessage());
+        }
+        return root;
     }
 
     @FXML
