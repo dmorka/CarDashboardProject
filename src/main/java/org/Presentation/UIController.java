@@ -8,7 +8,7 @@ import java.io.IOException;
 /**
  * The type Ui controller.
  */
-public  class UIController {
+public class UIController {
     /**
      * The Dashboard.
      */

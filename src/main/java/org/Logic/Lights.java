@@ -10,12 +10,12 @@ public interface Lights {
     public void switchLight();
 
     /**
-     * Turn on.
+     * Turn on the lights.
      */
     public void turnOn();
 
     /**
-     * Turn off.
+     * Turn off the lights.
      */
     public void turnOff();
 }

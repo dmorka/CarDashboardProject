@@ -44,6 +44,12 @@ public class DatabaseImportController {
     private TableColumn<RecordModel, Date> col_create_date;
 
     /**
+     * Instantiates a new Database import controller.
+     */
+    public DatabaseImportController() {
+    }
+
+    /**
      * Load db.
      *
      * @param set the set

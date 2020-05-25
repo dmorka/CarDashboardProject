@@ -11,11 +11,11 @@ import java.io.File;
  */
 public class FlashingSignalThread extends Thread {
     /**
-     * The B 1.
+     * The indicator on mp3 .
      */
     AudioClip b1 = new AudioClip(new File("sounds/blinkerSound1.mp3").toURI().toString());
     /**
-     * The B 2.
+     * The indicator off mp3.
      */
     AudioClip b2 = new AudioClip(new File("sounds/blinkerSound2.mp3").toURI().toString());
     /**

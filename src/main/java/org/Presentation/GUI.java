@@ -33,6 +33,12 @@ public class GUI extends Application {
         launch();
     }
 
+    /**
+     * Instantiates a new Gui.
+     */
+    public GUI() {
+    }
+
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(GUI.class.getResource("dashboard.fxml"));

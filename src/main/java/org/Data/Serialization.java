@@ -29,6 +29,12 @@ public class Serialization {
     }
 
     /**
+     * Instantiates a new Serialization.
+     */
+    public Serialization() {
+    }
+
+    /**
      * Read dashboard dashboard.
      *
      * @return the dashboard

@@ -13,6 +13,12 @@ import java.nio.file.Paths;
 public class XML {
 
     /**
+     * Instantiates a new Xml.
+     */
+    public XML() {
+    }
+
+    /**
      * Read record model from XML file.
      *
      * @param path the path

@@ -12,6 +12,12 @@ import java.io.IOException;
  * The type Main controller.
  */
 public class MainController {
+    /**
+     * Instantiates a new Main controller.
+     */
+    public MainController() {
+    }
+
     @FXML
     private void onMouseClicked(MouseEvent mouseEvent) {
         Button button = (Button) mouseEvent.getSource();

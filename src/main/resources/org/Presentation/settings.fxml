@@ -7,8 +7,9 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.*?>
 <?import org.controlsfx.control.ToggleSwitch?>
-<?import org.Presentation.*?>
-<VBox xmlns:fx="http://javafx.com/fxml/1" fx:id="vbox" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+<?import org.Presentation.TextFieldLimited?>
+<VBox xmlns:fx="http://javafx.com/fxml/1" fx:id="vbox" maxHeight="1.7976931348623157E308"
+      maxWidth="1.7976931348623157E308"
       prefHeight="200.0" prefWidth="607.0" style="-fx-background-color: black;"
       xmlns="http://javafx.com/javafx/11.0.1" fx:controller="org.Presentation.SettingsController">
     <children>

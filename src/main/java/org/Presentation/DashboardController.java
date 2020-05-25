@@ -48,6 +48,12 @@ import java.util.HashMap;
  * The type Dashboard controller.
  */
 public class DashboardController extends UIController {
+    /**
+     * Instantiates a new Dashboard controller.
+     */
+    public DashboardController() {
+    }
+
     private FlashingSignalThread flashingSignalThread;
     private SpeedThread speedThread;
     private Timeline progressBar;
@@ -271,7 +277,7 @@ public class DashboardController extends UIController {
             pane = (VBox) root.getNamespace().get("vbox");
         } else if (filename.equals("about.fxml")) {
             pane = (Pane) root.getNamespace().get("vbox");
-        }else if (filename.equals("keyShortcuts.fxml")) {
+        } else if (filename.equals("keyShortcuts.fxml")) {
             pane = (Pane) root.getNamespace().get("vbox");
         }
         BorderlessScene scene = new BorderlessScene(stage, StageStyle.UNDECORATED, pane, 250, 250);
@@ -506,7 +512,7 @@ public class DashboardController extends UIController {
         int color = dashboard.getSettings().getDashboardLightIntesity();
         GPmain.setStyle("-fx-background-color: rgb(" + color + ", " + color + ", " + color + ");");
         dashboard.setGears();
-        if(MIstartEngine.isDisable()) {
+        if (MIstartEngine.isDisable()) {
             lightSwitch("headlightsLowBeam", true);
         }
     }
@@ -554,19 +560,19 @@ public class DashboardController extends UIController {
             } catch (GearException e) {
                 openDialog(e.getClass().getSimpleName(), e.getMessage());
             }
-        } else if(event.getCode() == KeyCode.H) {
+        } else if (event.getCode() == KeyCode.H) {
             dashboard.playCarSound(Dashboard.CarSound.HONK, true);
-        } else if(event.getCode() == KeyCode.I) {
+        } else if (event.getCode() == KeyCode.I) {
             playPauseMP();
-        } else if(event.getCode() == KeyCode.O) {
+        } else if (event.getCode() == KeyCode.O) {
             nextSongMP();
-        } else if(event.getCode() == KeyCode.U) {
+        } else if (event.getCode() == KeyCode.U) {
             previousSong();
-        } else if(event.getCode() == KeyCode.T) {
-            SLvolume.setValue(SLvolume.getValue()-5);
+        } else if (event.getCode() == KeyCode.T) {
+            SLvolume.setValue(SLvolume.getValue() - 5);
             changeVolumeMP();
-        } else if(event.getCode() == KeyCode.Y) {
-            SLvolume.setValue(SLvolume.getValue()+5);
+        } else if (event.getCode() == KeyCode.Y) {
+            SLvolume.setValue(SLvolume.getValue() + 5);
             changeVolumeMP();
         }
 
@@ -594,7 +600,7 @@ public class DashboardController extends UIController {
             indicatorsTurnRight.setSelected(false);
             lightSwitch("indicatorsTurnRight", false);
             //indicatorSwitch(IVindicatorsTurnRight, lights.get("indicatorsTurnRight")[0],false);
-        } else if(event.getCode() == KeyCode.H) {
+        } else if (event.getCode() == KeyCode.H) {
             dashboard.playCarSound(Dashboard.CarSound.HONK, false);
         }
     }
@@ -750,7 +756,8 @@ public class DashboardController extends UIController {
         try {
             speedGauge.setValue(dashboard.getSpeed());
             revsGauge.setValue(dashboard.getRevs());
-        } catch (NullPointerException ignore){}
+        } catch (NullPointerException ignore) {
+        }
     }
 
 

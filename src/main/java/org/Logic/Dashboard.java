@@ -5,17 +5,12 @@ import javafx.scene.media.AudioClip;
 import org.Data.RecordModel;
 import org.Data.SQL;
 import org.Data.XML;
-import org.Presentation.GUI;
 
 import javax.xml.stream.XMLStreamException;
 import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
 import java.math.RoundingMode;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.sql.Date;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -424,19 +419,6 @@ public class Dashboard implements Serializable {
     }
 
     /**
-     * Sets day counter 1 in km.
-     *
-     * @param dayCounter1 the day counter 1 in km
-     * @throws NegativeValueException the negative value of counter exception
-     */
-    public void setDayCounter1(int dayCounter1) throws NegativeValueException {
-        if (dayCounter1 < 0)
-            throw new NegativeValueException("The day counter 1 can't be negative!");
-
-        this.dayCounter1 = dayCounter1;
-    }
-
-    /**
      * Gets day counter 2 in km.
      *
      * @return the day counter 2 in km
@@ -451,18 +433,6 @@ public class Dashboard implements Serializable {
      * @param dayCounter2 the day counter 2 in km
      */
     public void setDayCounter2(float dayCounter2) {
-        this.dayCounter2 = dayCounter2;
-    }
-
-    /**
-     * Sets day counter 2 in km.
-     *
-     * @param dayCounter2 the day counter 2 in km
-     * @throws NegativeValueException the negative value of counter exception
-     */
-    public void setDayCounter2(int dayCounter2) throws NegativeValueException {
-        if (dayCounter2 < 0)
-            throw new NegativeValueException("The day counter 2 can't be negative!");
         this.dayCounter2 = dayCounter2;
     }
 
@@ -531,8 +501,8 @@ public class Dashboard implements Serializable {
      */
     public void setCurrentGear(short currentGear, boolean engineRunning) throws GearException {
         if (currentGear < gears.size()) {
-            if(currentGear == 1 && this.currentGear > 1) {
-                this.revs = (int) (this.settings.getMaxRevs() * ((float)this.speed / this.gears.get(1)));
+            if (currentGear == 1 && this.currentGear > 1) {
+                this.revs = (int) (this.settings.getMaxRevs() * ((float) this.speed / this.gears.get(1)));
             }
             if (currentGear == 0 || engineRunning)
                 this.currentGear = currentGear;
@@ -540,8 +510,7 @@ public class Dashboard implements Serializable {
                 this.keyUp = false;
                 this.keyDown = false;
                 throw new GearException("You cannot change the gear to " + currentGear + " at this speed!");
-            }
-            else this.currentGear = currentGear;
+            } else this.currentGear = currentGear;
         }
     }
 
@@ -624,6 +593,31 @@ public class Dashboard implements Serializable {
     }
 
     /**
+     * Play car sound.
+     *
+     * @param carSound the car sound
+     * @param play     the play
+     */
+    public void playCarSound(CarSound carSound, boolean play) {
+        if (play) {
+            if (audioClip != null)
+                audioClip.stop();
+            audioClip = new AudioClip(new File("sounds/" + carSound.filename).toURI().toString());
+            audioClip.play();
+        } else if (audioClip != null)
+            audioClip.stop();
+    }
+
+    /**
+     * Gets music player.
+     *
+     * @return the music player
+     */
+    public MusicPlayer getMusicPlayer() {
+        return musicPlayer;
+    }
+
+    /**
      * Play start engine sound.
      */
     public enum CarSound {
@@ -641,35 +635,9 @@ public class Dashboard implements Serializable {
         GEAR_SHIFT("gearShiftSound.mp3");
 
         private final String filename;
+
         CarSound(String filename) {
             this.filename = filename;
         }
-    }
-
-    /**
-     * Play car sound.
-     *
-     * @param carSound the car sound
-     * @param play     the play
-     */
-    public void playCarSound(CarSound carSound, boolean play) {
-        if(play) {
-            if(audioClip != null)
-                audioClip.stop();
-            audioClip = new AudioClip(new File("sounds/"+carSound.filename).toURI().toString());
-            audioClip.play();
-        }
-        else
-            if(audioClip != null)
-                audioClip.stop();
-    }
-
-    /**
-     * Gets music player.
-     *
-     * @return the music player
-     */
-    public MusicPlayer getMusicPlayer() {
-        return musicPlayer;
     }
 }

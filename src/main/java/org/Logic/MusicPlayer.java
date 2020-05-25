@@ -35,7 +35,7 @@ public class MusicPlayer {
     public String getTitle() {
         if (playlist.isEmpty())
             return "Playlist is empty";
-        String title="";
+        String title = "";
         try {
             title = mediaPlayer.getMedia().getMetadata().get("title").toString();
         } catch (NullPointerException e) {

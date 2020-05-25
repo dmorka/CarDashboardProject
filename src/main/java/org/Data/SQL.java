@@ -29,6 +29,12 @@ public class SQL implements DataHandling {
     Statement stsm = null;
 
     /**
+     * Instantiates a new Sql.
+     */
+    public SQL() {
+    }
+
+    /**
      * Connect with the database.
      */
     public void connect() {

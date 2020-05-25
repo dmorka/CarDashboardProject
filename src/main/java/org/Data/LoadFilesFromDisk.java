@@ -3,8 +3,6 @@ package org.Data;
 import javafx.scene.image.Image;
 import org.Presentation.GUI;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -20,7 +18,13 @@ import java.util.stream.Stream;
 public class LoadFilesFromDisk {
 
     /**
-     * Load files list.
+     * Instantiates a new Load files from disk.
+     */
+    public LoadFilesFromDisk() {
+    }
+
+    /**
+     * Load files from given directory.
      *
      * @param directoryPath the directory path
      * @param extension     the extension
@@ -33,7 +37,7 @@ public class LoadFilesFromDisk {
     }
 
     /**
-     * Load mp 3 files list.
+     * Load mp 3 files from given directory.
      *
      * @param directoryPath the directory path
      * @return the list
@@ -55,8 +59,8 @@ public class LoadFilesFromDisk {
 
         for (String name : lightList) {
             Image[] lights = {
-                    new Image(GUI.class.getResourceAsStream("images/lights/"+ name + "Off.png")),
-                    new Image(GUI.class.getResourceAsStream("images/lights/"+ name + "On.png"))
+                    new Image(GUI.class.getResourceAsStream("images/lights/" + name + "Off.png")),
+                    new Image(GUI.class.getResourceAsStream("images/lights/" + name + "On.png"))
             };
             result.put(name, lights);
         }

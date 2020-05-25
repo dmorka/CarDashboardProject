@@ -54,5 +54,9 @@ public class Main extends Application {
 
     }
 
-
+    /**
+     * Instantiates a new Main.
+     */
+    public Main() {
+    }
 }
