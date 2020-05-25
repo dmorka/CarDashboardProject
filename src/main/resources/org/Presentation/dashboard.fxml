@@ -1,19 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import eu.hansolo.medusa.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.effect.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.input.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.paint.*?>
-<?import javafx.scene.shape.*?>
-<?import javafx.scene.text.*?>
-<?import org.controlsfx.control.cell.*?>
+<?import eu.hansolo.medusa.Gauge?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.CheckMenuItem?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.effect.Glow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.input.KeyCodeCombination?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.shape.Polygon?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+<?import org.controlsfx.control.cell.ImageGridCell?>
 
-<StackPane fx:id="stackPane" stylesheets="@openDialogStyle.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.Presentation.DashboardController">
+<StackPane fx:id="stackPane" stylesheets="@openDialogStyle.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.Presentation.DashboardController">
     <children>
         <GridPane fx:id="GPmain" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" onKeyPressed="#keyPressed" onKeyReleased="#keyReleased" prefHeight="450.0" prefWidth="900.0" style="-fx-background-color: black;">
             <columnConstraints>
@@ -43,13 +60,13 @@
                                     <menus>
                                         <Menu mnemonicParsing="false" text="File">
                                             <items>
-                                                <Menu mnemonicParsing="false" text="Import from">
+                                                <Menu fx:id="Mimport" mnemonicParsing="false" text="Import from">
                                                     <items>
                                                         <MenuItem mnemonicParsing="false" onAction="#importFromXML" text="XML file" />
                                                         <MenuItem fx:id="MIdatabaseImport" mnemonicParsing="false" onAction="#openNewWindow" text="JDBC Database" />
                                                     </items>
                                                 </Menu>
-                                                <Menu mnemonicParsing="false" text="Export to">
+                                                <Menu fx:id="Mexport" mnemonicParsing="false" text="Export to">
                                                     <items>
                                                         <MenuItem fx:id="MIxmlFile" mnemonicParsing="false" onAction="#exportToXML" text="XML file" />
                                                         <MenuItem fx:id="MIjdbcDatabase" mnemonicParsing="false" onAction="#exportToDB" text="JDBC Database" />
@@ -108,7 +125,7 @@
                                                         </CheckMenuItem>
                                                     </items>
                                                 </Menu>
-                                                <Menu fx:id="Mindicators" mnemonicParsing="false" text="Indicators" disable="true">
+                                                <Menu fx:id="Mindicators" disable="true" mnemonicParsing="false" text="Indicators">
                                                     <items>
                                                         <CheckMenuItem fx:id="indicatorsTurnLeft" mnemonicParsing="false" onAction="#menuLightSwitch" text="Turn left" />
                                                         <CheckMenuItem fx:id="indicatorsTurnRight" mnemonicParsing="false" onAction="#menuLightSwitch" text="Turn right" />
@@ -200,58 +217,58 @@
                                 <Insets left="20.0" />
                             </HBox.margin>
                      <needleColor>
-                        <Color red="0.501960813999176" green="0.03529411926865578" blue="0.6705882549285889" />
+                        <Color blue="0.6705882549285889" green="0.03529411926865578" red="0.501960813999176" />
                      </needleColor>
                      <thresholdColor>
-                        <Color red="0.501960813999176" green="0.03529411926865578" blue="0.6705882549285889" />
+                        <Color blue="0.6705882549285889" green="0.03529411926865578" red="0.501960813999176" />
                      </thresholdColor>
                      <subTitleColor>
-                        <Color red="1.0" green="1.0" blue="1.0" />
+                        <Color blue="1.0" green="1.0" red="1.0" />
                      </subTitleColor>
                      <zeroColor>
-                        <Color red="1.0" green="1.0" blue="1.0" />
+                        <Color blue="1.0" green="1.0" red="1.0" />
                      </zeroColor>
                      <valueColor>
-                        <Color red="1.0" green="1.0" blue="1.0" />
+                        <Color blue="1.0" green="1.0" red="1.0" />
                      </valueColor>
                      <unitColor>
-                        <Color red="1.0" green="1.0" blue="1.0" />
+                        <Color blue="1.0" green="1.0" red="1.0" />
                      </unitColor>
                      <titleColor>
-                        <Color red="1.0" green="1.0" blue="1.0" />
+                        <Color blue="1.0" green="1.0" red="1.0" />
                      </titleColor>
                      <tickMarkColor>
-                        <Color red="1.0" green="1.0" blue="1.0" />
+                        <Color blue="1.0" green="1.0" red="1.0" />
                      </tickMarkColor>
                      <barBackgroundColor>
-                        <Color red="1.0" green="1.0" blue="1.0" />
+                        <Color blue="1.0" green="1.0" red="1.0" />
                      </barBackgroundColor>
                      <barBorderColor>
-                        <Color red="1.0" green="1.0" blue="1.0" />
+                        <Color blue="1.0" green="1.0" red="1.0" />
                      </barBorderColor>
                      <barColor>
-                        <Color red="1.0" green="1.0" blue="1.0" />
+                        <Color blue="1.0" green="1.0" red="1.0" />
                      </barColor>
                      <knobColor>
-                        <Color red="0.501960813999176" green="0.03529411926865578" blue="0.6705882549285889" />
+                        <Color blue="0.6705882549285889" green="0.03529411926865578" red="0.501960813999176" />
                      </knobColor>
                      <ledColor>
-                        <Color red="0.501960813999176" green="0.03529411926865578" blue="0.6705882549285889" />
+                        <Color blue="0.6705882549285889" green="0.03529411926865578" red="0.501960813999176" />
                      </ledColor>
                      <majorTickMarkColor>
-                        <Color red="0.6117647290229797" green="0.5843137502670288" blue="0.5843137502670288" />
+                        <Color blue="0.5843137502670288" green="0.5843137502670288" red="0.6117647290229797" />
                      </majorTickMarkColor>
                      <mediumTickMarkColor>
-                        <Color red="1.0" green="1.0" blue="1.0" opacity="0.0" />
+                        <Color blue="1.0" green="1.0" opacity="0.0" red="1.0" />
                      </mediumTickMarkColor>
                      <minorTickMarkColor>
-                        <Color red="0.501960813999176" green="0.03529411926865578" blue="0.6705882549285889" />
+                        <Color blue="0.6705882549285889" green="0.03529411926865578" red="0.501960813999176" />
                      </minorTickMarkColor>
                      <needleBorderColor>
-                        <Color red="1.0" green="1.0" blue="1.0" />
+                        <Color blue="1.0" green="1.0" red="1.0" />
                      </needleBorderColor>
                      <tickLabelColor>
-                        <Color red="1.0" green="1.0" blue="1.0" />
+                        <Color blue="1.0" green="1.0" red="1.0" />
                      </tickLabelColor>
                         </Gauge>
                         <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="321.0" prefWidth="228.0" style="-fx-border-color: white; -fx-border-width: 3px;">
@@ -739,58 +756,58 @@
                                 <Glow level="0.21" />
                             </effect>
                             <barBackgroundColor>
-                                <Color red="1.0" green="1.0" blue="1.0" />
+                                <Color blue="1.0" green="1.0" red="1.0" />
                             </barBackgroundColor>
                             <HBox.margin>
                                 <Insets right="20.0" />
                             </HBox.margin>
                      <thresholdColor>
-                        <Color red="0.501960813999176" green="0.03529411926865578" blue="0.6705882549285889" />
+                        <Color blue="0.6705882549285889" green="0.03529411926865578" red="0.501960813999176" />
                      </thresholdColor>
                      <ledColor>
-                        <Color red="0.501960813999176" green="0.03529411926865578" blue="0.6705882549285889" />
+                        <Color blue="0.6705882549285889" green="0.03529411926865578" red="0.501960813999176" />
                      </ledColor>
                      <barColor>
-                        <Color red="1.0" green="1.0" blue="1.0" />
+                        <Color blue="1.0" green="1.0" red="1.0" />
                      </barColor>
                      <needleColor>
-                        <Color red="0.501960813999176" green="0.03529411926865578" blue="0.6705882549285889" />
+                        <Color blue="0.6705882549285889" green="0.03529411926865578" red="0.501960813999176" />
                      </needleColor>
                      <tickLabelColor>
-                        <Color red="1.0" green="1.0" blue="1.0" />
+                        <Color blue="1.0" green="1.0" red="1.0" />
                      </tickLabelColor>
                      <needleBorderColor>
-                        <Color red="0.501960813999176" green="0.03529411926865578" blue="0.6705882549285889" />
+                        <Color blue="0.6705882549285889" green="0.03529411926865578" red="0.501960813999176" />
                      </needleBorderColor>
                      <knobColor>
-                        <Color red="0.501960813999176" green="0.03529411926865578" blue="0.6705882549285889" />
+                        <Color blue="0.6705882549285889" green="0.03529411926865578" red="0.501960813999176" />
                      </knobColor>
                      <majorTickMarkColor>
-                        <Color red="0.6117647290229797" green="0.5843137502670288" blue="0.5843137502670288" />
+                        <Color blue="0.5843137502670288" green="0.5843137502670288" red="0.6117647290229797" />
                      </majorTickMarkColor>
                      <barBorderColor>
-                        <Color red="1.0" green="1.0" blue="1.0" />
+                        <Color blue="1.0" green="1.0" red="1.0" />
                      </barBorderColor>
                      <zeroColor>
-                        <Color red="1.0" green="1.0" blue="1.0" />
+                        <Color blue="1.0" green="1.0" red="1.0" />
                      </zeroColor>
                      <valueColor>
-                        <Color red="1.0" green="1.0" blue="1.0" />
+                        <Color blue="1.0" green="1.0" red="1.0" />
                      </valueColor>
                      <unitColor>
-                        <Color red="1.0" green="1.0" blue="1.0" />
+                        <Color blue="1.0" green="1.0" red="1.0" />
                      </unitColor>
                      <titleColor>
-                        <Color red="1.0" green="1.0" blue="1.0" />
+                        <Color blue="1.0" green="1.0" red="1.0" />
                      </titleColor>
                      <tickMarkColor>
-                        <Color red="1.0" green="1.0" blue="1.0" />
+                        <Color blue="1.0" green="1.0" red="1.0" />
                      </tickMarkColor>
                      <subTitleColor>
-                        <Color red="1.0" green="1.0" blue="1.0" />
+                        <Color blue="1.0" green="1.0" red="1.0" />
                      </subTitleColor>
                      <minorTickMarkColor>
-                        <Color red="0.501960813999176" green="0.03529411926865578" blue="0.6705882549285889" />
+                        <Color blue="0.6705882549285889" green="0.03529411926865578" red="0.501960813999176" />
                      </minorTickMarkColor>
                      <customFont>
                         <Font name="Arial Bold" size="16.0" />

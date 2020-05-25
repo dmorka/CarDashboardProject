@@ -52,15 +52,9 @@ public class DashboardController extends UIController {
     private SpeedThread speedThread;
     private Timeline progressBar;
     @FXML
-    private MenuItem MIspeedUp;
-    @FXML
-    private MenuItem MIspeedDown;
-    @FXML
     private CheckMenuItem cruiseControl;
     @FXML
     private Menu McruiseControl;
-    @FXML
-    private MenuBar MmenuBar;
     @FXML
     private StackPane stackPane;
     @FXML
@@ -97,6 +91,8 @@ public class DashboardController extends UIController {
     private MenuItem MIsettings;
     @FXML
     private Menu Mindicators;
+    @FXML
+    private Menu Mimport;
     @FXML
     private CheckMenuItem indicatorsTurnLeft;
     @FXML
@@ -693,6 +689,7 @@ public class DashboardController extends UIController {
             MIstartEngine.setDisable(true);
             McruiseControl.setDisable(false);
             Mindicators.setDisable(false);
+            Mimport.setDisable(true);
             dashboard.getOnBoardComputer().startJourneyTime();
             dashboard.playCarSound(Dashboard.CarSound.START_ENGINE, true);
             if (dashboard.getSpeed() == 0)
@@ -721,6 +718,7 @@ public class DashboardController extends UIController {
             Mindicators.setDisable(true);
             MIstopEngine.setDisable(true);
             McruiseControl.setDisable(true);
+            Mimport.setDisable(false);
             speedThread.setEngineRunning(false);
             dashboard.getOnBoardComputer().pauseJourneyTime();
             switchAllLights(false);

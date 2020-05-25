@@ -25,7 +25,6 @@ public class SpeedThread extends Thread {
      */
 //Konstruktor klasy
     public SpeedThread(UIController uiController, int startAfter) {
-        System.out.println("Speed thread was created!");
         this.uiController = uiController;
         this.startAfter = startAfter;
         this.dashboard = uiController.getDashboard();
