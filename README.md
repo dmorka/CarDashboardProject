@@ -9,8 +9,13 @@ Component programming.
 ### Programming language:
 Java
 
-### Date:
-2020
+### Academic year:
+2019/2020
+
+### Authors:
+Dawid Morka\
+Kacper Włodarczyk
+
 
 ### Screenshots:
 #### Choose TUI or GUI
