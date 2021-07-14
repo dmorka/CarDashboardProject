@@ -13,8 +13,8 @@ Java
 2020
 
 ### Screenshots:
-#### Select TUI or GUI
-![Select TUI or GUI](screenshots/tui_gui.png?raw=true)
+#### Choose TUI or GUI
+![Choose TUI or GUI](screenshots/tui_gui.png?raw=true)
 #### GUI dashboard
 ![GUI dashboard](screenshots/gui_main.png?raw=true)
 #### GUI settings
